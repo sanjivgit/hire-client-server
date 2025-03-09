@@ -1,0 +1,54 @@
+/auth/register:
+  post:
+    summary: Register a new user with phone number
+    description: Accepts a phone number, creates a temporary user record, and sends an OTP for verification
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - fullName
+              - phone
+              - password
+              - otp
+            properties:
+              fullName:
+                type: string
+                description: User's full name
+                example: "Sanjiv Kumar"
+              phone:
+                type: string
+                description: User's phone number
+                example: "1234567890"
+              password:
+                type: string
+                description: User's password
+                example: "Password123!"
+              otp:
+                type: string
+                description: One-time password for verification
+                example: "1236"
+    responses:
+      "201":
+        description: Registration successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Registration successful"
+                data:
+                  type: object
+                  properties:
+                    phone:
+                      type: string
+                      example: "1234567890"

@@ -1,0 +1,32 @@
+{"level":"error","message":"\"full_name\" is required","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-06T17:02:31.895Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T08:12:18.891Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T08:28:05.230Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T08:35:44.359Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T08:37:05.424Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T08:38:18.748Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T08:50:23.038Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T09:06:08.741Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T09:06:59.713Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T09:08:41.486Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T09:14:27.381Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T09:15:09.624Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T09:17:34.383Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T09:19:06.520Z"}
+{"level":"error","message":"column \"email\" does not exist","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T09:38:13.835Z"}
+{"level":"error","message":"users.findOne is not a function","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T09:46:33.106Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'findOne')","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T10:02:28.981Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'findOne')","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T10:02:50.251Z"}
+{"level":"error","message":"users.findOne is not a function","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T10:08:05.294Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'findOne')","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T10:17:20.894Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'findOne')","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T10:18:16.256Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'findOne')","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T10:21:28.237Z"}
+{"level":"error","message":"users.findOne is not a function","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T10:40:48.687Z"}
+{"level":"error","message":"Request failed with status code 400","metaData":{"action":"POST","apiId":"0103","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T11:23:12.348Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0102","version":"1.0"}},"service":"user-service","timestamp":"2025-03-09T11:51:18.072Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0102","version":"1.0"}},"service":"user-service","timestamp":"2025-03-09T11:52:14.293Z"}
+{"level":"error","message":"column \"role\" does not exist","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T14:24:39.040Z"}
+{"level":"error","message":"column \"role\" does not exist","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T14:25:07.931Z"}
+{"level":"error","message":"column \"role\" does not exist","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T14:37:46.793Z"}
+{"level":"error","message":"column \"role\" does not exist","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T14:40:42.856Z"}
+{"level":"error","message":"include.model.getTableName is not a function","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T14:41:51.357Z"}
+{"level":"error","message":"roles is not associated to users!","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T14:44:47.422Z"}

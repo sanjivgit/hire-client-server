@@ -1,0 +1,84 @@
+/auth/login:
+  post:
+    summary: Login to the application
+    description: Accepts a phone number and password, and logs in the user
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - phone
+            properties:
+              phone:
+                type: string
+                description: User's phone number
+                example: "1234567890"
+              password:
+                type: string
+                description: User's password
+                example: "password"
+    responses:
+      "201":
+        description: Login successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Login successfully"
+                data:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      example: "1234567890"
+                    user:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        name:
+                          type: string
+                          example: "John Doe"
+                        phone:
+                          type: string
+                          example: "1234567890"
+                        email:
+                          type: string
+                          example: "john.doe@example.com"
+                        token:
+                          type: string
+                          example: "1234567890"
+                        address:
+                          type: object
+                          properties:
+                            address:
+                              type: string
+                              example: "1234 Main St, Anytown, USA"
+                            pinCode:
+                              type: string
+                              example: "12345"
+                            state:
+                              type: string
+                              example: "California"
+                            district:
+                              type: string
+                              example: "Los Angeles"
+                        isAdmin:
+                          type: boolean
+                          example: false
+                        createdAt:
+                          type: string
+                          example: "2021-01-01T00:00:00.000Z"
+                        updatedAt:
+                          
