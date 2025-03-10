@@ -1,0 +1,49 @@
+/auth/forget-password:
+  post:
+    summary: Change your password
+    description: Accepts a phone number, password and otp
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - phone
+              - password
+              - otp
+            properties:
+              phone:
+                type: string
+                description: User's phone number
+                example: "1234567890"
+              password:
+                type: string
+                description: User's password
+                example: "Password123!"
+              otp:
+                type: string
+                description: One-time password for verification
+                example: "1236"
+    responses:
+      "201":
+        description: Password changed successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Password changed successful"
+                data:
+                  type: object
+                  properties:
+                    phone:
+                      type: string
+                      example: "1234567890"

@@ -30,3 +30,8 @@
 {"level":"error","message":"column \"role\" does not exist","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T14:40:42.856Z"}
 {"level":"error","message":"include.model.getTableName is not a function","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T14:41:51.357Z"}
 {"level":"error","message":"roles is not associated to users!","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T14:44:47.422Z"}
+{"level":"error","message":"roles is associated to users using an alias. You must use the 'as' keyword to specify the alias within your include statement.","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T16:41:24.811Z"}
+{"level":"error","message":"roles is associated to users using an alias. You must use the 'as' keyword to specify the alias within your include statement.","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T16:56:45.703Z"}
+{"level":"error","message":"value too long for type character varying(255)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T17:00:47.150Z"}
+{"level":"error","message":"value too long for type character varying(255)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T17:03:00.934Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T02:47:54.577Z"}

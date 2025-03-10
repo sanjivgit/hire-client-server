@@ -20,7 +20,7 @@ export const swaggerSetup = (app: Application) => {
           description: "development server through tunnel",
         },
       ]
-    },
+    },  
     apis: ["./src/**/*.yml"],
   };
 

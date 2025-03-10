@@ -147,7 +147,7 @@ class AuthController {
     req: Request,
     res: Response,
     apiId: string
-  ): Promise<Response> => {
+  ): Promise<any> => {
     const resObj: resObj = {
       apiId,
       action: "POST",
@@ -173,7 +173,7 @@ class AuthController {
     req: Request,
     res: Response,
     apiId: string
-  ): Promise<Response> => {
+  ): Promise<any> => {
     const resObj: resObj = {
       apiId,
       action: "POST",
@@ -182,21 +182,21 @@ class AuthController {
     try {
       const data = await this.dao.verifyMailOtp(req.body.email, req.body.otp);
 
-      // if (data === null) {
-      //   return CommonRes.VALIDATION_ERROR(
-      //     "Wrong OTP entered!!!",
-      //     resObj,
-      //     req,
-      //     res
-      //   );
-      // } else if (!data) {
-      //   return CommonRes.VALIDATION_ERROR(
-      //     "OTP has been expired!!!",
-      //     resObj,
-      //     req,
-      //     res
-      //   );
-      // }
+      if (data === null) {
+        return CommonRes.VALIDATION_ERROR(
+          "Wrong OTP entered!!!",
+          resObj,
+          req,
+          res
+        );
+      } else if (!data) {
+        return CommonRes.VALIDATION_ERROR(
+          "OTP has been expired!!!",
+          resObj,
+          req,
+          res
+        );
+      }
 
       return CommonRes.SUCCESS(
         "OTP validated successfully!!!",
@@ -254,7 +254,7 @@ class AuthController {
     req: Request,
     res: Response,
     apiId: string
-  ): Promise<Response> => {
+  ): Promise<any> => {
     const resObj: resObj = {
       apiId,
       action: "POST",
@@ -263,21 +263,21 @@ class AuthController {
     try {
       const data = await this.dao.verifyPhoneOtp(req.body.phone, req.body.otp);
 
-      // if (data === null) {
-      //   return CommonRes.VALIDATION_ERROR(
-      //     "Wrong OTP entered!!!",
-      //     resObj,
-      //     req,
-      //     res
-      //   );
-      // } else if (!data) {
-      //   return CommonRes.VALIDATION_ERROR(
-      //     "OTP has been expired!!!",
-      //     resObj,
-      //     req,
-      //     res
-      //   );
-      // }
+      if (data === null) {
+        return CommonRes.VALIDATION_ERROR(
+          "Wrong OTP entered!!!",
+          resObj,
+          req,
+          res
+        );
+      } else if (!data) {
+        return CommonRes.VALIDATION_ERROR(
+          "OTP has been expired!!!",
+          resObj,
+          req,
+          res
+        );
+      }
 
       return CommonRes.SUCCESS(
         "OTP validated successfully!!!",
@@ -296,7 +296,7 @@ class AuthController {
     req: Request,
     res: Response,
     apiId: string
-  ): Promise<Response> => {
+  ): Promise<any> => {
     const resObj: resObj = {
       apiId,
       action: "POST",
@@ -313,33 +313,33 @@ class AuthController {
         req.body.otp
       );
 
-      // if (otpVerify === null) {
-      //   return CommonRes.VALIDATION_ERROR(
-      //     "Wrong OTP entered!!!",
-      //     resObj,
-      //     req,
-      //     res
-      //   );
-      // } else if (!otpVerify) {
-      //   return CommonRes.VALIDATION_ERROR(
-      //     "OTP has been expired!!!",
-      //     resObj,
-      //     req,
-      //     res
-      //   );
-      // }
+      if (otpVerify === null) {
+        return CommonRes.VALIDATION_ERROR(
+          "Wrong OTP entered!!!",
+          resObj,
+          req,
+          res
+        );
+      } else if (!otpVerify) {
+        return CommonRes.VALIDATION_ERROR(
+          "OTP has been expired!!!",
+          resObj,
+          req,
+          res
+        );
+      }
 
       ////////// Checking user already exist or not ?? If no then continue otherwise throw error message
       const isExist = await this.dao.getUserByPhone(req.body.phone);
 
-      // if (!isExist) {
-      //   return CommonRes.VALIDATION_ERROR(
-      //     "Your Phone Number is Not Registered",
-      //     resObj,
-      //     req,
-      //     res
-      //   );
-      // }
+      if (!isExist) {
+        return CommonRes.VALIDATION_ERROR(
+          "Your Phone Number is Not Registered",
+          resObj,
+          req,
+          res
+        );
+      }
 
       /* Changing password here */
       const data = await this.dao.forgetPassword({

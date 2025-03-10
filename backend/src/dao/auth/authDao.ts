@@ -31,11 +31,11 @@ class AuthDao {
   };
 
   register = async (credentials: any) => {
-    const { full_name, phone, password } = credentials;
+    const { fullName, phone, password } = credentials;
     const hashPassword = await bcrypt.hash(password, 10);
     
     const user = await this.users.create({
-      name: full_name,
+      name: fullName,
       phone: String(phone),
       password: hashPassword
     });
@@ -54,6 +54,7 @@ class AuthDao {
         include: [
           {
             model: this.roles,
+            as: 'role',
             attributes: ['role'],
           },
         ],
