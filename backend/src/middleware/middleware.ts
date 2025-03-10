@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import CommonRes from "../utils/commonResponse";
 import { resMessage } from "../responseMessage/commonMessage";
 import { resObj } from "../utils/types";
+import { SECRET_KEY } from "../config";
 
 class Middleware {
   private initMsg;
@@ -14,7 +15,7 @@ class Middleware {
 
   //// Generate the temperaury token
   jwtSign = (authData: any) => {
-    const secret = process.env.SECRET_KEY || "xyz";
+    const secret = SECRET_KEY;
 
     return jwt.sign(
       {
@@ -26,16 +27,16 @@ class Middleware {
   };
 
   //// Verify the generated token
-  jwtVerify = async (req: Request, res: Response, next: NextFunction) => {
+  jwtVerify = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const resObj: resObj = {
       apiId: "Not related to APIs",
       action: "Token Verification",
       version: "1.0",
     };
-    const secret = process.env.SECRET_KEY || "xyz";
+    const secret = SECRET_KEY;
     const bearerHeader = req.headers["authorization"];
-    const token = bearerHeader?.split(" ")[0];
-
+    const token = bearerHeader?.split(" ")[1];
+   
     if (token && typeof token !== "undefined") {
       try {
         const data: any = await jwt.verify(token, secret);
@@ -70,7 +71,7 @@ class Middleware {
       action: "Token Verification",
       version: "1.0",
     };
-    const secret = process.env.SECRET_KEY || "xyz";
+    const secret = SECRET_KEY;
     const bearerHeader = req.headers["authorization"];
     const token = bearerHeader?.split(" ")[0];
 

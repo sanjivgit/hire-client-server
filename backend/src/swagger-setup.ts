@@ -14,6 +14,16 @@ export const swaggerSetup = (app: Application) => {
         title: "Hello World",
         version: "1.0.0",
       },
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
+            description: "Enter your JWT token in the format: Bearer <token>"
+          }
+        }
+      },
       servers: [
         {
           url: `http://localhost:${PORT}/api/v1`, 

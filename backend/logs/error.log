@@ -35,3 +35,14 @@
 {"level":"error","message":"value too long for type character varying(255)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T17:00:47.150Z"}
 {"level":"error","message":"value too long for type character varying(255)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-09T17:03:00.934Z"}
 {"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T02:47:54.577Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T17:34:36.641Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T17:42:35.193Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T17:44:02.593Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T17:44:27.951Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T18:00:42.478Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T18:02:18.072Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T18:02:52.609Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-10T18:03:15.394Z"}
+{"level":"error","message":"WHERE parameter \"id\" has invalid \"undefined\" value","metaData":{"action":"GET","apiId":"0201","version":"1.0"},"service":"user-service","timestamp":"2025-03-10T18:05:07.347Z"}
+{"level":"error","message":"WHERE parameter \"id\" has invalid \"undefined\" value","metaData":{"action":"GET","apiId":"0201","version":"1.0"},"service":"user-service","timestamp":"2025-03-10T18:05:49.040Z"}
+{"level":"error","message":"column \"fullName\" does not exist","metaData":{"action":"GET","apiId":"0201","version":"1.0"},"service":"user-service","timestamp":"2025-03-10T18:06:44.374Z"}
