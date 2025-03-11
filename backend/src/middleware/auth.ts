@@ -1,31 +1,112 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+"use strict";
 
-interface AuthenticatedRequest extends Request {
-  user?: {
-    id: number;
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import CommonRes from "../utils/commonResponse";
+import { resMessage } from "../responseMessage/commonMessage";
+import { resObj } from "../utils/types";
+import { SECRET_KEY } from "../config";
+
+class Authorization {
+  private initMsg;
+  constructor() {
+    this.initMsg = "Token";
+  }
+
+  //// Generate the temperaury token
+  jwtSign = (authData: any) => {
+    const secret = SECRET_KEY;
+
+    return jwt.sign(
+      {
+        authData,
+      },
+      secret,
+      { expiresIn: "7d" }
+    );
   };
+
+  //// Verify the generated token
+  jwtVerify = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    const resObj: resObj = {
+      apiId: "Not related to APIs",
+      action: "Token Verification",
+      version: "1.0",
+    };
+    const secret = SECRET_KEY;
+    const bearerHeader = req.headers["authorization"];
+    const token = bearerHeader?.split(" ")[1];
+  
+    if (token && typeof token !== "undefined") {
+      try {
+        const data: any = await jwt.verify(token, secret);
+        req.body.user = data?.authData;
+        return next();
+      } catch (error: any) {
+        return CommonRes.UNAUTHORISED(
+          resMessage(this.initMsg).INVALID,
+          resObj,
+          req,
+          res
+        );
+      }
+    } else {
+      return CommonRes.UNAUTHORISED(
+        resMessage(this.initMsg).NOT_FOUND,
+        resObj,
+        req,
+        res
+      );
+    }
+  };
+
+  //// Verify isAdmin the generated token
+  jwtVerifyIsAdmin = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const resObj: resObj = {
+      apiId: "Not related to APIs",
+      action: "Token Verification",
+      version: "1.0",
+    };
+    const secret = SECRET_KEY;
+    const bearerHeader = req.headers["authorization"];
+    const token = bearerHeader?.split(" ")[0];
+
+    if (token && typeof token !== "undefined") {
+      try {
+        const data: any = await jwt.verify(token, secret);
+        if (!data?.authData?.is_admin) {
+          return CommonRes.UNAUTHORISED(
+            "You Are Not Authorised",
+            resObj,
+            req,
+            res
+          );
+        }
+        req.body.user = data?.authData;
+        return next();
+      } catch (error: any) {
+        return CommonRes.UNAUTHORISED(
+          resMessage(this.initMsg).INVALID,
+          resObj,
+          req,
+          res
+        );
+      }
+    } else {
+      return CommonRes.UNAUTHORISED(
+        resMessage(this.initMsg).NOT_FOUND,
+        resObj,
+        req,
+        res
+      );
+    }
+  };
+
+  authenticateUser = this.jwtVerify;
 }
 
-export const authenticateToken = (
-  req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction
-) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ message: "Authentication token required" });
-  }
-
-  try {
-    const user = jwt.verify(token, process.env.JWT_SECRET || "your-secret-key") as {
-      id: number;
-    };
-    req.user = user;
-    next();
-  } catch (error) {
-    return res.status(403).json({ message: "Invalid token" });
-  }
-}; 
+export default Authorization;

@@ -1,0 +1,214 @@
+/service-types:
+  get:
+    summary: Get all service types
+    description: Retrieve all service types with optional search functionality
+    tags:
+      - Service Types
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Optional search term to filter service types by name
+    responses:
+      "200":
+        description: Successfully retrieved service types
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service types retrieved successfully"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Web Development"
+                      services:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Frontend Development"
+
+/service-types/create:
+  post:
+    summary: Create a new service type
+    description: Create a new service type with the given name
+    tags:
+      - Service Types
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                example: "Web Development"
+    responses:
+      "201":
+        description: Service type created successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service type created successfully"  
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Web Development"
+
+/service-types/{id}:
+  get:
+    summary: Get a service type by ID
+    description: Retrieve a service type by its ID
+    tags:
+      - Service Types 
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer 
+        description: ID of the service type to retrieve
+    responses:
+      "200":
+        description: Successfully retrieved service type
+        content:
+          application/json: 
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true 
+                message:
+                  type: string
+                  example: "Service type retrieved successfully"
+                data:
+                  type: object
+                  properties:   
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Web Development"
+
+/service-types/update/{id}:
+  put:
+    summary: Update a service type
+    description: Update an existing service type by ID
+    tags:
+      - Service Types
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the service type to update
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                example: "Mobile Development"
+    responses:
+      "200":
+        description: Service type updated successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service type updated successfully"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Mobile Development"
+
+/service-types/delete/{id}:
+  delete:
+    summary: Delete a service type
+    description: Delete an existing service type by ID
+    tags:
+      - Service Types
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the service type to delete
+    responses:
+      "200":
+        description: Service type deleted successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service type deleted successfully" 

@@ -2,6 +2,7 @@ import express from "express";
 import AuthRoute from "./route/auth/Auth";
 import FileUploadRoute from "./route/auth/FileUPloadRoute";
 import UserRoute from "./route/user/user";
+import ServiceTypeRoute from "./route/serviceType";
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ class HireRoute {
     new AuthRoute().configure(app, "01"); // 01
 
     new UserRoute().configure(app, "02"); // 02
+
+    new ServiceTypeRoute().configure(app, "03"); // 03
 
     // new TestPaperRoute().configure(app, "03"); // 03
 

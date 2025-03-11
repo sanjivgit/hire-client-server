@@ -26,7 +26,7 @@ export const swaggerSetup = (app: Application) => {
       },
       servers: [
         {
-          url: `http://localhost:${PORT}/api/v1`, 
+          url: `http://localhost:${PORT}/api/v1`,
           description: "development server through tunnel",
         },
       ]
@@ -37,6 +37,10 @@ export const swaggerSetup = (app: Application) => {
   app.use(
     "/api-docs",
     swaggerUi.serve,
-    swaggerUi.setup(swaggerJsdoc(swaggerDocument))
+    swaggerUi.setup(swaggerJsdoc(swaggerDocument), {
+      swaggerOptions: {
+        persistAuthorization: true
+      }
+    })
   );
 };

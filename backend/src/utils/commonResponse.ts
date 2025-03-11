@@ -114,6 +114,24 @@ const CommonRes = Object.freeze({
       res
     );
   },
+  BAD_REQUEST: (
+    error: any,
+    resObj: resObj,
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    return sendResponse(
+      false,
+      error,
+      "",
+      400,
+      resObj.action,
+      resObj.apiId,
+      resObj.version,
+      req,
+      res
+    );
+  },
   UNAUTHORISED: (
     error: any,
     resObj: resObj,

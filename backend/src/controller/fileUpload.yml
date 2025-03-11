@@ -1,0 +1,92 @@
+/file/upload:
+  post:
+    summary: Upload single file
+    description: Upload profile picture (jpg, jpeg, png) or document (pdf)
+    tags:
+      - File Management
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: query
+        name: fileFor
+        required: true
+        schema:
+          type: string
+          enum: [profilePic, document]
+        description: "Type of file to upload (profilePic for images, document for PDF)"
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - file
+            properties:
+              file:
+                type: string
+                format: binary
+                description: "File to upload (jpg, jpeg, png for profilePic, pdf for document)"
+    responses:
+      "200":
+        description: File uploaded successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "File uploaded successfully"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 1
+                    filePath:
+                      type: string
+                      example: "1-1234567890.jpg"
+                      description: "URL path to the uploaded file"
+      "400":
+        description: Invalid file type
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid file type. Only jpg, jpeg, png allowed for profile picture and pdf for documents"
+      "401":
+        description: Unauthorized - Invalid or missing bearer token
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Bearer token is required"
+      "413":
+        description: File too large
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "File too large. Maximum size is 5MB" 

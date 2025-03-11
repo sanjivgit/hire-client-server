@@ -1,9 +1,8 @@
 import CommonRes from "../../utils/commonResponse";
 import { resObj } from "../../utils/types";
-import { resMessage } from "../../responseMessage/commonMessage";
-import AuthDao from "../../dao/auth/authDao";
 import { Request, Response } from "express";
 import UserDao from "../../dao/user/userDao";
+import { updateUserValidation } from "../../requests/user/updateUserValidation";
 
 /**
  * | Author- Sanjiv Kumar
@@ -13,8 +12,10 @@ import UserDao from "../../dao/user/userDao";
  */
 
 interface AuthenticatedRequest extends Request {
-  user?: {
-    userId: number;
+  body: {
+    user?: {
+      id: number;
+    };
   };
 }
 
@@ -38,8 +39,18 @@ class UserController {
     };
 
     try {
-      const { id: userId } = req.body.user;
-      const userDetails = await this.userDao.getUserByUserId(userId);
+      const userId = req.body.user?.id;
+
+      if (!userId) {
+        return CommonRes.UNAUTHORISED(
+          "User not authenticated",
+          resObj,
+          req,
+          res
+        );
+      }
+
+      const userDetails = await this.userDao.getUserByUserId(String(userId));
 
       if (!userDetails) {
         return CommonRes.NOT_FOUND(
@@ -54,6 +65,60 @@ class UserController {
       return CommonRes.SUCCESS(
         "User details retrieved successfully",
         userDetails,
+        resObj,
+        req,
+        res
+      );
+    } catch (error: any) {
+      return CommonRes.SERVER_ERROR(error, resObj, req, res);
+    }
+  };
+
+  updateUserDetails = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    apiId: string
+  ): Promise<any> => {
+    const resObj: resObj = {
+      apiId,
+      action: "PUT",
+      version: "1.0",
+    };
+
+    try {
+      const { user, ...details } = req.body;
+      const userId = user?.id;
+
+      if (!userId) {
+        return CommonRes.UNAUTHORISED(
+          "User not authenticated",
+          resObj,
+          req,
+          res
+        );
+      }
+
+      // Validate request body
+      const { error } = updateUserValidation.validate(details);
+      if (error) {
+        return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
+      }
+
+      const updatedUser = await this.userDao.updateUserDetails(String(userId), details);
+
+      if (!updatedUser) {
+        return CommonRes.NOT_FOUND(
+          "User not found",
+          null,
+          resObj,
+          req,
+          res
+        );
+      }
+
+      return CommonRes.SUCCESS(
+        "User details updated successfully",
+        updatedUser,
         resObj,
         req,
         res
