@@ -1,9 +1,9 @@
-/user/partner-registration:
+/partner/partner-registration:
   post:
     summary: Partner Registration
     description: Partner Registration
     tags:
-      - User
+      - Partner
     security:
       - bearerAuth: []
     requestBody:

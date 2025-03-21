@@ -4,6 +4,7 @@ import FileUploadRoute from "./route/auth/FileUPloadRoute";
 import UserRoute from "./route/user/user";
 import ServiceTypeRoute from "./route/serviceType";
 import ServiceRoute from "./route/service";
+import PartnerRoute from "./route/partner/partner";
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ class HireRoute {
 
     new ServiceRoute().configure(app, "04"); // 04
 
-    // new TestPaperRoute().configure(app, "03"); // 03
+    new PartnerRoute().configure(app, "05"); // 05
 
     // new QuestionTypeRoute().configure(app, "04"); // 04
 

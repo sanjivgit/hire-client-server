@@ -74,6 +74,11 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'RESTRICT'
     },
+    status: {
+      type: DataTypes.ENUM('pending', 'approved', 'suspended', 'active'),
+      defaultValue: 'pending',
+      allowNull: false
+    },
     aadharImageId: {
       type: DataTypes.INTEGER,
       allowNull: false,

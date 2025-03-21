@@ -26,14 +26,10 @@ interface BecomePartner {
 class UserDao {
   private users: any;
   private partners: any;
-  private sequelize: any;
-  private partner_services: any;
 
   constructor() {
     this.users = db.users;
     this.partners = db.partners;
-    this.sequelize = db.sequelize;
-    this.partner_services = db.partner_services;
   }
 
   getUserByUserId = async (userId: string) => {
@@ -48,9 +44,23 @@ class UserDao {
         "createdAt",
         "updatedAt",
       ],
+      include: [
+        {
+          model: this.partners,
+          as: "partner", // Alias for the relation
+          attributes: ["id", "serviceTypeId", "aadharNumber"], // Add necessary fields from partners
+          required: false, // Ensures it does a LEFT JOIN (doesn't filter out users without partners)
+        },
+      ],
     });
 
-    return generateRes(user);
+    // Transform the response to include `isPartner`
+    const formattedUser = {
+      ...user.get(), // Get raw user object
+      isPartner: !!user.partner, // Convert `partner` existence to boolean
+    };
+
+    return generateRes(formattedUser);
   };
 
   updateUserDetails = async (userId: string, details: UpdateUserDetails) => {
@@ -86,44 +96,6 @@ class UserDao {
     }
 
     return generateRes(updatedUser);
-  };
-
-  becomePartner = async (userDetails: any) => {
-    const { serviceIds, ...partnerDetails } = userDetails;
-    const t = await this.sequelize.transaction();
-
-    try {
-      const partner = await this.partners.create(partnerDetails, {
-        transaction: t,
-        returning: [
-          "id",
-          "firstName",
-          "lastName",
-          "userId",
-          "aadharNumber",
-          "serviceTypeId",
-          "aadharImageId",
-          "additionalDocumentId",
-          "createdAt",
-          "updatedAt",
-        ],
-      });
-
-      await Promise.all(
-        serviceIds.map((serviceId: number) =>
-          this.partner_services.create(
-            { partnerId: partner.id, serviceId: serviceId },
-            { transaction: t }
-          )
-        )
-      );
-
-      await t.commit();
-      return generateRes(partner);
-    } catch (error) {
-      await t.rollback();
-      throw error;
-    }
   };
 }
 
