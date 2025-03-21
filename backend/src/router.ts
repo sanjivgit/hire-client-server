@@ -3,6 +3,7 @@ import AuthRoute from "./route/auth/Auth";
 import FileUploadRoute from "./route/auth/FileUPloadRoute";
 import UserRoute from "./route/user/user";
 import ServiceTypeRoute from "./route/serviceType";
+import ServiceRoute from "./route/service";
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ class HireRoute {
     new UserRoute().configure(app, "02"); // 02
 
     new ServiceTypeRoute().configure(app, "03"); // 03
+
+    new ServiceRoute().configure(app, "04"); // 04
 
     // new TestPaperRoute().configure(app, "03"); // 03
 

@@ -1,8 +1,9 @@
 import CommonRes from "../../utils/commonResponse";
-import { resObj } from "../../utils/types";
+import { resObj, User } from "../../utils/types";
 import { Request, Response } from "express";
 import UserDao from "../../dao/user/userDao";
 import { updateUserValidation } from "../../requests/user/updateUserValidation";
+import { partnerRegistrationValidation } from "../../requests/user/partnerRegistrationValidation";
 
 /**
  * | Author- Sanjiv Kumar
@@ -13,12 +14,21 @@ import { updateUserValidation } from "../../requests/user/updateUserValidation";
 
 interface AuthenticatedRequest extends Request {
   body: {
-    user?: {
-      id: number;
-    };
+    user?: User;
   };
 }
-
+interface PartnerRegistrationRequest extends Request {
+  body: {
+    user: User;
+    firstName: string;
+    lastName: string;
+    serviceIds: number[];
+    serviceTypeId: number;
+    aadharNumber: string;
+    aadharImageId: number;
+    additionalDocumentId: number;
+  };
+}
 class UserController {
   private userDao: UserDao;
   private initMsg: string;
@@ -53,13 +63,7 @@ class UserController {
       const userDetails = await this.userDao.getUserByUserId(String(userId));
 
       if (!userDetails) {
-        return CommonRes.NOT_FOUND(
-          "User not found",
-          null,
-          resObj,
-          req,
-          res
-        );
+        return CommonRes.NOT_FOUND("User not found", null, resObj, req, res);
       }
 
       return CommonRes.SUCCESS(
@@ -104,21 +108,62 @@ class UserController {
         return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
       }
 
-      const updatedUser = await this.userDao.updateUserDetails(String(userId), details);
+      const updatedUser = await this.userDao.updateUserDetails(
+        String(userId),
+        details
+      );
 
       if (!updatedUser) {
-        return CommonRes.NOT_FOUND(
-          "User not found",
-          null,
+        return CommonRes.NOT_FOUND("User not found", null, resObj, req, res);
+      }
+
+      return CommonRes.SUCCESS(
+        "User details updated successfully",
+        updatedUser,
+        resObj,
+        req,
+        res
+      );
+    } catch (error: any) {
+      return CommonRes.SERVER_ERROR(error, resObj, req, res);
+    }
+  };
+
+  becomePartner = async (
+    req: PartnerRegistrationRequest,
+    res: Response,
+    apiId: string
+  ): Promise<any> => {
+    const resObj: resObj = {
+      apiId,
+      action: "POST",
+      version: "1.0",
+    };
+
+    try {
+      const { user, ...details } = req.body;
+      const userId = user?.id;
+
+      if (!userId) {
+        return CommonRes.UNAUTHORISED(
+          "User not authenticated",
           resObj,
           req,
           res
         );
       }
 
+      // Validate request body
+      const { error } = partnerRegistrationValidation.validate(details);
+      if (error) {
+        return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
+      }
+
+      const partner = await this.userDao.becomePartner({ ...details, userId });
+
       return CommonRes.SUCCESS(
-        "User details updated successfully",
-        updatedUser,
+        "Partner created successfully",
+        partner,
         resObj,
         req,
         res

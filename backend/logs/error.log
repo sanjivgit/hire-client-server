@@ -53,3 +53,10 @@
 {"level":"error","message":"Invalid file type specified!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-11T03:31:44.780Z"}
 {"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-11T03:41:41.916Z"}
 {"level":"error","message":"\"user\" is not allowed","metaData":{"action":"PUT","apiId":"0302","version":"1.0"},"service":"user-service","timestamp":"2025-03-11T17:31:42.266Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-21T17:25:54.321Z"}
+{"level":"error","message":"column \"serviceIds\" does not exist","metaData":{"action":"POST","apiId":"0203","version":"1.0"},"service":"user-service","timestamp":"2025-03-21T17:29:21.895Z"}
+{"level":"error","message":"column \"serviceIds\" does not exist","metaData":{"action":"POST","apiId":"0203","version":"1.0"},"service":"user-service","timestamp":"2025-03-21T17:32:02.940Z"}
+{"level":"error","message":"column \"serviceIds\" does not exist","metaData":{"action":"POST","apiId":"0203","version":"1.0"},"service":"user-service","timestamp":"2025-03-21T17:34:05.549Z"}
+{"level":"error","message":"column \"serviceIds\" does not exist","metaData":{"action":"POST","apiId":"0203","version":"1.0"},"service":"user-service","timestamp":"2025-03-21T17:34:46.579Z"}
+{"level":"error","message":"column \"serviceIds\" does not exist","metaData":{"action":"POST","apiId":"0203","version":"1.0"},"service":"user-service","timestamp":"2025-03-21T17:39:52.959Z"}
+{"level":"error","message":"column \"serviceIds\" does not exist","metaData":{"action":"POST","apiId":"0203","version":"1.0"},"service":"user-service","timestamp":"2025-03-21T17:42:28.406Z"}

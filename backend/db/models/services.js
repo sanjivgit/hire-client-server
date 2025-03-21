@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       });
+
+      services.hasMany(models.partners, {
+        foreignKey: 'serviceIds',
+        as: 'partners',
+      });
     }
   }
   services.init({

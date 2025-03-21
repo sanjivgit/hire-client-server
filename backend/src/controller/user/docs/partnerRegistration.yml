@@ -1,0 +1,61 @@
+/user/partner-registration:
+  post:
+    summary: Partner Registration
+    description: Partner Registration
+    tags:
+      - User
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+                example: "John"
+              lastName:
+                type: string
+                example: "Doe"
+              serviceIds:
+                type: array
+                items:
+                  type: number
+              serviceTypeId:
+                type: number
+                example: 1
+              aadharNumber:
+                type: string
+                example: "1234567890"
+              aadharImageId:
+                type: number
+                example: 1
+              additionalDocumentId:
+                type: number
+                example: 1  
+    responses:
+      "200":
+        description: Partner Registration successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner registration successful"
+                data:
+                  type: object
+                  properties:
+                    partner:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+      

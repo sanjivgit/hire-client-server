@@ -1,0 +1,317 @@
+/services:
+  get:
+    summary: Get all services
+    description: Retrieve all services with optional search functionality
+    tags:
+      - Services
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Optional search term to filter services by name
+    responses:
+      "200":
+        description: Successfully retrieved services
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Services retrieved successfully"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Frontend Development"
+                      description:
+                        type: string
+                        example: "Modern web development services"
+                      price:
+                        type: number
+                        example: 1000
+                      serviceType:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Web Development"
+
+/services/create:
+  post:
+    summary: Create a new service
+    description: Create a new service with the given details
+    tags:
+      - Services
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+              - serviceTypeId
+            properties:
+              name:
+                type: string
+                example: "Frontend Development"
+              serviceTypeId:
+                type: integer
+                example: 1
+    responses:
+      "201":
+        description: Service created successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service created successfully"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Frontend Development"
+                    serviceType:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Web Development"
+
+/services/{id}:
+  get:
+    summary: Get a service by ID
+    description: Retrieve a service by its ID
+    tags:
+      - Services
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the service to retrieve
+    responses:
+      "200":
+        description: Successfully retrieved service
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service retrieved successfully"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Frontend Development"
+                    description:
+                      type: string
+                      example: "Modern web development services"
+                    price:
+                      type: number
+                      example: 1000
+                    serviceType:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Web Development"
+
+/services/update/{id}:
+  put:
+    summary: Update a service
+    description: Update an existing service by ID
+    tags:
+      - Services
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the service to update
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "Advanced Frontend Development"
+              serviceTypeId:
+                type: integer
+                example: 1
+    responses:
+      "200":
+        description: Service updated successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service updated successfully"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Advanced Frontend Development"
+                    serviceType:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Web Development"
+
+/services/delete/{id}:
+  delete:
+    summary: Delete a service
+    description: Delete an existing service by ID
+    tags:
+      - Services
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the service to delete
+    responses:
+      "200":
+        description: Service deleted successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service deleted successfully"
+
+/services/by-service-type/{serviceTypeId}:
+  get:
+    summary: Get services by service type ID
+    description: Retrieve all services belonging to a specific service type with optional search functionality
+    tags:
+      - Services
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: serviceTypeId
+        required: true
+        schema:
+          type: integer
+        description: ID of the service type to filter services by
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Optional search term to filter services by name
+    responses:
+      "200":
+        description: Successfully retrieved services
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Services retrieved successfully"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Frontend Development"
+                      description:
+                        type: string
+                        example: "Modern web development services"
+                      price:
+                        type: number
+                        example: 1000
+                      serviceType:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Web Development" 

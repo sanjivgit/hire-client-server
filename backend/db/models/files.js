@@ -15,6 +15,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'profilePic',
         as: 'userProfile'
       });
+
+      files.hasOne(models.partners, {
+        foreignKey: 'aadharImageId',
+        as: 'aadharImage'
+      });
+
+      files.hasOne(models.partners, {
+        foreignKey: 'additionalDocumentId',
+        as: 'additionalDocument'
+      });
     }
   }
   files.init({
