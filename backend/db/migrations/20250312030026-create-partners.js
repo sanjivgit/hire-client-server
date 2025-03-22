@@ -10,15 +10,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
+      first_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      lastName: {
+      last_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -28,11 +28,11 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
-      aadharNumber: {
+      aadhar_number: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      serviceTypeId: {
+      service_type_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -40,7 +40,7 @@ module.exports = {
           key: 'id'
         },
       },
-      aadharImageId: {
+      aadhar_image_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -50,7 +50,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
-      additionalDocumentId: {
+      additional_document_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -60,12 +60,17 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
-      createdAt: {
+      status: {
+        type: Sequelize.ENUM('pending', 'approved', 'suspended', 'active'),
+        allowNull: false,
+        defaultValue: 'pending',
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')

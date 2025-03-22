@@ -38,8 +38,8 @@ class PartnerDao {
           "serviceTypeId",
           "aadharImageId",
           "additionalDocumentId",
-          "createdAt",
-          "updatedAt",
+          "created_at",
+          "updated_at",
         ],
       });
 

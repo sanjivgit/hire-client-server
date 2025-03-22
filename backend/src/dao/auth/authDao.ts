@@ -12,6 +12,9 @@ class AuthDao {
   private otps: any;
   private roles: any;
   private sequelize: any;
+  private partners: any;
+  private services: any;
+  private partners_services: any;
 
   constructor() {
     this.middleware = new Middleware();
@@ -19,25 +22,28 @@ class AuthDao {
     this.otps = db.otps;
     this.roles = db.roles;
     this.sequelize = db.sequelize;
+    this.partners = db.partners;
+    this.services = db.services;
+    this.partners_services = db.partners_services;
   }
 
   getUserByPhone = async (phone: string) => {
     const user = await this.users.findOne({
       where: { phone },
-      attributes: ['id']
+      attributes: ["id"],
     });
 
     return generateRes(user);
   };
 
   register = async (credentials: any) => {
-    const { fullName, phone, password } = credentials;
+    const { name, phone, password } = credentials;
     const hashPassword = await bcrypt.hash(password, 10);
-    
+
     const user = await this.users.create({
-      name: fullName,
+      name,
       phone: String(phone),
-      password: hashPassword
+      password: hashPassword,
     });
 
     return generateRes(user);
@@ -48,18 +54,37 @@ class AuthDao {
 
     try {
       const { password, phone } = credentials;
-      const user = await this.users.findOne({
-        where: { phone: String(phone) },
-        attributes: ['id', 'name', 'phone', 'address', 'password'],
-        include: [
-          {
-            model: this.roles,
-            as: 'role',
-            attributes: ['role'],
-          },
-        ],
-        transaction: t
+      const rawQuery = `
+    SELECT 
+        u.id, 
+        u.name, 
+        u.phone, 
+        u.address, 
+        u.password, 
+        r.role AS role, 
+        json_build_object(
+          'id', p.id, 
+          'service_type_id', p.service_type_id,
+          'services', COALESCE(json_agg(
+                json_build_object('id', s.id, 'name', s.name)
+              ) FILTER (WHERE s.id IS NOT NULL), '[]'::json)
+        ) AS partner
+    FROM users u
+    LEFT JOIN roles r ON u.id = r.user_id
+    LEFT JOIN partners p ON u.id = p.user_id
+    LEFT JOIN partner_services ps ON p.id = ps.partner_id
+    LEFT JOIN services s ON ps.service_id = s.id
+    WHERE u.phone = :phone
+    GROUP BY u.id, u.name, u.phone, u.address::text, u.password, r.role, p.id, p.service_type_id;
+  `;
+
+      const [user] = await this.sequelize.query(rawQuery, {
+        replacements: { phone },
+        type: this.sequelize.QueryTypes.SELECT,
+        transaction: t,
       });
+
+      console.log("user >>", user);
 
       if (!user) {
         await t.rollback();
@@ -70,17 +95,17 @@ class AuthDao {
         password,
         user.password
       );
-      
+
       if (isValidPassword) {
-        const { password, ...others } = user.get({ plain: true });
+        const { password, ...others } = user;
         const token = this.middleware.jwtSign(others);
 
         // Update the token in the database
         await this.users.update(
           { token },
-          { 
+          {
             where: { id: user.id },
-            transaction: t
+            transaction: t,
           }
         );
 
@@ -119,7 +144,7 @@ class AuthDao {
     await this.otps.create({
       phone: "null",
       email,
-      otp
+      otp,
     });
   };
 
@@ -128,13 +153,14 @@ class AuthDao {
       where: {
         email,
         otp,
-      }
+      },
     });
 
     if (data) {
-      const createdAt: Date = data.createdAt;
+      const createdAt: Date = data.created_at;
       const currentTime: Date = new Date();
-      const timeDifference: number = currentTime.getTime() - createdAt.getTime();
+      const timeDifference: number =
+        currentTime.getTime() - createdAt.getTime();
 
       await this.otps.destroy({
         where: {
@@ -162,7 +188,7 @@ class AuthDao {
 
     const res = await this.otps.create({
       phone: String(phone),
-      otp: "123456"
+      otp: "123456",
     });
 
     return generateRes(res);
@@ -173,13 +199,14 @@ class AuthDao {
       where: {
         phone,
         otp,
-      }
+      },
     });
 
     if (data) {
       const createdAt: Date = data.createdAt;
       const currentTime: Date = new Date();
-      const timeDifference: number = currentTime.getTime() - createdAt.getTime();
+      const timeDifference: number =
+        currentTime.getTime() - createdAt.getTime();
 
       await this.otps.destroy({
         where: {
@@ -195,7 +222,7 @@ class AuthDao {
   forgetPassword = async (credentials: any) => {
     const { phone, password } = credentials;
     const hashPassword = await bcrypt.hash(password, 10);
-    
+
     const user = await this.users.update(
       { password: hashPassword },
       { where: { phone } }

@@ -12,22 +12,22 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Define associations
       partners.belongsTo(models.users, {
-        foreignKey: 'userId',
+        foreignKey: 'user_id',
         as: 'user',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       });
       partners.belongsTo(models.service_types, {
-        foreignKey: 'serviceTypeId',
-        as: 'serviceType'
+        foreignKey: 'service_type_id',
+        as: 'service_type'
       });
       partners.belongsTo(models.files, {
-        foreignKey: 'aadharImageId',
-        as: 'aadharImage'
+        foreignKey: 'aadhar_image_id',
+        as: 'aadhar_image'
       });
       partners.belongsTo(models.files, {
-        foreignKey: 'additionalDocumentId',
-        as: 'additionalDocumentFile'
+        foreignKey: 'additional_document_id',
+        as: 'additional_document'
       });
       // Many-to-many relationship with services
       // partners.belongsToMany(models.services, {
@@ -41,15 +41,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   partners.init({
-    firstName: {
+    first_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastName: {
+    last_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
@@ -60,11 +60,11 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     },
-    aadharNumber: {
+    aadhar_number: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    serviceTypeId: {
+    service_type_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -79,7 +79,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'pending',
       allowNull: false
     },
-    aadharImageId: {
+    aadhar_image_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -89,7 +89,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'RESTRICT'
     },
-    additionalDocumentId: {
+    additional_document_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -99,17 +99,19 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'RESTRICT'
     },
-    createdAt: {
+    created_at: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    updatedAt: {
+    updated_at: {
       type: DataTypes.DATE,
       allowNull: false,
     },
   }, {
     sequelize,
     modelName: 'partners',
+    timestamps: true,
+    underscored: true
   });
   return partners;
 };

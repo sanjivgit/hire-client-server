@@ -7,6 +7,7 @@ import { registrationValidation } from "../../requests/auth/registrationValidati
 import { forgetPasswordValidation } from "../../requests/auth/forgetPasswordValidation";
 import { Request, Response } from "express";
 import LoginDto from "../../dto/response/auth/loginDto";
+import RegistrationDto from "../../dto/request/auth/registrationDto";
 
 /**
  * | Author- Sanjiv Kumar
@@ -36,16 +37,17 @@ class AuthController {
     };
 
     try {
+
+      
       const { error } = registrationValidation.validate(req.body);
-
+      
       if (error) return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
-
+      
       /* Verifing the opt sent on given phone number */
       const otpVerify = await this.dao.verifyPhoneOtp(
         String(req.body.phone),
         String(req.body.otp)
       );
-
 
       if (otpVerify === null) {
         return CommonRes.VALIDATION_ERROR(
@@ -62,9 +64,11 @@ class AuthController {
           res
         );
       }
+      
+      const registrationDto = new RegistrationDto(req.body);
 
       ////////// Checking user already exist or not ?? If no then continue otherwise throw error message
-      const isExist = await this.dao.getUserByPhone(String(req.body.phone));
+      const isExist = await this.dao.getUserByPhone(registrationDto.phone);
 
       if (isExist) {
         return CommonRes.CONFLICT_ERROR(
@@ -76,7 +80,7 @@ class AuthController {
       }
 
       ////////// Registering User //////////
-      const data = await this.dao.register(req.body);
+      const data = await this.dao.register(registrationDto);
 
       return CommonRes.SUCCESS(
         resMessage(this.initMsg).REGISTER,

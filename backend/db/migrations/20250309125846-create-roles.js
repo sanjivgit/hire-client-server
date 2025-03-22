@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER, // Ensure userId is an integer to match users.id
         allowNull: false,
         references: {
@@ -23,11 +23,11 @@ module.exports = {
         type: Sequelize.ENUM('admin', 'superAdmin'),
         allowNull: false,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

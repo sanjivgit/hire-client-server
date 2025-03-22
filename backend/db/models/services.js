@@ -11,21 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       services.belongsTo(models.service_types, {
-        foreignKey: 'serviceTypeId',
-        as: 'serviceType',
+        foreignKey: 'service_type_id',
+        as: 'service_type',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       });
 
       services.hasMany(models.partners, {
-        foreignKey: 'serviceIds',
+        foreignKey: 'service_id',
         as: 'partners',
       });
     }
   }
   services.init({
     name: DataTypes.STRING,
-    serviceTypeId: {
+    service_type_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -38,6 +38,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'services',
+    timestamps: true,
+    underscored: true
   });
   return services;
 };

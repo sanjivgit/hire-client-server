@@ -68,8 +68,8 @@ class ServiceDao {
 
       const services = await this.services.findAll({
         where: whereClause,
-        order: [["createdAt", "DESC"]],
-        attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+        order: [["created_at", "DESC"]],
+        attributes: ['id', 'name', 'created_at', 'updated_at'],
         include: [
           {
             model: db.service_types,
@@ -98,8 +98,8 @@ class ServiceDao {
 
       const services = await this.services.findAll({
         where: whereClause,
-        order: [["createdAt", "DESC"]],
-        attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+        order: [["created_at", "DESC"]],
+        attributes: ['id', 'name', 'created_at', 'updated_at'],
         include: [
           {
             model: db.service_types,
@@ -117,7 +117,7 @@ class ServiceDao {
   getServiceById = async (id: number) => {
     try {
       return await this.services.findByPk(id, {
-        attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+        attributes: ['id', 'name', 'created_at', 'updated_at'],
         include: [
           {
             model: db.service_types,

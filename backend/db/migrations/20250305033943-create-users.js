@@ -18,12 +18,22 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      profile_pic: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'files',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
       password: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       token: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
         allowNull: true,
       },
       email: {
@@ -43,11 +53,11 @@ module.exports = {
           district: "",
         },
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

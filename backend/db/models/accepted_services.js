@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   accepted_services.init({
-    partnerId: {
+    partner_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'partners',
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     },
-    serviceRequestId:{
+    service_request_id:{
       type: DataTypes.INTEGER,
       references: {
         model: 'service_requests',
@@ -48,6 +48,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'accepted_services',
+    timestamps: true,
+    underscored: true 
   });
   return accepted_services;
 };

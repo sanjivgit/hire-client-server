@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   roles.init(
     {
-      userId: {
+      user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "roles",
+      timestamps: true,
+      underscored: true
     }
   );
   return roles;

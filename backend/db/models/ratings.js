@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ratings.init({
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       references:{
         model: 'users',
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'CASCADE'
     },
-    partnerId: {
+    partner_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'partners',
@@ -34,6 +34,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'ratings',
+    timestamps: true,
+    underscored: true
   });
   return ratings;
 };

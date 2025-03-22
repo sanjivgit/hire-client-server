@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       service_types.hasMany(models.services, {
-        foreignKey: 'serviceTypeId',
+        foreignKey: 'service_type_id',
         as: 'services',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       });
 
       service_types.hasMany(models.partners, {
-        foreignKey: 'serviceTypeId',
+        foreignKey: 'service_type_id',
         as: 'partners',
       });
     }
@@ -28,6 +28,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'service_types',
+    timestamps: true,
+    underscored: true
   });
   return service_types;
 };

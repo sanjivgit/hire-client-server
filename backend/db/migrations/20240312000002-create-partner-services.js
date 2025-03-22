@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      partnerId: {
+      partner_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -20,7 +20,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      serviceId: {
+      service_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -30,12 +30,12 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
@@ -44,7 +44,7 @@ module.exports = {
 
     // Add unique constraint to prevent duplicate entries
     await queryInterface.addConstraint('partner_services', {
-      fields: ['partnerId', 'serviceId'],
+      fields: ['partner_id', 'service_id'],
       type: 'unique',
       name: 'unique_partner_service'
     });

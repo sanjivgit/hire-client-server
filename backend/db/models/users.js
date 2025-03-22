@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      users.hasOne(models.roles, { foreignKey: "userId", as: "role" });
+      users.hasOne(models.roles, { foreignKey: "user_id", as: "role" });
       users.hasOne(models.partners, {
-        foreignKey: "userId",
+        foreignKey: "user_id",
         as: "partner",
       });
     }
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      profilePic: {
+      profile_pic: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
@@ -64,6 +64,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "users",
+      timestamps: true,
+      underscored: true
     }
   );
   return users;

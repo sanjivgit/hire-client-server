@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
@@ -17,7 +17,7 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      partnerId: {
+      partner_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'partners',
@@ -28,11 +28,11 @@ module.exports = {
       rating: {
         type: Sequelize.INTEGER
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

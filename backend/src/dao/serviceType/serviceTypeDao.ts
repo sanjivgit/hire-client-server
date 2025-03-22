@@ -53,7 +53,7 @@ class ServiceTypeDao {
 
       const serviceTypes = await this.serviceTypes.findAll({
         where: whereClause,
-        order: [['createdAt', 'DESC']],
+        order: [['created_at', 'DESC']],
         include: [{
           model: db.services,
           as: 'services',

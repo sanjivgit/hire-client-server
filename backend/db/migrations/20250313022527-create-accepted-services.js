@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      partnerId: {
+      partner_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -19,7 +19,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      serviceRequestId: {
+      service_request_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -34,7 +34,7 @@ module.exports = {
         allowNull: true
       },
       description: {
-        type: Sequelize.DESCRIPTION,
+        type: Sequelize.TEXT,
         allowNull: true
       },
       status: {
@@ -42,11 +42,11 @@ module.exports = {
         allowNull: false,
         defaultValue: 'pending'
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

@@ -12,18 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Files can be referenced by users through profilePic
       files.hasOne(models.users, {
-        foreignKey: 'profilePic',
+        foreignKey: 'profile_pic',
         as: 'userProfile'
       });
 
       files.hasOne(models.partners, {
-        foreignKey: 'aadharImageId',
-        as: 'aadharImage'
+        foreignKey: 'aadhar_image_id',
+        as: 'aadhar_image'
       });
 
       files.hasOne(models.partners, {
-        foreignKey: 'additionalDocumentId',
-        as: 'additionalDocument'
+        foreignKey: 'additional_document_id',
+        as: 'additional_document'
       });
     }
   }
@@ -33,14 +33,15 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    filePath: {
+    file_path: {
       type: DataTypes.STRING,
       allowNull: false
     }
   }, {
     sequelize,
     modelName: 'files',
-    timestamps: true
+    timestamps: true,
+    underscored: true
   });
   return files;
 };

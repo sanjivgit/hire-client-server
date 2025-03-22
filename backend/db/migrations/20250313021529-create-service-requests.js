@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -17,7 +17,7 @@ module.exports = {
           key: 'id'
         }
       },
-      serviceId: {
+      service_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -26,20 +26,51 @@ module.exports = {
         }
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
     });
+
+    // Add foreign key constraints with cascade rules
+    await queryInterface.addConstraint('service_requests', {
+      fields: ['user_id'],
+      type: 'foreign key',
+      references: {
+        table: 'users',
+        field: 'id'
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    });
+
+    await queryInterface.addConstraint('service_requests', {
+      fields: ['service_id'],
+      type: 'foreign key',
+      references: {
+        table: 'services',
+        field: 'id'
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    });
   },
   async down(queryInterface, Sequelize) {
+    // Remove constraints first
+    const constraints = await queryInterface.showConstraints('service_requests');
+    for (const constraint of constraints) {
+      if (constraint.constraintType === 'FOREIGN KEY') {
+        await queryInterface.removeConstraint('service_requests', constraint.constraintName);
+      }
+    }
+    // Then drop the table
     await queryInterface.dropTable('service_requests');
   }
 };

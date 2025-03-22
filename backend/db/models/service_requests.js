@@ -12,17 +12,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Define associations here
       service_requests.belongsTo(models.users, {
-        foreignKey: 'userId',
+        foreignKey: 'user_id',
         onDelete: 'CASCADE'
       });
       service_requests.belongsTo(models.services, {
-        foreignKey: 'serviceId',
+        foreignKey: 'service_id',
         onDelete: 'CASCADE'
       });
     }
   }
   service_requests.init({
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    serviceId: {
+    service_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -45,6 +45,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'service_requests',
+    timestamps: true,
+    underscored: true
   });
   return service_requests;
 };

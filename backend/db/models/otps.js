@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model, Op } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class otps extends Model {
     /**
@@ -15,26 +14,28 @@ module.exports = (sequelize, DataTypes) => {
   }
   otps.init({
     phone: DataTypes.STRING,
+    email: DataTypes.STRING,
     otp: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'otps',
-      tableName: 'otps',
-      hooks: {
-        afterSync: async () => {
-          // Set up periodic cleanup every minute
-          setInterval(() => {
-            // Delete OTPs older than 2 minutes
-            otps.destroy({
-              where: {
-                createdAt: {
-                  [Op.lt]: new Date(Date.now() - 2 * 60 * 1000)
-                }
+    hooks: {
+      afterSync: async () => {
+        // Set up periodic cleanup every minute
+        setInterval(() => {
+          // Delete OTPs older than 2 minutes
+          otps.destroy({
+            where: {
+              created_at: {
+                [Op.lt]: new Date(Date.now() - 2 * 60 * 1000)
               }
-            }).catch(console.error);
-          }, 60000);
-        },
+            }
+          }).catch(console.error);
+        }, 60000);
       },
+    },
+    timestamps: true,
+    underscored: true  // This tells Sequelize to use snake_case for timestamp fields
   });
   return otps;
 };

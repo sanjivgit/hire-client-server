@@ -41,8 +41,8 @@ class UserDao {
         "phone",
         "email",
         "address",
-        "createdAt",
-        "updatedAt",
+        "created_at",
+        "updated_at",
       ],
       include: [
         {
@@ -81,8 +81,8 @@ class UserDao {
         "phone",
         "email",
         "address",
-        "createdAt",
-        "updatedAt",
+        "created_at",
+        "updated_at",
       ],
     });
 

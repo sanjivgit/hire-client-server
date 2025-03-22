@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   partner_services.init({
-    partnerId: {
+    partner_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     },
-    serviceId: {
+    service_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -31,6 +31,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'partner_services',
+    timestamps: true,
+    underscored: true
   });
   return partner_services;
 }; 

@@ -60,3 +60,24 @@
 {"level":"error","message":"column \"serviceIds\" does not exist","metaData":{"action":"POST","apiId":"0203","version":"1.0"},"service":"user-service","timestamp":"2025-03-21T17:34:46.579Z"}
 {"level":"error","message":"column \"serviceIds\" does not exist","metaData":{"action":"POST","apiId":"0203","version":"1.0"},"service":"user-service","timestamp":"2025-03-21T17:39:52.959Z"}
 {"level":"error","message":"column \"serviceIds\" does not exist","metaData":{"action":"POST","apiId":"0203","version":"1.0"},"service":"user-service","timestamp":"2025-03-21T17:42:28.406Z"}
+{"level":"error","message":"Include unexpected. Element has to be either a Model, an Association or an object.","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T03:13:51.909Z"}
+{"level":"error","message":"Include unexpected. Element has to be either a Model, an Association or an object.","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T03:17:13.008Z"}
+{"level":"error","message":"column u.roleid does not exist","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T03:22:51.367Z"}
+{"level":"error","message":"column r.userid does not exist","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T03:31:27.376Z"}
+{"level":"error","message":"column r.userid does not exist","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T03:31:46.520Z"}
+{"level":"error","message":"column \"createdAt\" does not exist","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T16:55:58.366Z"}
+{"level":"error","message":"column \"createdAt\" does not exist","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T16:58:28.306Z"}
+{"level":"error","message":"column \"createdAt\" does not exist","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:00:03.765Z"}
+{"level":"error","message":"column \"createdAt\" does not exist","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:01:26.950Z"}
+{"level":"error","message":"column \"createdAt\" does not exist","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:03:36.657Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0102","version":"1.0"}},"service":"user-service","timestamp":"2025-03-22T17:10:17.225Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'getTime')","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:11:17.999Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'getTime')","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:15:49.004Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0102","version":"1.0"}},"service":"user-service","timestamp":"2025-03-22T17:16:48.915Z"}
+{"level":"error","message":"column \"createdAt\" of relation \"users\" does not exist","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:17:02.822Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0102","version":"1.0"}},"service":"user-service","timestamp":"2025-03-22T17:26:26.384Z"}
+{"level":"error","message":"column r.userid does not exist","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:28:27.811Z"}
+{"level":"error","message":"column \"u.id\" must appear in the GROUP BY clause or be used in an aggregate function","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:33:40.851Z"}
+{"level":"error","message":"could not identify an equality operator for type json","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:37:27.445Z"}
+{"level":"error","message":"user.get is not a function","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:44:23.818Z"}
+{"level":"error","message":"user.get is not a function","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:48:57.802Z"}
