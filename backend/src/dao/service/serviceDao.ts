@@ -12,9 +12,7 @@ class ServiceDao {
 
   createService = async (data: {
     name: string;
-    serviceTypeId: number;
-    description?: string;
-    price?: number;
+    service_type_id: number;
   }) => {
     try {
       const service = await this.services.create(data);
@@ -28,9 +26,7 @@ class ServiceDao {
     id: number,
     data: {
       name?: string;
-      serviceTypeId?: number;
-      description?: string;
-      price?: number;
+      service_type_id?: number;
     }
   ) => {
     try {
@@ -73,7 +69,7 @@ class ServiceDao {
         include: [
           {
             model: db.service_types,
-            as: "serviceType",
+            as: "service_type",
             attributes: ["id", "name"],
           },
         ],
@@ -87,7 +83,7 @@ class ServiceDao {
   getServicesByTypeId = async (serviceTypeId: number, search?: string) => {
     try {
       const whereClause: any = {
-        serviceTypeId,
+        service_type_id: serviceTypeId,
       };
 
       if (search) {
@@ -103,7 +99,7 @@ class ServiceDao {
         include: [
           {
             model: db.service_types,
-            as: "serviceType",
+            as: "service_type",
             attributes: ["id", "name"],
           },
         ],
@@ -121,7 +117,7 @@ class ServiceDao {
         include: [
           {
             model: db.service_types,
-            as: "serviceType",
+            as: "service_type",
             attributes: ["id", "name"],
           },
         ],

@@ -81,3 +81,11 @@
 {"level":"error","message":"could not identify an equality operator for type json","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:37:27.445Z"}
 {"level":"error","message":"user.get is not a function","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:44:23.818Z"}
 {"level":"error","message":"user.get is not a function","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-22T17:48:57.802Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-23T05:14:19.206Z"}
+{"level":"error","message":"notNull Violation: services.service_type_id cannot be null","metaData":{"action":"POST","apiId":"0402","version":"1.0"},"service":"user-service","timestamp":"2025-03-23T05:15:48.665Z"}
+{"level":"error","message":"service_types is associated to services using an alias. You've included an alias (serviceType), but it does not match the alias(es) defined in your association (service_type).","metaData":{"action":"POST","apiId":"0402","version":"1.0"},"service":"user-service","timestamp":"2025-03-23T05:37:43.866Z"}
+{"level":"error","message":"column services.description does not exist","metaData":{"action":"GET","apiId":"0401","version":"1.0"},"service":"user-service","timestamp":"2025-03-23T05:50:08.516Z"}
+{"level":"error","message":"services.get is not a function","metaData":{"action":"GET","apiId":"0401","version":"1.0"},"service":"user-service","timestamp":"2025-03-23T06:13:21.050Z"}
+{"level":"error","message":"accepted_services is not associated to service_requests!","metaData":{"action":"POST","apiId":"0601","version":"1.0"},"service":"user-service","timestamp":"2025-03-23T11:08:28.759Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0604","version":"1.0"}},"service":"user-service","timestamp":"2025-03-23T11:13:04.674Z"}
+{"level":"error","message":"accepted_services is not associated to service_requests!","metaData":{"action":"GET","apiId":"0604","version":"1.0"},"service":"user-service","timestamp":"2025-03-23T11:15:05.068Z"}

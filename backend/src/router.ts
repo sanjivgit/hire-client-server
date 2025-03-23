@@ -5,6 +5,7 @@ import UserRoute from "./route/user/user";
 import ServiceTypeRoute from "./route/serviceType";
 import ServiceRoute from "./route/service";
 import PartnerRoute from "./route/partner/partner";
+import ServiceRequestRoute from "./route/serviceRequest";
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,8 @@ class HireRoute {
     new ServiceRoute().configure(app, "04"); // 04
 
     new PartnerRoute().configure(app, "05"); // 05
+
+    new ServiceRequestRoute().configure(app, "06"); // 06
 
     // new QuestionTypeRoute().configure(app, "04"); // 04
 

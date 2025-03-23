@@ -11,6 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      accepted_services.belongsTo(models.service_requests, {
+        foreignKey: 'service_request_id',
+        as: 'service_request',
+        onDelete: 'CASCADE'
+      });
+      
+      accepted_services.belongsTo(models.partners, {
+        foreignKey: 'partner_id',
+        as: 'partner',
+        onDelete: 'CASCADE'
+      });
     }
   }
   accepted_services.init({

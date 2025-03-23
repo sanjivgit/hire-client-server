@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'service_id',
         onDelete: 'CASCADE'
       });
+      // Add association with accepted_services
+      service_requests.hasOne(models.accepted_services, {
+        foreignKey: 'service_request_id',
+        as: 'accepted_service',
+        onDelete: 'CASCADE'
+      });
     }
   }
   service_requests.init({
