@@ -40,6 +40,7 @@ class Authorization {
     if (token && typeof token !== "undefined") {
       try {
         const data: any = await jwt.verify(token, secret);
+        
         req.body.user = data?.authData;
         return next();
       } catch (error: any) {

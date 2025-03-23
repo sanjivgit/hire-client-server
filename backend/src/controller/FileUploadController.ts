@@ -27,7 +27,7 @@ class FileUploadController {
         }
 
         const file = await this.fileDao.createFile({
-          filePath: req.file.filename,
+          file_path: req.file.filename,
         });
 
         return CommonRes.SUCCESS(

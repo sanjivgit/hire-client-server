@@ -23,7 +23,7 @@ class PartnerDao {
   }
 
   becomePartner = async (userDetails: any) => {
-    const { serviceIds, ...partnerDetails } = userDetails;
+    const { service_ids, ...partnerDetails } = userDetails;
     const t = await this.sequelize.transaction();
 
     try {
@@ -31,22 +31,24 @@ class PartnerDao {
         transaction: t,
         returning: [
           "id",
-          "firstName",
-          "lastName",
-          "userId",
-          "aadharNumber",
-          "serviceTypeId",
-          "aadharImageId",
-          "additionalDocumentId",
+          "first_name",
+          "last_name",
+          "user_id",
+          "aadhar_number",
+          "service_type_id",
+          "aadhar_image_id",
+          "additional_document_id",
           "created_at",
           "updated_at",
         ],
       });
 
+      console.log("partner >>>>", partner);
+
       await Promise.all(
-        serviceIds.map((serviceId: number) =>
+        service_ids.map((serviceId: number) =>
           this.partner_services.create(
-            { partnerId: partner.id, serviceId: serviceId },
+            { partner_id: partner.id, service_id: serviceId },
             { transaction: t }
           )
         )

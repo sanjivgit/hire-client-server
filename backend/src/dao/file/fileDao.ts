@@ -10,7 +10,7 @@ class FileDao {
   }
 
   createFile = async (data: {
-    filePath: string;
+    file_path: string;
   }) => {
 
     try {

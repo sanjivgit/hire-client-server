@@ -3,6 +3,8 @@ import { resObj, User } from "../../utils/types";
 import { Request, Response } from "express";
 import PartnerDao from "../../dao/partner/partnerDao";
 import { partnerRegistrationValidation } from "../../requests/partner/partnerRegistrationValidation";
+import PartnerRequestDto from "../../dto/request/partner/partnerRequestDto";
+import PartnerResponseDto from "../../dto/response/partner/partnerResponseDto";
 
 /**
  * | Author- Sanjiv Kumar
@@ -56,17 +58,21 @@ class PartnerController {
         );
       }
 
+      const partnerRequestDto = new PartnerRequestDto(details);
+
       // Validate request body
-      const { error } = partnerRegistrationValidation.validate(details);
+      const { error } = partnerRegistrationValidation.validate(partnerRequestDto);
       if (error) {
         return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
       }
 
-      const partner = await this.partnerDao.becomePartner({ ...details, userId });
+      const partner = await this.partnerDao.becomePartner({ ...partnerRequestDto, user_id: userId });
+
+      const partnerResponseDto = new PartnerResponseDto(partner.toJSON());
 
       return CommonRes.SUCCESS(
         "Partner created successfully",
-        partner,
+        partnerResponseDto,
         resObj,
         req,
         res

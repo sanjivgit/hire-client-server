@@ -1,11 +1,11 @@
 import Joi from "joi";
 
 export const partnerRegistrationValidation = Joi.object({
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
-  serviceTypeId: Joi.number().required(),
-  serviceIds: Joi.array().items(Joi.number()).required(),
-  aadharNumber: Joi.string().required(),
-  aadharImageId: Joi.number().required(),
-  additionalDocumentId: Joi.number().required(),
+  first_name: Joi.string().required(),
+  last_name: Joi.string().required(),
+  service_type_id: Joi.number().required(),
+  service_ids: Joi.array().items(Joi.number()).required(),
+  aadhar_number: Joi.string().required(),
+  aadhar_image_id: Joi.number().required(),
+  additional_document_id: Joi.number().required(),
 });

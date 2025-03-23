@@ -1,0 +1,658 @@
+/accepted-services/accept:
+  post:
+    summary: Accept a service request
+    description: Partners can accept service requests to provide their services
+    tags:
+      - Accepted Services
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - serviceRequestId
+            properties:
+              serviceRequestId:
+                type: integer
+                description: ID of the service request to accept
+                example: 1
+              description:
+                type: string
+                description: Additional details or notes about the service
+                example: "I can complete this service within 2 days"
+              amount:
+                type: number
+                description: Amount to charge for the service
+                example: 1500
+    responses:
+      "200":
+        description: Service request accepted successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service request accepted successfully"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    description:
+                      type: string
+                      example: "I can complete this service within 2 days"
+                    amount:
+                      type: number
+                      example: 1500
+                    status:
+                      type: string
+                      example: "pending"
+                      enum: ["pending", "in-progress", "completed", "rejected"]
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+                    partner:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        name:
+                          type: string
+                          example: "ABC Plumbing Services"
+                        phone:
+                          type: string
+                          example: "+919876543210"
+                        address:
+                          type: object
+                          properties:
+                            street:
+                              type: string
+                              example: "456 Service St"
+                            city:
+                              type: string
+                              example: "New Delhi"
+                            state:
+                              type: string
+                              example: "Delhi"
+                            pincode:
+                              type: string
+                              example: "110001"
+                        serviceType:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Household"
+                    serviceRequest:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        description:
+                          type: string
+                          example: "I need this service on weekend"
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 2
+                            name:
+                              type: string
+                              example: "John Doe"
+                            phone:
+                              type: string
+                              example: "+919876543210"
+                            address:
+                              type: object
+                              properties:
+                                street:
+                                  type: string
+                                  example: "123 Main St"
+                                city:
+                                  type: string
+                                  example: "New Delhi"
+                                state:
+                                  type: string
+                                  example: "Delhi"
+                                pincode:
+                                  type: string
+                                  example: "110001"
+                        service:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 3
+                            name:
+                              type: string
+                              example: "Plumbing Service"
+                            serviceType:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: "Household"
+
+
+
+
+/accepted-services/update/{id}:
+  put:
+    summary: Update an accepted service
+    description: Partners can update the status, amount, and description of an accepted service
+    tags:
+      - Accepted Services
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the accepted service to update
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+            properties:
+              status:
+                type: string
+                enum: ["pending", "in-progress", "completed", "rejected"]
+                description: Current status of the service
+                example: "in-progress"
+              amount:
+                type: number
+                description: Updated amount for the service
+                example: 2000
+              description:
+                type: string
+                description: Updated description or notes
+                example: "Service will be completed by tomorrow"
+    responses:
+      "200":
+        description: Accepted service updated successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Accepted service updated successfully"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    description:
+                      type: string
+                      example: "Service will be completed by tomorrow"
+                    amount:
+                      type: number
+                      example: 2000
+                    status:
+                      type: string
+                      example: "in-progress"
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    partner:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        name:
+                          type: string
+                          example: "ABC Plumbing Services"
+                    serviceRequest:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 2
+                            name:
+                              type: string
+                              example: "John Doe"
+                        service:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 3
+                            name:
+                              type: string
+                              example: "Plumbing Service"
+
+
+
+
+/accepted-services/partner:
+  get:
+    summary: Get all accepted services for current partner
+    description: Retrieve all service requests accepted by the authenticated partner
+    tags:
+      - Accepted Services
+    security:
+      - bearerAuth: []
+    responses:
+      "200":
+        description: Successfully retrieved accepted services
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Accepted services retrieved successfully"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      description:
+                        type: string
+                        example: "I can complete this service within 2 days"
+                      amount:
+                        type: number
+                        example: 1500
+                      status:
+                        type: string
+                        example: "pending"
+                        enum: ["pending", "in-progress", "completed", "rejected"]
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      partner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 3
+                          name:
+                            type: string
+                            example: "ABC Plumbing Services"
+                          serviceType:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Household"
+                      serviceRequest:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          description:
+                            type: string
+                            example: "I need this service on weekend"
+                          user:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 2
+                              name:
+                                type: string
+                                example: "John Doe"
+                          service:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: "Plumbing Service"
+                              serviceType:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 1
+                                  name:
+                                    type: string
+                                    example: "Household"
+
+
+
+
+/accepted-services:
+  get:
+    summary: Get all accepted services with filters
+    description: Retrieve all accepted services with optional filtering
+    tags:
+      - Accepted Services
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: query
+        name: startDate
+        schema:
+          type: string
+          format: date
+        description: Filter by start date (YYYY-MM-DD)
+      - in: query
+        name: endDate
+        schema:
+          type: string
+          format: date
+        description: Filter by end date (YYYY-MM-DD)
+      - in: query
+        name: partnerId
+        schema:
+          type: integer
+        description: Filter by partner ID
+      - in: query
+        name: userId
+        schema:
+          type: integer
+        description: Filter by user ID (from service request)
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum: ["pending", "in-progress", "completed", "rejected"]
+        description: Filter by status
+    responses:
+      "200":
+        description: Successfully retrieved accepted services
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Accepted services retrieved successfully"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      description:
+                        type: string
+                        example: "I can complete this service within 2 days"
+                      amount:
+                        type: number
+                        example: 1500
+                      status:
+                        type: string
+                        example: "pending"
+                        enum: ["pending", "in-progress", "completed", "rejected"]
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      partner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 3
+                          name:
+                            type: string
+                            example: "ABC Plumbing Services"
+                          serviceType:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Household"
+                      serviceRequest:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          description:
+                            type: string
+                            example: "I need this service on weekend"
+                          user:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 2
+                              name:
+                                type: string
+                                example: "John Doe"
+                          service:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: "Plumbing Service"
+                              serviceType:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 1
+                                  name:
+                                    type: string
+                                    example: "Household"
+
+
+
+
+/accepted-services/{id}:
+  get:
+    summary: Get an accepted service by ID
+    description: Retrieve details of a specific accepted service
+    tags:
+      - Accepted Services
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the accepted service to retrieve
+    responses:
+      "200":
+        description: Successfully retrieved accepted service
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Accepted service retrieved successfully"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    description:
+                      type: string
+                      example: "I can complete this service within 2 days"
+                    amount:
+                      type: number
+                      example: 1500
+                    status:
+                      type: string
+                      example: "pending"
+                      enum: ["pending", "in-progress", "completed", "rejected"]
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+                    partner:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        name:
+                          type: string
+                          example: "ABC Plumbing Services"
+                        phone:
+                          type: string
+                          example: "+919876543210"
+                        address:
+                          type: object
+                          properties:
+                            street:
+                              type: string
+                              example: "456 Service St"
+                            city:
+                              type: string
+                              example: "New Delhi"
+                            state:
+                              type: string
+                              example: "Delhi"
+                            pincode:
+                              type: string
+                              example: "110001"
+                        serviceType:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Household"
+                    serviceRequest:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        description:
+                          type: string
+                          example: "I need this service on weekend"
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 2
+                            name:
+                              type: string
+                              example: "John Doe"
+                            phone:
+                              type: string
+                              example: "+919876543210"
+                            address:
+                              type: object
+                              properties:
+                                street:
+                                  type: string
+                                  example: "123 Main St"
+                                city:
+                                  type: string
+                                  example: "New Delhi"
+                                state:
+                                  type: string
+                                  example: "Delhi"
+                                pincode:
+                                  type: string
+                                  example: "110001"
+                        service:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 3
+                            name:
+                              type: string
+                              example: "Plumbing Service"
+                            serviceType:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: "Household" 
