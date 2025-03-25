@@ -227,16 +227,16 @@ class AuthController {
     };
     try {
       ////////// Checking user already exist or not ?? If no then continue otherwise throw error message
-      const isExist = await this.dao.getUserByPhone(String(req.body.phone));
+      // const isExist = await this.dao.getUserByPhone(String(req.body.phone));
 
-      if (isExist) {
-        return CommonRes.CONFLICT_ERROR(
-          "Your Phone Number is Aleady Registered",
-          resObj,
-          req,
-          res
-        );
-      }
+      // if (isExist) {
+      //   return CommonRes.CONFLICT_ERROR(
+      //     "Your Phone Number is Aleady Registered",
+      //     resObj,
+      //     req,
+      //     res
+      //   );
+      // }
 
 
       const response = await this.dao.sendPhoneOtp(req.body.phone);
@@ -311,6 +311,18 @@ class AuthController {
 
       if (error) return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
 
+      ////////// Checking user already exist or not ?? If no then continue otherwise throw error message
+      const isExist = await this.dao.getUserByPhone(req.body.phone);
+
+      if (!isExist) {
+        return CommonRes.VALIDATION_ERROR(
+          "Your Phone Number is Not Registered",
+          resObj,
+          req,
+          res
+        );
+      }
+
       /* Verifing the opt sent on given phone number */
       const otpVerify = await this.dao.verifyPhoneOtp(
         req.body.phone,
@@ -333,23 +345,12 @@ class AuthController {
         );
       }
 
-      ////////// Checking user already exist or not ?? If no then continue otherwise throw error message
-      const isExist = await this.dao.getUserByPhone(req.body.phone);
-
-      if (!isExist) {
-        return CommonRes.VALIDATION_ERROR(
-          "Your Phone Number is Not Registered",
-          resObj,
-          req,
-          res
-        );
-      }
-
       /* Changing password here */
       const data = await this.dao.forgetPassword({
         phone: req.body.phone,
         password: req.body.password,
       });
+
       return CommonRes.SUCCESS(
         "Your Password Changed Successfully!!",
         data,

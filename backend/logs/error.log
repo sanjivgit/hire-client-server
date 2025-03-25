@@ -105,3 +105,32 @@
 {"level":"error","message":"column partner.service_id does not exist","metaData":{"action":"GET","apiId":"0704","version":"1.0"},"service":"user-service","timestamp":"2025-03-23T15:04:33.521Z"}
 {"level":"error","message":"column partner.service_id does not exist","metaData":{"action":"GET","apiId":"0704","version":"1.0"},"service":"user-service","timestamp":"2025-03-23T15:07:23.576Z"}
 {"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"GET","apiId":"0704","version":"1.0"},"service":"user-service","timestamp":"2025-03-23T15:50:41.338Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-24T16:10:46.070Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-24T17:11:55.272Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:04:59.884Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:05:25.255Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:06:03.750Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:06:48.793Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:07:14.593Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:08:14.821Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:15:00.884Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:15:07.447Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0103","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:18:24.763Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0103","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:18:28.850Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0103","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:23:00.434Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0103","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:23:10.937Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0103","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:23:51.750Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0107","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:34:13.623Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0107","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:34:34.905Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0107","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:37:36.357Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0107","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:39:07.078Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0107","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:39:38.213Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0107","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:41:35.882Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0107","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:41:46.822Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0107","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:42:00.741Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:43:23.610Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0102","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:56:11.276Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:56:22.912Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:56:26.163Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:56:31.328Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0102","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:58:29.287Z"}
