@@ -47,6 +47,7 @@ const fileFilter = (
   cb: multer.FileFilterCallback
 ) => {
   const fileFor = req.query.fileFor;
+  
   if (fileFor === "profilePic") {
     // Allow only image files for profile pictures
     if (!file.mimetype.startsWith("image/")) {

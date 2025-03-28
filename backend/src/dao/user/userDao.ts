@@ -10,6 +10,7 @@ interface AddressDetails {
 
 interface UpdateUserDetails {
   name?: string;
+  profile_pic?: number;
   address?: AddressDetails;
 }
 
@@ -26,39 +27,53 @@ interface BecomePartner {
 class UserDao {
   private users: any;
   private partners: any;
+  private services: any;
+  private sequelize: any;
 
   constructor() {
     this.users = db.users;
     this.partners = db.partners;
+    this.services = db.services;
+    this.sequelize = db.sequelize;
   }
 
   getUserByUserId = async (userId: string) => {
-    const user = await this.users.findOne({
-      where: { id: userId },
-      attributes: [
-        "id",
-        "name",
-        "phone",
-        "email",
-        "address",
-        "created_at",
-        "updated_at",
-      ],
-      include: [
-        {
-          model: this.partners,
-          as: "partner", // Alias for the relation
-          attributes: ["id", "serviceTypeId", "aadharNumber"], // Add necessary fields from partners
-          required: false, // Ensures it does a LEFT JOIN (doesn't filter out users without partners)
-        },
-      ],
+    const rawQuery = `
+    SELECT 
+        u.id, 
+        u.name, 
+        u.phone,
+        u.profile_pic,
+        u.address,
+        u.password, 
+        r.role AS role, 
+        json_build_object(
+          'id', p.id, 
+          'service_type_id', p.service_type_id,
+          'services', COALESCE(json_agg(
+                json_build_object('id', s.id, 'name', s.name)
+              ) FILTER (WHERE s.id IS NOT NULL), '[]'::json)
+        ) AS partner
+    FROM users u
+    LEFT JOIN roles r ON u.id = r.user_id
+    LEFT JOIN partners p ON u.id = p.user_id
+    LEFT JOIN partner_services ps ON p.id = ps.partner_id
+    LEFT JOIN services s ON ps.service_id = s.id
+    WHERE u.id = :userId
+    GROUP BY u.id, u.name, u.phone, u.address::text, u.password, r.role, p.id, p.service_type_id;
+  `;
+
+    const [user] = await this.sequelize.query(rawQuery, {
+      replacements: { userId },
+      type: this.sequelize.QueryTypes.SELECT,
     });
 
+    const { password, ...userDetails } = user;
+
     // Transform the response to include `isPartner`
-    const formattedUser = {
-      ...user.get(), // Get raw user object
-      isPartner: !!user.partner, // Convert `partner` existence to boolean
-    };
+    const formattedUser = userDetails;
+
+    formattedUser.isPartner = !!user.partner;
 
     return generateRes(formattedUser);
   };

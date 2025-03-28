@@ -3,6 +3,7 @@ import { resObj, User } from "../../utils/types";
 import { Request, Response } from "express";
 import UserDao from "../../dao/user/userDao";
 import { updateUserValidation } from "../../requests/user/updateUserValidation";
+import LoginDto from "../../dto/response/auth/loginDto";
 
 /**
  * | Author- Sanjiv Kumar
@@ -52,9 +53,11 @@ class UserController {
         return CommonRes.NOT_FOUND("User not found", null, resObj, req, res);
       }
 
+      const loginDto = new LoginDto(userDetails);
+
       return CommonRes.SUCCESS(
         "User details retrieved successfully",
-        userDetails,
+        loginDto,
         resObj,
         req,
         res

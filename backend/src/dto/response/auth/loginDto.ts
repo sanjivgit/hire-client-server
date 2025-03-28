@@ -2,6 +2,7 @@ interface ResponseUser {
   id: number;
   name: string;
   phone: string;
+  profile_pic: number;
   address: {
     address: string;
     pinCode: string;
@@ -22,6 +23,7 @@ interface User {
   id: number;
   name: string;
   phone: string;
+  profilePicId: number;
   address: {
     address: string;
     pinCode: string;
@@ -50,6 +52,7 @@ class LoginDto {
     this.user = {
       id: response.id, 
       name: response.name,
+      profilePicId: response.profile_pic,
       phone: response.phone, 
       address: response.address,
     };

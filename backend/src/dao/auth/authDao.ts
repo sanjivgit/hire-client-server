@@ -84,8 +84,6 @@ class AuthDao {
         transaction: t,
       });
 
-      console.log("user >>", user);
-
       if (!user) {
         await t.rollback();
         return generateRes(null);

@@ -134,3 +134,35 @@
 {"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:56:26.163Z"}
 {"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:56:31.328Z"}
 {"level":"error","message":{"metaData":{"action":"GET","apiId":"0102","version":"1.0"}},"service":"user-service","timestamp":"2025-03-25T03:58:29.287Z"}
+{"level":"error","message":"column partner.serviceTypeId does not exist","metaData":{"action":"GET","apiId":"0201","version":"1.0"},"service":"user-service","timestamp":"2025-03-26T02:36:42.107Z"}
+{"level":"error","message":"services is not associated to partners!","metaData":{"action":"GET","apiId":"0201","version":"1.0"},"service":"user-service","timestamp":"2025-03-26T02:40:04.303Z"}
+{"level":"error","message":"services is not associated to partners!","metaData":{"action":"GET","apiId":"0201","version":"1.0"},"service":"user-service","timestamp":"2025-03-26T02:41:13.844Z"}
+{"level":"error","message":"\"fullName\" is required","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-27T03:37:27.088Z"}
+{"level":"error","message":"\"fullName\" is required","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-27T03:38:00.975Z"}
+{"level":"error","message":"\"fullName\" is required","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-27T03:48:33.042Z"}
+{"level":"error","message":"\"fullName\" is required","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-28T00:39:44.134Z"}
+{"level":"error","message":"\"fullName\" is required","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-03-28T00:43:15.336Z"}
+{"level":"error","message":"Only PDF files are allowed for documents!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-28T00:44:49.117Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:06:04.763Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:13:42.407Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:14:33.001Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:15:18.301Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:18:25.596Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:18:40.942Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:22:48.249Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:23:02.748Z"}
+{"level":"error","message":"The \"path\" argument must be of type string. Received type number (1)","metaData":{"action":"GET","apiId":"0002","version":"1.0"},"service":"user-service","timestamp":"2025-03-28T01:24:46.145Z"}
+{"level":"error","message":"The \"path\" argument must be of type string. Received type number (1)","metaData":{"action":"GET","apiId":"0002","version":"1.0"},"service":"user-service","timestamp":"2025-03-28T01:27:13.934Z"}
+{"level":"error","message":"The \"path\" argument must be of type string. Received type number (2)","metaData":{"action":"GET","apiId":"0002","version":"1.0"},"service":"user-service","timestamp":"2025-03-28T01:29:12.544Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:31:56.749Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:32:28.950Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T01:36:03.491Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:01:26.141Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:01:26.160Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:01:26.178Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:01:26.198Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:01:26.409Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:01:47.787Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:19:12.419Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:22:28.466Z"}
+{"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T16:42:41.477Z"}
