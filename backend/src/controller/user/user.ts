@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import UserDao from "../../dao/user/userDao";
 import { updateUserValidation } from "../../requests/user/updateUserValidation";
 import LoginDto from "../../dto/response/auth/loginDto";
+import UserRequestDto from "../../dto/request/userDto/userRequestDto";
 
 /**
  * | Author- Sanjiv Kumar
@@ -91,24 +92,28 @@ class UserController {
         );
       }
 
+      const userRequestDto = new UserRequestDto(details);
+
       // Validate request body
-      const { error } = updateUserValidation.validate(details);
+      const { error } = updateUserValidation.validate(userRequestDto);
       if (error) {
         return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
       }
 
       const updatedUser = await this.userDao.updateUserDetails(
         String(userId),
-        details
+        userRequestDto
       );
 
       if (!updatedUser) {
         return CommonRes.NOT_FOUND("User not found", null, resObj, req, res);
       }
 
+      const loginDto = new LoginDto(updatedUser);
+
       return CommonRes.SUCCESS(
         "User details updated successfully",
-        updatedUser,
+        loginDto,
         resObj,
         req,
         res

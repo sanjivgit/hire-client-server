@@ -30,14 +30,14 @@ module.exports = (sequelize, DataTypes) => {
         as: 'additional_document'
       });
       // Many-to-many relationship with services
-      // partners.belongsToMany(models.services, {
-      //   through: 'partner_services',
-      //   foreignKey: 'partnerId',
-      //   otherKey: 'serviceId',
-      //   as: 'services',
-      //   onDelete: 'CASCADE',
-      //   onUpdate: 'CASCADE'
-      // });
+      partners.belongsToMany(models.services, {
+        through: 'partner_services',
+        foreignKey: 'partner_id', // Use the correct column name
+        otherKey: 'service_id',   // Use the correct column name
+        as: 'services',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   }
   partners.init({

@@ -1,0 +1,143 @@
+/partner/update:
+  put:
+    summary: Update Partner Details
+    description: Update Partner Details
+    tags:
+      - Partner
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              firstName:
+                type: string
+                example: "John"
+              lastName:
+                type: string
+                example: "Doe"
+              serviceIds:
+                type: array
+                items:
+                  type: number
+              serviceTypeId:
+                type: number
+                example: 1
+              aadharNumber:
+                type: string
+                example: "1234567890"
+              aadharImageId:
+                type: number
+                example: 1
+              additionalDocumentId:
+                type: number
+                example: 1 
+    responses:
+      "200":
+        description: Partner details updated successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner details updated successfully. Your profile is pending for review."
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    firstName:
+                      type: string
+                      example: "John"
+                    lastName:
+                      type: string
+                      example: "Doe"
+                    userId:
+                      type: integer
+                      example: 1
+                    aadharNumber:
+                      type: string
+                      example: "1234 5678 9012"
+                    serviceTypeId:
+                      type: integer
+                      example: 1
+                    serviceType:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Plumbing"
+                    services:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Pipe Fitting"
+                    status:
+                      type: string
+                      example: "pending"
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+      "400":
+        description: Validation error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Validation error: Partner ID is required"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "You are not authorized to update this partner profile"
+      "404":
+        description: Partner not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Partner not found" 

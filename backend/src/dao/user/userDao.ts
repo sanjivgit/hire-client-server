@@ -3,7 +3,7 @@ const db = require("../../../db/models/index");
 
 interface AddressDetails {
   address: string;
-  pinCode: string;
+  pincode: string;
   state: string;
   district: string;
 }
@@ -49,6 +49,12 @@ class UserDao {
         r.role AS role, 
         json_build_object(
           'id', p.id, 
+          'first_name', p.first_name,
+          'last_name', p.last_name,
+          'aadhar_image_id', p.aadhar_image_id,
+          'status', p.status,
+          'additional_document_id', p.additional_document_id,
+          'aadhar_number', p.aadhar_number,
           'service_type_id', p.service_type_id,
           'services', COALESCE(json_agg(
                 json_build_object('id', s.id, 'name', s.name)
@@ -93,6 +99,7 @@ class UserDao {
       attributes: [
         "id",
         "name",
+        "profile_pic",
         "phone",
         "email",
         "address",

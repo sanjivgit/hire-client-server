@@ -4,7 +4,18 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class partner_services extends Model {
     static associate(models) {
-      // No need for explicit associations here
+      partner_services.belongsTo(models.partners, {
+        foreignKey: 'partner_id',
+        as: 'partner',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+      partner_services.belongsTo(models.services, {
+        foreignKey: 'service_id',
+        as: 'service',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   }
   partner_services.init({

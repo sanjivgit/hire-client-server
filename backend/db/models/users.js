@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       token: {
-        type: DataTypes.STRING(500),
+        type: DataTypes.STRING(2000),
         allowNull: true,
       },
       email: {

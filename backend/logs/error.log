@@ -166,3 +166,45 @@
 {"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:19:12.419Z"}
 {"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T02:22:28.466Z"}
 {"level":"error","message":{"metaData":{"action":"Token Verification","apiId":"Not related to APIs","version":"1.0"}},"service":"user-service","timestamp":"2025-03-28T16:42:41.477Z"}
+{"level":"error","message":"\"profilePicId\" is not allowed","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T01:21:14.719Z"}
+{"level":"error","message":"\"profilePicId\" is not allowed","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T01:22:49.463Z"}
+{"level":"error","message":"\"profilePicId\" is not allowed","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T01:23:25.241Z"}
+{"level":"error","message":"\"profilePicId\" is not allowed","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T01:23:47.716Z"}
+{"level":"error","message":"\"profilePicId\" is not allowed","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T01:24:49.470Z"}
+{"level":"error","message":"\"profilePic\" is not allowed","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T01:25:00.843Z"}
+{"level":"error","message":"\"profile_pic_id\" is not allowed","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T01:35:50.873Z"}
+{"level":"error","message":"\"profile_pic_id\" is not allowed","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T01:40:00.438Z"}
+{"level":"error","message":"\"profile_pic_id\" is not allowed","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T01:42:08.944Z"}
+{"level":"error","message":{"metaData":{"action":"PUT","apiId":"0202","version":"1.0"}},"service":"user-service","timestamp":"2025-03-29T01:42:58.774Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-29T03:01:55.924Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0002","version":"1.0"}},"service":"user-service","timestamp":"2025-03-29T03:05:30.658Z"}
+{"level":"error","message":"value too long for type character varying(500)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T15:59:09.434Z"}
+{"level":"error","message":"value too long for type character varying(500)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T15:59:14.579Z"}
+{"level":"error","message":"value too long for type character varying(500)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T15:59:25.424Z"}
+{"level":"error","message":"value too long for type character varying(500)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T15:59:30.103Z"}
+{"level":"error","message":"value too long for type character varying(500)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T16:00:48.113Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-29T16:00:59.140Z"}
+{"level":"error","message":"value too long for type character varying(500)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T16:01:08.758Z"}
+{"level":"error","message":"value too long for type character varying(500)","metaData":{"action":"GET","apiId":"0101","version":"1.0"},"service":"user-service","timestamp":"2025-03-29T16:04:08.415Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-29T16:07:11.307Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-29T16:07:13.314Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-30T03:44:47.698Z"}
+{"level":"error","message":"Only PDF files are allowed for documents!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T06:56:47.785Z"}
+{"level":"error","message":"Only PDF files are allowed for documents!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T06:58:50.214Z"}
+{"level":"error","message":"Only PDF files are allowed for documents!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T07:00:27.144Z"}
+{"level":"error","message":"Only PDF files are allowed for documents!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T07:03:56.949Z"}
+{"level":"error","message":"Only PDF files are allowed for documents!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T07:14:30.364Z"}
+{"level":"error","message":"Only PDF files are allowed for documents!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T07:22:48.550Z"}
+{"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:09:39.584Z"}
+{"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:12:30.699Z"}
+{"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:13:24.312Z"}
+{"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:15:20.714Z"}
+{"level":"error","message":"You are not authorized to update this partner profile","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:17:36.185Z"}
+{"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:18:25.299Z"}
+{"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:19:13.299Z"}
+{"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:21:11.229Z"}
+{"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:21:37.888Z"}
+{"level":"error","message":"partner_services is not associated to partners!","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:25:30.161Z"}
+{"level":"error","message":"partner_services is not associated to partners!","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:31:05.252Z"}
+{"level":"error","message":"partner_services is not associated to partners!","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:31:30.129Z"}
+{"level":"error","message":"column partners.service_id does not exist","metaData":{"action":"PUT","apiId":"0502","version":"1.0"},"service":"user-service","timestamp":"2025-03-30T12:32:29.330Z"}

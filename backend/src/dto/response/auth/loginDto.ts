@@ -14,6 +14,12 @@ interface ResponseUser {
   isSuperAdmin: boolean;
   partner: {
     id: number;
+    first_name: string;
+    last_name: string;
+    aadhar_number: string;
+    aadhar_image_id: number;
+    additional_document_id: number;
+    status: string;
     service_type_id: number;
     services: any[];
   } | null;
@@ -35,6 +41,12 @@ interface User {
   isSuperAdmin?: boolean;
   partner?: {
     id: number;
+    firstName: string;
+    lastName: string;
+    aadharNumber: string;
+    aadharImageId: number;
+    additionalDocumentId: number;
+    status: string;
     serviceTypeId: number;
     services: any[];
   } | null;
@@ -66,6 +78,12 @@ class LoginDto {
     if(response.partner?.id) {
       this.user.partner = {
         id: response.partner.id,
+        firstName: response.partner.first_name,
+        lastName: response.partner.last_name,
+        aadharNumber: response.partner.aadhar_number,
+        aadharImageId: response.partner.aadhar_image_id,
+        additionalDocumentId: response.partner.additional_document_id,
+        status: response.partner.status,
         serviceTypeId: response.partner.service_type_id,
         services: response.partner.services,
       };

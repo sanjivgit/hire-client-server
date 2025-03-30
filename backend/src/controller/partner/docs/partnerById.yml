@@ -1,0 +1,166 @@
+/partner/{id}:
+  get:
+    summary: Get Partner by ID
+    description: Retrieve detailed information about a specific partner
+    tags:
+      - Partner
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the partner to retrieve
+    responses:
+      "200":
+        description: Partner retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner retrieved successfully"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    firstName:
+                      type: string
+                      example: "John"
+                    lastName:
+                      type: string
+                      example: "Doe"
+                    userId:
+                      type: integer
+                      example: 1
+                    aadharNumber:
+                      type: string
+                      example: "1234 5678 9012"
+                    serviceTypeId:
+                      type: integer
+                      example: 1
+                    serviceType:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Plumbing"
+                    services:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Pipe Fitting"
+                    status:
+                      type: string
+                      example: "pending"
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+                    user:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "John Doe"
+                        phone:
+                          type: string
+                          example: "+919876543210"
+                        email:
+                          type: string
+                          example: "johndoe@example.com"
+                        address:
+                          type: object
+                          properties:
+                            address:
+                              type: string
+                              example: "123 Main St"
+                            pincode:
+                              type: string
+                              example: "110001"
+                            state:
+                              type: string
+                              example: "Delhi"
+                            district:
+                              type: string
+                              example: "New Delhi"
+                    aadharImage:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        filePath:
+                          type: string
+                          example: "aadhar-1234.jpg"
+                    additionalDocument:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 2
+                        filePath:
+                          type: string
+                          example: "document-5678.pdf"
+      "400":
+        description: Invalid partner ID
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid partner ID"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "User not authenticated"
+      "404":
+        description: Partner not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Partner not found" 
