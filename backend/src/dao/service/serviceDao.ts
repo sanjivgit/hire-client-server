@@ -13,6 +13,7 @@ class ServiceDao {
   createService = async (data: {
     name: string;
     service_type_id: number;
+    icon_id: number;
   }) => {
     try {
       const service = await this.services.create(data);
@@ -27,6 +28,7 @@ class ServiceDao {
     data: {
       name?: string;
       service_type_id?: number;
+      icon_id?: number;
     }
   ) => {
     try {
@@ -65,7 +67,7 @@ class ServiceDao {
       const services = await this.services.findAll({
         where: whereClause,
         order: [["created_at", "DESC"]],
-        attributes: ['id', 'name', 'created_at', 'updated_at'],
+        attributes: ['id', 'name', 'icon_id', 'created_at', 'updated_at'],
         include: [
           {
             model: db.service_types,
@@ -95,7 +97,7 @@ class ServiceDao {
       const services = await this.services.findAll({
         where: whereClause,
         order: [["created_at", "DESC"]],
-        attributes: ['id', 'name', 'created_at', 'updated_at'],
+        attributes: ['id', 'name', 'icon_id', 'created_at', 'updated_at'],
         include: [
           {
             model: db.service_types,
@@ -113,7 +115,7 @@ class ServiceDao {
   getServiceById = async (id: number) => {
     try {
       return await this.services.findByPk(id, {
-        attributes: ['id', 'name', 'created_at', 'updated_at'],
+        attributes: ['id', 'name', 'icon_id', 'created_at', 'updated_at'],
         include: [
           {
             model: db.service_types,

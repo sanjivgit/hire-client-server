@@ -34,6 +34,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
+    },
+    icon_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'icons',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     }
   }, {
     sequelize,

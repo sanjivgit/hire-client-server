@@ -37,12 +37,9 @@
                       name:
                         type: string
                         example: "Frontend Development"
-                      description:
-                        type: string
-                        example: "Modern web development services"
-                      price:
-                        type: number
-                        example: 1000
+                      iconId:
+                        type: integer
+                        example: 1
                       serviceType:
                         type: object
                         properties:
@@ -52,6 +49,7 @@
                           name:
                             type: string
                             example: "Web Development"
+
 
 /services/create:
   post:
@@ -77,6 +75,9 @@
               serviceTypeId:
                 type: integer
                 example: 1
+              iconId:
+                type: integer
+                example: 1
     responses:
       "201":
         description: Service created successfully
@@ -100,6 +101,9 @@
                     name:
                       type: string
                       example: "Frontend Development"
+                    iconId:
+                      type: integer
+                      example: 1
                     serviceType:
                       type: object
                       properties:
@@ -148,12 +152,9 @@
                     name:
                       type: string
                       example: "Frontend Development"
-                    description:
-                      type: string
-                      example: "Modern web development services"
-                    price:
-                      type: number
-                      example: 1000
+                    iconId:
+                      type: integer
+                      example: 1
                     serviceType:
                       type: object
                       properties:
@@ -192,6 +193,9 @@
               serviceTypeId:
                 type: integer
                 example: 1
+              iconId:
+                type: integer
+                example: 1
     responses:
       "200":
         description: Service updated successfully
@@ -215,6 +219,9 @@
                     name:
                       type: string
                       example: "Advanced Frontend Development"
+                    iconId:
+                      type: integer
+                      example: 1
                     serviceType:
                       type: object
                       properties:
@@ -300,12 +307,9 @@
                       name:
                         type: string
                         example: "Frontend Development"
-                      description:
-                        type: string
-                        example: "Modern web development services"
-                      price:
-                        type: number
-                        example: 1000
+                      iconId:
+                        type: integer
+                        example: 1
                       serviceType:
                         type: object
                         properties:
