@@ -211,4 +211,60 @@
                   example: true
                 message:
                   type: string
-                  example: "Service type deleted successfully" 
+                  example: "Service type deleted successfully"
+
+/service-types-with-limited-services:
+  get:
+    summary: Get all service types with limited services
+    description: Retrieve all service types with a limited number of services per type (default is 4)
+    tags:
+      - Service Types
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          default: 4
+          minimum: 1
+          maximum: 10
+        description: Maximum number of services to include per service type (1-10)
+    responses:
+      "200":
+        description: Successfully retrieved service types with limited services
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service types with limited services retrieved successfully"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Web Development"
+                      services:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Frontend Development"
+                        maxItems: 4
+                        description: Limited to the number specified in the limit parameter (default 4, max 10) 

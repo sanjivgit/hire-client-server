@@ -42,6 +42,14 @@ class ServiceTypeRoute {
       (req: Request, res: Response) =>
         this.serviceTypeController.getServiceTypeById(req, res, apiId + "05")
     );
+    
+    // New route for service types with limited services
+    app.route(`${baseUrl}/service-types-with-limited-services`).get(
+      (req: Request, res: Response, next: NextFunction) =>
+        this.authorization.authenticateUser(req, res, next),
+      (req: Request, res: Response) =>
+        this.serviceTypeController.getServiceTypesWithLimitedServices(req, res, apiId + "06")
+    );
   }
 }
 

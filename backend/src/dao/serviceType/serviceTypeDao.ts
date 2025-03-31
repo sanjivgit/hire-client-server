@@ -79,6 +79,26 @@ class ServiceTypeDao {
       throw error;
     }
   };
+
+  getServiceTypesWithLimitedServices = async (limit: number = 4) => {
+    try {
+      // First, fetch all service types
+      const serviceTypes = await this.serviceTypes.findAll({
+        order: [['created_at', 'DESC']],
+        include: [{
+          model: db.services,
+          as: 'services',
+          attributes: ['id', 'name', 'service_type_id', 'icon_id'],
+          limit: limit,  // Limit to 4 services per service type
+          order: [['created_at', 'DESC']]  // Get the most recent services
+        }]
+      });
+      
+      return serviceTypes;
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 
 export default ServiceTypeDao; 
