@@ -58,6 +58,7 @@ class AuthDao {
     SELECT 
         u.id, 
         u.name, 
+        u.profile_pic,
         u.phone, 
         u.address, 
         u.password, 

@@ -94,19 +94,7 @@ class UserDao {
     }
 
     // Fetch and return updated user details
-    const updatedUser = await this.users.findOne({
-      where: { id: userId },
-      attributes: [
-        "id",
-        "name",
-        "profile_pic",
-        "phone",
-        "email",
-        "address",
-        "created_at",
-        "updated_at",
-      ],
-    });
+    const updatedUser = await this.getUserByUserId(userId);
 
     // Parse the address back to object if it exists
     if (updatedUser && updatedUser.address) {
