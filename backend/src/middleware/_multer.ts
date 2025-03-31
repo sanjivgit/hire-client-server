@@ -8,6 +8,7 @@ import { SECRET_KEY } from "../config";
 const uploadDir = "public/uploads";
 const profilePicsDir = `${uploadDir}/profile-pics`;
 const documentsDir = `${uploadDir}/documents`;
+const iconsDir = `${uploadDir}/icons`;
 
 [uploadDir, profilePicsDir, documentsDir].forEach((dir) => {
   if (!fs.existsSync(dir)) {
@@ -19,8 +20,7 @@ const documentsDir = `${uploadDir}/documents`;
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
     const fileFor = req.query.fileFor;
-    const isProfilePic = fileFor === "profilePic";
-    const dest = isProfilePic ? profilePicsDir : documentsDir;
+    const dest = fileFor === "profilePic" ? profilePicsDir : fileFor === "document" ? documentsDir : iconsDir;
     const token: string = req.headers["authorization"]?.split(" ")[1] || "";
     const decoded: any = await jwt.verify(token, SECRET_KEY);
    

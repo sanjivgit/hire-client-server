@@ -31,6 +31,13 @@ class FileUploadRoute {
         this.fileUploadController.getFileById(req, res, apiId + "02");
       }
     );
+
+    // Get a file by ID
+    app.route(`${baseUrl}/${this.routeName}-without-token/:id`).get(
+      (req: Request, res: Response) => {
+        this.fileUploadController.getFileByIdWithoutToken(req, res, apiId + "03");
+      }
+    );
   }
 }
 

@@ -12,8 +12,8 @@
         required: true
         schema:
           type: string
-          enum: [profilePic, document]
-        description: "Type of file to upload (profilePic for images, document for PDF)"
+          enum: [profilePic, document, icon]
+        description: "Type of file to upload (profilePic for images, document for PDF, icon for icons)"
     requestBody:
       required: true
       content:
@@ -152,3 +152,65 @@
                 message:
                   type: string
                   example: "File not found" 
+
+
+
+/file-without-token/{id}:
+  get:
+    summary: Retrieve a file by ID
+    description: Get a file from the server using its ID from the files table
+    tags:
+      - File Management
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the file to retrieve
+    responses:
+      "200":
+        description: File retrieved successfully
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+          image/png:
+            schema:
+              type: string
+              format: binary
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      "400":
+        description: Invalid file ID
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid file ID"
+      "404":
+        description: File not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "File not found"
