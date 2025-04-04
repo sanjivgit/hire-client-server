@@ -8,6 +8,7 @@ class ServiceRequestDao {
   private users: any;
   private acceptedServices: any;
   private serviceTypes: any;
+  private partners: any;
 
   constructor() {
     this.serviceRequests = db.service_requests;
@@ -16,6 +17,7 @@ class ServiceRequestDao {
     this.users = db.users;
     this.acceptedServices = db.accepted_services;
     this.serviceTypes = db.service_types;
+    this.partners = db.partners;
   }
 
   createServiceRequest = async (data: {
@@ -69,6 +71,20 @@ class ServiceRequestDao {
           {
             model: this.acceptedServices,
             as: "accepted_service",
+            include: [
+              {
+                model: this.partners,
+                as: "partner",
+                attributes: ["id", "first_name", "last_name"],
+                include: [
+                  {
+                    model: this.users,
+                    as: "user",
+                    attributes: ["id", "name", "phone", "address"],
+                  },
+                ],
+              },
+            ],
             required: false,
           },
         ],

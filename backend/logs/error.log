@@ -252,3 +252,13 @@
 {"level":"error","message":"Only image files are allowed for profile pictures!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-31T05:34:59.210Z"}
 {"level":"error","message":"Only image files are allowed for profile pictures!","metaData":{"action":"GET","apiId":"0001","version":"1.0"},"service":"user-service","timestamp":"2025-03-31T05:35:32.680Z"}
 {"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-03-31T05:39:58.552Z"}
+{"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T02:55:24.084Z"}
+{"level":"error","message":"\"address.pinCode\" is required","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T02:57:22.014Z"}
+{"level":"error","message":"\"address.pinCode\" is required","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T02:57:40.861Z"}
+{"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T02:58:48.739Z"}
+{"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T03:00:36.069Z"}
+{"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T03:02:47.817Z"}
+{"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T03:03:56.554Z"}
+{"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T03:04:05.507Z"}
+{"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T03:05:10.077Z"}
+{"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T03:07:31.579Z"}
