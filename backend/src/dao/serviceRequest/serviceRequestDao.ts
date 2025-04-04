@@ -46,9 +46,18 @@ class ServiceRequestDao {
 
   getServiceRequestsByUserId = async (userId: number) => {
     try {
+      // Calculate date 7 days ago
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      
       const serviceRequests = await this.serviceRequests.findAll({
-        where: { user_id: userId },
-        order: [["created_at", "DESC"]],
+        where: { 
+          user_id: userId,
+          updated_at: {
+            [Op.gte]: sevenDaysAgo // Only get service requests updated in the last 7 days
+          }
+        },
+        order: [["updated_at", "DESC"]], // Order by updated_at instead of created_at
         attributes: ['id', 'description', 'created_at', 'updated_at'],
         include: [
           {
