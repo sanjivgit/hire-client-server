@@ -84,9 +84,19 @@ class AcceptedServiceDao {
   // Get all accepted services for a specific partner
   getAcceptedServicesByPartnerId = async (partnerId: number) => {
     try {
+      // Calculate date 10 days ago
+      const tenDaysAgo = new Date();
+      tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+
       const acceptedServices = await this.acceptedServices.findAll({
-        where: { partner_id: partnerId },
+        where: { 
+          partner_id: partnerId,
+          created_at: {
+            [Op.gte]: tenDaysAgo // Only get accepted services created in the last 10 days
+          }
+        },
         order: [["created_at", "DESC"]],
+        attributes: ['id', 'description', 'amount', 'status', 'created_at', 'updated_at'],
         include: [
           {
             model: this.partners,
