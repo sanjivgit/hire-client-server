@@ -207,8 +207,10 @@ class HistoryDao {
             'request' as type,
             sr.description as request_description,
             as2.description as accept_description,
-            sr.created_at,
-            sr.updated_at,
+            sr.created_at as request_created_at,
+            sr.updated_at as request_updated_at,
+            as2.created_at as accept_created_at,
+            as2.updated_at as accept_updated_at,
             s.id as service_id,
             s.name as service_name,
             st.id as service_type_id,
@@ -218,6 +220,7 @@ class HistoryDao {
             -- Customer details (requester)
             u.id as customer_id,
             u.name as customer_name,
+            u.profile_pic as customer_profile_pic_id,
             u.phone as customer_phone,
             u.email as customer_email,
             u.address as customer_address,
@@ -227,6 +230,7 @@ class HistoryDao {
             p.last_name as partner_last_name,
             pu.id as partner_user_id,
             pu.name as partner_user_name,
+            pu.profile_pic as partner_user_profile_pic_id,
             pu.phone as partner_user_phone,
             pu.email as partner_user_email,
             pu.address as partner_user_address
@@ -247,8 +251,10 @@ class HistoryDao {
             'accept' as type,
             as1.description as accept_description,
             sr.description as request_description,
-            as1.created_at,
-            as1.updated_at,
+            as1.created_at as accept_created_at,
+            as1.updated_at as accept_updated_at,
+            sr.created_at as request_created_at,
+            sr.updated_at as request_updated_at,
             s.id as service_id,
             s.name as service_name,
             st.id as service_type_id,
@@ -258,6 +264,7 @@ class HistoryDao {
             -- Customer details (requester)
             u.id as customer_id,
             u.name as customer_name,
+            u.profile_pic as customer_profile_pic_id,
             u.phone as customer_phone,
             u.email as customer_email,
             u.address as customer_address,
@@ -267,6 +274,7 @@ class HistoryDao {
             p.last_name as partner_last_name,
             pu.id as partner_user_id,
             pu.name as partner_user_name,
+            pu.profile_pic as partner_user_profile_pic_id,
             pu.phone as partner_user_phone,
             pu.email as partner_user_email,
             pu.address as partner_user_address
@@ -321,11 +329,14 @@ class HistoryDao {
         acceptDescription: item.accept_description,
         status: item.status,
         price: item.price,
-        createdAt: item.created_at,
-        updatedAt: item.updated_at,
+        requestCreatedAt: item.request_created_at,
+        requestUpdatedAt: item.request_updated_at,
+        acceptCreatedAt: item.accept_created_at,
+        acceptUpdatedAt: item.accept_updated_at,
         customer: {
           id: item.customer_id,
           name: item.customer_name,
+          profilePicId: item.customer_profile_pic_id,
           phone: item.customer_phone,
           email: item.customer_email,
           address: item.customer_address
@@ -337,6 +348,7 @@ class HistoryDao {
           user: {
             id: item.partner_user_id,
             name: item.partner_user_name,
+            profilePicId: item.partner_user_profile_pic_id,
             phone: item.partner_user_phone,
             email: item.partner_user_email,
             address: item.partner_user_address
