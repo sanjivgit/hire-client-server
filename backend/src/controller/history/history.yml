@@ -1,0 +1,204 @@
+/user/service-history:
+  get:
+    summary: Get user service history
+    description: Retrieve a user's service history including both requested services and accepted services
+    tags:
+      - History
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: query
+        name: serviceType
+        schema:
+          type: string
+          enum: [request, accept]
+        description: Filter by service type (request = services requested by user, accept = services accepted by user as partner)
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum: [requested, pending, completed, cancelled]
+        description: Filter by service status
+      - in: query
+        name: startDate
+        schema:
+          type: string
+          format: date
+        description: Start date for filtering (YYYY-MM-DD)
+      - in: query
+        name: endDate
+        schema:
+          type: string
+          format: date
+        description: End date for filtering (YYYY-MM-DD)
+      - in: query
+        name: query
+        schema:
+          type: string
+        description: Search term to filter by service name, service type name, or description
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          default: 10
+        description: Number of items per page
+    responses:
+      "200":
+        description: Successfully retrieved service history
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service history retrieved successfully"
+                data:
+                  type: object
+                  properties:
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          type:
+                            type: string
+                            enum: [request, accept]
+                            example: "request"
+                          service:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Plumbing Service"
+                          serviceType:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Home Maintenance"
+                          description:
+                            type: string
+                            example: "Fix leaking tap in kitchen"
+                          status:
+                            type: string
+                            enum: [requested, pending, completed, cancelled]
+                            example: "pending"
+                          price:
+                            type: number
+                            nullable: true
+                            example: 1500
+                          createdAt:
+                            type: string
+                            format: date-time
+                          updatedAt:
+                            type: string
+                            format: date-time
+                          customer:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "John Doe"
+                              phone:
+                                type: string
+                                example: "9876543210"
+                              email:
+                                type: string
+                                example: "john@example.com"
+                              address:
+                                type: string
+                                example: "123 Main St"
+                          partner:
+                            type: object
+                            nullable: true
+                            properties:
+                              id:
+                                type: integer
+                                example: 2
+                              firstName:
+                                type: string
+                                example: "Jane"
+                              lastName:
+                                type: string
+                                example: "Smith"
+                              user:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 3
+                                  name:
+                                    type: string
+                                    example: "Jane Smith"
+                                  phone:
+                                    type: string
+                                    example: "9876543211"
+                                  email:
+                                    type: string
+                                    example: "jane@example.com"
+                                  address:
+                                    type: string
+                                    example: "456 Oak St"
+                    pagination:
+                      type: object
+                      properties:
+                        currentPage:
+                          type: integer
+                          example: 1
+                        totalPages:
+                          type: integer
+                          example: 5
+                        totalItems:
+                          type: integer
+                          example: 48
+                        itemsPerPage:
+                          type: integer
+                          example: 10
+      "400":
+        description: Bad request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid date format. Please use ISO format (YYYY-MM-DD)"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "User not authenticated" 

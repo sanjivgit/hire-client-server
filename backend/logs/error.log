@@ -262,3 +262,18 @@
 {"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T03:04:05.507Z"}
 {"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T03:05:10.077Z"}
 {"level":"error","message":"\"address.address\" length must be at least 5 characters long","metaData":{"action":"PUT","apiId":"0202","version":"1.0"},"service":"user-service","timestamp":"2025-04-01T03:07:31.579Z"}
+{"level":"error","message":"column \"service_id\" does not exist","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-04T17:05:25.064Z"}
+{"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"requested\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-04T17:18:09.751Z"}
+{"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"requested\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-04T17:20:11.650Z"}
+{"level":"error","message":"syntax error at or near \"from\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T01:25:13.867Z"}
+{"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"requested\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T01:25:34.599Z"}
+{"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"null\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T01:25:58.894Z"}
+{"level":"error","message":"missing FROM-clause entry for table \"p\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T01:26:25.083Z"}
+{"level":"error","message":"syntax error at or near \":\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T01:29:11.210Z"}
+{"level":"error","message":"Named replacement \":partnerId\" has no entry in the replacement map.","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T01:38:09.247Z"}
+{"level":"error","message":"column sr.service_type_id does not exist","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T02:08:21.358Z"}
+{"level":"error","message":"each UNION query must have the same number of columns","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T02:09:06.018Z"}
+{"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"requested\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T02:25:50.393Z"}
+{"level":"error","message":"results.map is not a function","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T02:27:08.830Z"}
+{"level":"error","message":"UNION types timestamp with time zone and text cannot be matched","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T03:09:12.744Z"}
+{"level":"error","message":"UNION types integer and text cannot be matched","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-05T03:10:56.548Z"}
