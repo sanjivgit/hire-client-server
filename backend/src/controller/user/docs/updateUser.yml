@@ -24,7 +24,7 @@
                   - address
                   - pinCode
                   - state
-                  - district
+                  - city
                 properties:
                   address:
                     type: string
@@ -40,7 +40,7 @@
                     minLength: 2
                     maxLength: 50
                     example: "California"
-                  district:
+                  city:
                     type: string
                     minLength: 2
                     maxLength: 50
@@ -86,7 +86,7 @@
                         state:
                           type: string
                           example: "California"
-                        district:
+                        city:
                           type: string
                           example: "Los Angeles"
                     createdAt:

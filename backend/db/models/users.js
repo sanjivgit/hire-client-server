@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
           address: "",
           pincode: "",
           state: "",
-          district: "",
+          city: "",
         },
       },
     },

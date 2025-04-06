@@ -50,7 +50,7 @@
                             state:
                               type: string
                               example: "California"
-                            district:
+                            city:
                               type: string
                               example: "Los Angeles"
                         isAdmin:

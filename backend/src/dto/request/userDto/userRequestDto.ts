@@ -5,7 +5,7 @@ interface UserRequest {
     address: string;
     pincode: string;
     state: string;
-    district: string;
+    city: string;
   };
 }
 
@@ -16,7 +16,7 @@ class UserRequestDto {
     address: string;
     pincode: string;
     state: string;
-    district: string;
+    city: string;
   };
 
   constructor(user: UserRequest) {
@@ -27,7 +27,7 @@ class UserRequestDto {
         address: user.address?.address || "",
         pincode: user.address?.pincode || "",
         state: user.address?.state || "",
-        district: user.address?.district || "",
+        city: user.address?.city || "",
       };
     }
   }

@@ -104,7 +104,7 @@
                             state:
                               type: string
                               example: "Delhi"
-                            district:
+                            city:
                               type: string
                               example: "New Delhi"
                     aadharImage:

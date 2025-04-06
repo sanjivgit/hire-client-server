@@ -50,7 +50,7 @@ module.exports = {
           address: "",
           pin_code: "",
           state: "",
-          district: "",
+          city: "",
         },
       },
       created_at: {

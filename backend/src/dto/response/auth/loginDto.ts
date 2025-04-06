@@ -7,7 +7,7 @@ interface ResponseUser {
     address: string;
     pinCode: string;
     state: string;
-    district: string;
+    city: string;
   };
   role: string | null;
   isAdmin: boolean;
@@ -34,7 +34,7 @@ interface User {
     address: string;
     pinCode: string;
     state: string;
-    district: string;
+    city: string;
   };
   role?: string | null;
   isAdmin?: boolean;

@@ -5,7 +5,7 @@ interface AddressDetails {
   address: string;
   pincode: string;
   state: string;
-  district: string;
+  city: string;
 }
 
 interface UpdateUserDetails {
