@@ -8,6 +8,7 @@ import PartnerRoute from "./route/partner/partner";
 import ServiceRequestRoute from "./route/serviceRequest";
 import AcceptedServiceRoute from "./route/acceptedService";
 import HistoryRoute from "./route/history";
+import NotificationsRoute from "./route/notifications";
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,8 @@ class HireRoute {
     new AcceptedServiceRoute().configure(app, "07"); // 07
     
     new HistoryRoute().configure(app, "08"); // 08
+
+    new NotificationsRoute().configure(app, "09"); // 09
 
     // new QuestionTypeRoute().configure(app, "04"); // 04
 

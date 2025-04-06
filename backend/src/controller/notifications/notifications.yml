@@ -1,0 +1,201 @@
+/user/notifications:
+  get:
+    tags:
+      - Notifications
+    summary: Get location-based and own service request notifications
+    description: |
+      This API returns two types of notifications:
+      1. Service requests from other users that match your location (pincode or city)
+      2. Your own service requests with information about who has accepted them
+      
+      The response includes detailed information about the service requests, customers, partners, and services.
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          default: 10
+          maximum: 50
+        description: Number of items per page
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Notifications retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Notifications retrieved successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                    version:
+                      type: string
+                    responseTime:
+                      type: number
+                    action:
+                      type: string
+                data:
+                  type: object
+                  properties:
+                    notifications:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: Service request ID
+                          type:
+                            type: string
+                            enum: [request, accept]
+                            description: Type of notification (request or acceptance)
+                          description:
+                            type: string
+                            description: Service request description
+                          createdAt:
+                            type: string
+                            format: date-time
+                            description: Creation time of the service request
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            description: Last update time of the service request
+                          acceptance:
+                            type: object
+                            nullable: true
+                            description: Acceptance details if the request has been accepted
+                            properties:
+                              id:
+                                type: integer
+                                description: Accepted service ID
+                              description:
+                                type: string
+                                description: Description provided by the partner
+                              status:
+                                type: string
+                                enum: [pending, accepted, completed, cancelled]
+                                description: Status of the accepted service
+                              amount:
+                                type: number
+                                description: Price quoted by the partner
+                              createdAt:
+                                type: string
+                                format: date-time
+                                description: When the service was accepted
+                              updatedAt:
+                                type: string
+                                format: date-time
+                                description: Last update time of the acceptance
+                          customer:
+                            type: object
+                            description: Details of the customer who requested the service
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              email:
+                                type: string
+                              phone:
+                                type: string
+                              profilePic:
+                                type: string
+                                nullable: true
+                              address:
+                                type: object
+                                properties:
+                                  address:
+                                    type: string
+                                  pincode:
+                                    type: string
+                                  city:
+                                    type: string
+                                  state:
+                                    type: string
+                          service:
+                            type: object
+                            description: Details of the requested service
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              serviceType:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  name:
+                                    type: string
+                          partner:
+                            type: object
+                            nullable: true
+                            description: Details of the partner who accepted the request (if any)
+                            properties:
+                              id:
+                                type: integer
+                              firstName:
+                                type: string
+                              lastName:
+                                type: string
+                              status:
+                                type: string
+                                enum: [pending, approved, rejected]
+                              user:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  name:
+                                    type: string
+                                  email:
+                                    type: string
+                                  phone:
+                                    type: string
+                                  profilePic:
+                                    type: string
+                                    nullable: true
+                                  address:
+                                    type: object
+                                    properties:
+                                      address:
+                                        type: string
+                                      pincode:
+                                        type: string
+                                      city:
+                                        type: string
+                                      state:
+                                        type: string
+                    pagination:
+                      type: object
+                      properties:
+                        currentPage:
+                          type: integer
+                        totalPages:
+                          type: integer
+                        totalItems:
+                          type: integer
+                        itemsPerPage:
+                          type: integer
+      400:
+        description: Bad request - Invalid pagination parameters
+      401:
+        description: Unauthorized - User authentication required
+      500:
+        description: Server error 
