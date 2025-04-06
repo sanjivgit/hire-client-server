@@ -207,6 +207,7 @@ class HistoryDao {
             'request' as type,
             sr.description as request_description,
             as2.description as accept_description,
+            sr.created_at as created_at,
             sr.created_at as request_created_at,
             sr.updated_at as request_updated_at,
             as2.created_at as accept_created_at,
@@ -251,6 +252,7 @@ class HistoryDao {
             'accept' as type,
             as1.description as accept_description,
             sr.description as request_description,
+            as1.created_at as created_at,
             as1.created_at as accept_created_at,
             as1.updated_at as accept_updated_at,
             sr.created_at as request_created_at,
@@ -296,7 +298,7 @@ class HistoryDao {
         ${statusFilter}
         ${queryFilter}
         ${serviceTypeFilter}
-        ORDER BY updated_at DESC
+        ORDER BY created_at DESC
         LIMIT :limit OFFSET :offset
       `;
 

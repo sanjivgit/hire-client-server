@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
    
     const userId = decoded?.authData?.id || "unknown";
 
-    const destDir = `${dest}/${userId}`;
+    const destDir = fileFor === 'document' ? `${dest}/${userId}` : dest;
 
     if (!fs.existsSync(destDir)) {
       fs.mkdirSync(destDir, { recursive: true });

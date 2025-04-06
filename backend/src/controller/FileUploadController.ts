@@ -88,7 +88,7 @@ class FileUploadController {
 
       if (imageExtensions.includes(fileExtension)) {
         // For images, check in profile-pics folder
-        filePath = path.join(publicDir, 'uploads', 'profile-pics', userId, fileData.file_path);
+        filePath = path.join(publicDir, 'uploads', 'profile-pics', fileData.file_path);
 
         // If not found in profile-pics, check documents as fallback
         if (!fs.existsSync(filePath)) {
@@ -100,7 +100,7 @@ class FileUploadController {
         
         // If not found in documents, check profile-pics as fallback
         if (!fs.existsSync(filePath)) {
-          filePath = path.join(publicDir, 'uploads', 'profile-pics', userId, fileData.file_path);
+          filePath = path.join(publicDir, 'uploads', 'profile-pics', fileData.file_path);
         }
       }
 
@@ -198,6 +198,11 @@ class FileUploadController {
       const fileExtension = path.extname(fileData.file_path).toLowerCase();
 
       filePath = path.join(publicDir, 'uploads', 'icons', fileData.file_path);
+
+      // If not found in documents, check profile-pics as fallback
+      if (!fs.existsSync(filePath)) {
+        filePath = path.join(publicDir, 'uploads', 'profile-pics', fileData.file_path);
+      }
 
       // Check if the file exists
       if (!fs.existsSync(filePath)) {
