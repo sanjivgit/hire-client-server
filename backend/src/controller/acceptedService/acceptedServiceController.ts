@@ -36,6 +36,7 @@ class AcceptedServiceController {
         );
       }
 
+      console.log("partner >>>>", req.body)
       // Create a merged data object with both the request body and user info
       const requestData = {
         ...req.body,
@@ -51,6 +52,17 @@ class AcceptedServiceController {
       const { error } = createAcceptedServiceValidation.validate(acceptedServiceDto);
       if (error) {
         return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
+      }
+
+      const isExisting = await this.dao.isAcceptedAlready(acceptedServiceDto.service_request_id)
+
+      if(isExisting){
+        return CommonRes.CONFLICT_ERROR(
+          "This service request has already been accepted",
+          resObj,
+          req,
+          res
+        );
       }
 
       // Create the accepted service

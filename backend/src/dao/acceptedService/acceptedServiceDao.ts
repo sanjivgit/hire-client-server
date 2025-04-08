@@ -20,6 +20,15 @@ class AcceptedServiceDao {
     this.serviceTypes = db.service_types;
   }
 
+  isAcceptedAlready = async(service_request_id: number) => {
+    // Check if the service request already has an accepted service
+    const isExistAlready = await this.acceptedServices.findOne({
+      where: { service_request_id: service_request_id }
+    });
+
+    return isExistAlready;
+  }
+
   // Create a new accepted service
   createAcceptedService = async (data: {
     partner_id: number;
@@ -28,15 +37,7 @@ class AcceptedServiceDao {
     amount?: number;
   }) => {
     try {
-      // Check if the service request already has an accepted service
-      const existingAcceptedService = await this.acceptedServices.findOne({
-        where: { service_request_id: data.service_request_id }
-      });
-
-      if (existingAcceptedService) {
-        throw new Error("This service request has already been accepted");
-      }
-
+      
       // Create the accepted service
       const acceptedService = await this.acceptedServices.create({
         ...data,

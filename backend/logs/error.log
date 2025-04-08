@@ -282,3 +282,39 @@
 {"level":"error","message":"column \"updated_at\" does not exist","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-06T02:43:34.426Z"}
 {"level":"error","message":"column \"updated_at\" does not exist","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-06T02:45:46.159Z"}
 {"level":"error","message":"column \"updated_at\" does not exist","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-06T02:47:15.828Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T01:27:04.513Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:23:24.576Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:24:03.104Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:24:14.328Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:25:05.792Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:25:21.068Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:25:43.292Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:26:30.975Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:28:00.895Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:30:10.408Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:32:12.617Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:32:48.463Z"}
+{"level":"error","message":"This service request has already been accepted","metaData":{"action":"POST","apiId":"0701","version":"1.0"},"service":"user-service","timestamp":"2025-04-07T02:35:29.824Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:44:18.579Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:44:27.842Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:45:07.917Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:45:13.974Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:45:53.780Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:46:14.774Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:46:51.234Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:47:55.732Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:48:19.200Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:48:35.483Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:50:35.877Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:50:53.421Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:56:20.123Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T02:59:35.075Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:00:21.266Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:00:39.678Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:01:12.121Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:01:25.575Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:02:39.812Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:03:43.915Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:03:54.348Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:04:08.092Z"}
+{"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:06:18.011Z"}

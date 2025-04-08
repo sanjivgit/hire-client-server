@@ -38,7 +38,7 @@ class NotificationsDao {
 
       // First, get the user's address details
       const user = await this.users.findByPk(userId);
-      
+
       if (!user || !user.address) {
         return { rows: [], count: 0 };
       }
@@ -120,6 +120,7 @@ class NotificationsDao {
             accepted_services ac ON sr.id = ac.service_request_id
           WHERE 
             sr.user_id = :userId
+            AND ac.id IS NOT NULL
         )
         
         SELECT 
