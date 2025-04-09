@@ -318,3 +318,12 @@
 {"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:03:54.348Z"}
 {"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:04:08.092Z"}
 {"level":"error","message":{"metaData":{"action":"POST","apiId":"0701","version":"1.0"}},"service":"user-service","timestamp":"2025-04-07T03:06:18.011Z"}
+{"level":"error","message":"\"fullName\" length must be at least 5 characters long","metaData":{"action":"GET","apiId":"0102","version":"1.0"},"service":"user-service","timestamp":"2025-04-08T15:40:31.561Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0703","version":"1.0"}},"service":"user-service","timestamp":"2025-04-08T16:04:19.398Z"}
+{"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"Completed\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T02:34:28.694Z"}
+{"level":"error","message":"column combined.description does not exist","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T02:41:46.568Z"}
+{"level":"error","message":"column combined.description does not exist","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T02:41:54.926Z"}
+{"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"Pending\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T02:42:02.503Z"}
+{"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"Pending\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T02:42:10.911Z"}
+{"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"cancelled\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T02:43:52.937Z"}
+{"level":"error","message":"column combined.description does not exist","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T03:13:20.889Z"}

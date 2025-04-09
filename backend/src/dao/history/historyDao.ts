@@ -169,7 +169,7 @@ class HistoryDao {
       // Build status filter
       let statusFilter = '';
       if (filters.status) {
-          statusFilter = ` AND combined.status = '${filters.status}'`; 
+          statusFilter = ` AND combined.status = '${filters.status.toLowerCase()}'`; 
       }
       // Build query filter
       let queryFilter = '';
@@ -177,8 +177,9 @@ class HistoryDao {
         const searchTerm = filters.query.replace(/'/g, "''"); // Escape single quotes
         queryFilter = ` AND (
           combined.service_name ILIKE '%${searchTerm}%' OR 
-          combined.service_type_name ILIKE '%${searchTerm}%' OR 
-          combined.description ILIKE '%${searchTerm}%'
+          combined.service_type_name ILIKE '%${searchTerm}%' OR
+          combined.customer_name ILIKE '%${searchTerm}%' OR
+          combined.partner_user_name ILIKE '%${searchTerm}%'
         )`;
       }
 
