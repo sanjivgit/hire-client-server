@@ -327,3 +327,11 @@
 {"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"Pending\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T02:42:10.911Z"}
 {"level":"error","message":"invalid input value for enum enum_accepted_services_status: \"cancelled\"","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T02:43:52.937Z"}
 {"level":"error","message":"column combined.description does not exist","metaData":{"action":"GET","apiId":"0801","version":"1.0"},"service":"user-service","timestamp":"2025-04-09T03:13:20.889Z"}
+{"level":"error","message":"relation \"fcm_tokens\" does not exist","metaData":{"action":"GET","apiId":"0201","version":"1.0"},"service":"user-service","timestamp":"2025-04-10T03:35:26.365Z"}
+{"level":"error","message":"column ft.fcm_token does not exist","metaData":{"action":"GET","apiId":"0201","version":"1.0"},"service":"user-service","timestamp":"2025-04-10T03:41:56.194Z"}
+{"level":"error","message":"column \"ft.token\" must appear in the GROUP BY clause or be used in an aggregate function","metaData":{"action":"GET","apiId":"0201","version":"1.0"},"service":"user-service","timestamp":"2025-04-10T03:43:04.910Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-04-10T14:56:04.426Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'id')","metaData":{"action":"POST","apiId":"0601","version":"1.0"},"service":"user-service","timestamp":"2025-04-11T03:06:37.189Z"}
+{"level":"error","message":{"metaData":{"action":"GET","apiId":"0101","version":"1.0"}},"service":"user-service","timestamp":"2025-04-11T15:12:52.579Z"}
+{"level":"error","message":"column u.fcm_token does not exist","metaData":{"action":"POST","apiId":"0601","version":"1.0"},"service":"user-service","timestamp":"2025-04-11T15:56:44.986Z"}
+{"level":"error","message":"column u.fcm_token does not exist","metaData":{"action":"POST","apiId":"0601","version":"1.0"},"service":"user-service","timestamp":"2025-04-11T15:56:51.223Z"}

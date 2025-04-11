@@ -45,7 +45,8 @@ class UserDao {
         u.phone,
         u.profile_pic,
         u.address,
-        u.password, 
+        u.password,
+        ft.token as fcm_token, 
         r.role AS role, 
         json_build_object(
           'id', p.id, 
@@ -65,8 +66,9 @@ class UserDao {
     LEFT JOIN partners p ON u.id = p.user_id
     LEFT JOIN partner_services ps ON p.id = ps.partner_id
     LEFT JOIN services s ON ps.service_id = s.id
+    LEFT JOIN fcm_tokens ft ON ft.user_id = u.id
     WHERE u.id = :userId
-    GROUP BY u.id, u.name, u.phone, u.address::text, u.password, r.role, p.id, p.service_type_id;
+    GROUP BY u.id, u.name, u.phone, u.address::text, u.password, r.role, p.id, p.service_type_id, ft.token;
   `;
 
     const [user] = await this.sequelize.query(rawQuery, {

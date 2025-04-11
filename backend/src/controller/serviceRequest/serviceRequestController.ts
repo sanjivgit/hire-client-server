@@ -29,7 +29,8 @@ class ServiceRequestController {
     };
     try {
       // Extract user_id from auth token (available in req.body.user)
-      const user_id = req.body.user?.id;
+      const userDetails = req.body.user;
+      const user_id = userDetails?.id;
       if (!user_id) {
         return CommonRes.UNAUTHORISED(
           "User authentication required",
@@ -47,7 +48,7 @@ class ServiceRequestController {
         return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
       }
 
-      const serviceRequest = await this.dao.createServiceRequest(serviceRequestDto);
+      const serviceRequest = await this.dao.createServiceRequest(serviceRequestDto, {city: userDetails?.address?.city, pincode: userDetails?.address?.pincode});
 
       const responseData = new ServiceRequestResponseDto(serviceRequest.toJSON());
 

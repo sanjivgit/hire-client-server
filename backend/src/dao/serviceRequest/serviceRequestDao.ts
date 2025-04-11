@@ -1,4 +1,6 @@
 const db = require("../../../db/models/index");
+import { add } from "winston";
+import { sendPushNotification } from "../../services/sendNotification";
 import { Op } from "sequelize";
 
 class ServiceRequestDao {
@@ -20,13 +22,49 @@ class ServiceRequestDao {
     this.partners = db.partners;
   }
 
-  createServiceRequest = async (data: {
-    user_id: number;
-    service_id: number;
-    description?: string;
-  }) => {
+  createServiceRequest = async (
+    data: {
+      user_id: number;
+      service_id: number;
+      description?: string;
+      fcm_token: string;
+    },
+    address: { city: string; pincode: string }
+  ) => {
     try {
       const serviceRequest = await this.serviceRequests.create(data);
+
+      const query = `
+        SELECT ft.token from 
+          partners as p
+          LEFT JOIN users u on u.id = p.user_id
+          LEFT JOIN fcm_tokens ft on ft.user_id = p.user_id
+          WHERE (
+              (u.address->>'pincode' = :userPincode AND :userPincode != '')
+              OR 
+              (LOWER(u.address->>'city') = LOWER(:userCity) AND :userCity != '')
+            ) AND u.id != :RequestingUserId
+      `;
+
+      const results = await this.sequelize.query(query, {
+        replacements: {
+          userPincode: address.pincode,
+          userCity: address.city,
+          RequestingUserId: data.user_id,
+        },
+        type: this.sequelize.QueryTypes.SELECT,
+      });
+
+      sendPushNotification(
+        results,
+        "New Service Request",
+        data?.description || "",
+        {
+          user_id: data.user_id,
+          screen: "notification",
+          serviceRequestId: serviceRequest.id,
+        }
+      );
       return await this.getServiceRequestById(serviceRequest.id);
     } catch (error) {
       throw error;
@@ -49,16 +87,16 @@ class ServiceRequestDao {
       // Calculate date 7 days ago
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-      
+
       const serviceRequests = await this.serviceRequests.findAll({
-        where: { 
+        where: {
           user_id: userId,
           updated_at: {
-            [Op.gte]: sevenDaysAgo // Only get service requests updated in the last 7 days
-          }
+            [Op.gte]: sevenDaysAgo, // Only get service requests updated in the last 7 days
+          },
         },
         order: [["updated_at", "DESC"]], // Order by updated_at instead of created_at
-        attributes: ['id', 'description', 'created_at', 'updated_at'],
+        attributes: ["id", "description", "created_at", "updated_at"],
         include: [
           {
             model: this.users,
@@ -138,7 +176,7 @@ class ServiceRequestDao {
       const serviceRequests = await this.serviceRequests.findAll({
         where: whereClause,
         order: [["created_at", "DESC"]],
-        attributes: ['id', 'description', 'created_at', 'updated_at'],
+        attributes: ["id", "description", "created_at", "updated_at"],
         include: [
           {
             model: this.users,
@@ -174,7 +212,7 @@ class ServiceRequestDao {
   getServiceRequestById = async (id: number) => {
     try {
       return await this.serviceRequests.findByPk(id, {
-        attributes: ['id', 'description', 'created_at', 'updated_at'],
+        attributes: ["id", "description", "created_at", "updated_at"],
         include: [
           {
             model: this.users,
@@ -206,4 +244,4 @@ class ServiceRequestDao {
   };
 }
 
-export default ServiceRequestDao; 
+export default ServiceRequestDao;

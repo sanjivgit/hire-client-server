@@ -9,6 +9,7 @@ import ServiceRequestRoute from "./route/serviceRequest";
 import AcceptedServiceRoute from "./route/acceptedService";
 import HistoryRoute from "./route/history";
 import NotificationsRoute from "./route/notifications";
+import FcmTokenRoute from "./route/user/fcmToken";
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,8 @@ class HireRoute {
     new HistoryRoute().configure(app, "08"); // 08
 
     new NotificationsRoute().configure(app, "09"); // 09
+
+    new FcmTokenRoute().configure(app, "10"); // 10 - FCM Token Routes
 
     // new QuestionTypeRoute().configure(app, "04"); // 04
 

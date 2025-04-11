@@ -12,6 +12,9 @@ export const createServiceRequestValidation = Joi.object({
   description: Joi.string().allow("", null).optional().messages({
     "string.base": "Description must be a string",
   }),
+  fcm_token: Joi.string().allow("", null).optional().messages({
+    "string.base": "FCM token must be a string",
+  }),
 });
 
 export const updateServiceRequestValidation = Joi.object({

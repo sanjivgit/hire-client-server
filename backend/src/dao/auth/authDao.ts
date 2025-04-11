@@ -59,7 +59,8 @@ class AuthDao {
         u.id, 
         u.name, 
         u.profile_pic,
-        u.phone, 
+        u.phone,
+        ft.token as fcm_token,  
         u.address, 
         u.password, 
         r.role AS role, 
@@ -81,8 +82,9 @@ class AuthDao {
     LEFT JOIN partners p ON u.id = p.user_id
     LEFT JOIN partner_services ps ON p.id = ps.partner_id
     LEFT JOIN services s ON ps.service_id = s.id
+    LEFT JOIN fcm_tokens ft ON ft.user_id = u.id
     WHERE u.phone = :phone
-    GROUP BY u.id, u.name, u.phone, u.address::text, u.password, r.role, p.id, p.service_type_id;
+    GROUP BY u.id, u.name, u.phone, u.address::text, u.password, r.role, p.id, p.service_type_id, ft.token;
   `;
 
       const [user] = await this.sequelize.query(rawQuery, {

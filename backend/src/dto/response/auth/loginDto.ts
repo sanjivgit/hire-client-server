@@ -3,6 +3,7 @@ interface ResponseUser {
   name: string;
   phone: string;
   profile_pic: number;
+  fcm_token: string;
   address: {
     address: string;
     pinCode: string;
@@ -30,6 +31,7 @@ interface User {
   name: string;
   phone: string;
   profilePicId: number;
+  fcmToken: string;
   address: {
     address: string;
     pinCode: string;
@@ -66,6 +68,7 @@ class LoginDto {
       name: response.name,
       profilePicId: response.profile_pic,
       phone: response.phone, 
+      fcmToken: response.fcm_token,
       address: response.address,
     };
 

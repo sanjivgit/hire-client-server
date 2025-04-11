@@ -4,12 +4,19 @@ import HireRoute from "./router";
 import { swaggerSetup } from "./swagger-setup";
 import { DOCS_BASE_URL } from "./config";
 const db = require("../db/models/index");
+import admin from 'firebase-admin';
+const serviceAccount = require("./utils/serviceAccountKey.json");
 
 const app = express();
 
 app.use(express.json());
 app.use("/public", express.static("public"));
 app.use(cors());
+
+// Initialize Firebase Admin SDK
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 swaggerSetup(app);
 
