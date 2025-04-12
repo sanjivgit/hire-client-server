@@ -48,6 +48,12 @@ class ServiceRequestController {
         return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
       }
 
+      const isRequestedAlready = await this.dao.checkDuplicateServiceRequest(userDetails?.id, req.body.service_id)
+
+      if(isRequestedAlready){
+        return CommonRes.CONFLICT_ERROR('You have already requested for this service. Now after 24 hour again able to request.', resObj, req, res);
+      }
+
       const serviceRequest = await this.dao.createServiceRequest(serviceRequestDto, {city: userDetails?.address?.city, pincode: userDetails?.address?.pincode});
 
       const responseData = new ServiceRequestResponseDto(serviceRequest.toJSON());

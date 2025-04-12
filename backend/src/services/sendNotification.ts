@@ -35,12 +35,12 @@ export const sendPushNotification = async (
 
   // 🔥 Now you can send each chunk using admin.messaging().sendMulticast()
   tokenChunks.forEach(async (chunk, index) => {
-    console.log("chunk >>>", chunk);
+
     const message = {
       tokens: chunk,
       notification: {
-        title: "Hello!",
-        body: "This is a batched push notification 🚀",
+        title: title,
+        body: body,
       },
       data: stringData// optional custom data
     };

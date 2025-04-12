@@ -22,6 +22,39 @@ class ServiceRequestDao {
     this.partners = db.partners;
   }
 
+  checkDuplicateServiceRequest = async (
+    userId: number,
+    serviceId: number
+  ): Promise<any> => {
+    try {
+      // Calculate date 24 hours ago
+      const oneDayAgo = new Date();
+      oneDayAgo.setHours(oneDayAgo.getHours() - 24);
+
+      const existingRequest = await this.serviceRequests.findOne({
+        where: {
+          user_id: userId,
+          service_id: serviceId,
+          created_at: {
+            [Op.gte]: oneDayAgo
+          }
+        },
+        include: [
+          {
+            model: this.services,
+            as: "service",
+            attributes: ["id", "name"]
+          }
+        ]
+      });
+
+      return existingRequest;
+    } catch (error) {
+      console.error("Error checking duplicate service request:", error);
+      throw error;
+    }
+  };
+
   createServiceRequest = async (
     data: {
       user_id: number;
@@ -39,7 +72,7 @@ class ServiceRequestDao {
           partners as p
           LEFT JOIN users u on u.id = p.user_id
           LEFT JOIN fcm_tokens ft on ft.user_id = p.user_id
-          WHERE (
+          WHERE p.status = 'approved' AND (
               (u.address->>'pincode' = :userPincode AND :userPincode != '')
               OR 
               (LOWER(u.address->>'city') = LOWER(:userCity) AND :userCity != '')

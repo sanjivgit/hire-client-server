@@ -36,12 +36,21 @@ class NotificationsDao {
       // Calculate offset for pagination
       const offset = (page - 1) * limit;
 
-      // First, get the user's address details
-      const user = await this.users.findByPk(userId);
+      // First, get the user's address details and check if the user is a partner
+      const user = await this.users.findByPk(userId, {
+        include: [{
+          model: this.partners,
+          as: 'partner',
+          attributes: ['id', 'status'],
+        }]
+      });
 
       if (!user || !user.address) {
         return { rows: [], count: 0 };
       }
+
+      // Check if the user is a partner with 'approved' status
+      const isApprovedPartner = user.partner && user.partner.status === 'approved';
 
       // Parse the address
       let userAddress;
@@ -65,7 +74,7 @@ class NotificationsDao {
       // Raw SQL query to get notifications
       const query = `
         WITH combined_results AS (
-          -- 1. Get service requests from other users in the same location
+          -- 1. Get service requests from other users in the same location (only if user is an approved partner)
           SELECT 
             sr.id,
             'request' as type,
@@ -95,10 +104,11 @@ class NotificationsDao {
               OR 
               (LOWER(u.address->>'city') = LOWER(:userCity) AND :userCity != '')
             )
+            AND :isApprovedPartner = TRUE
           
           UNION ALL
           
-          -- 2. Get the user's own service requests and their acceptance details
+          -- 2. Get the user's own service requests and their acceptance details (if any)
           SELECT 
             sr.id,
             CASE WHEN ac.id IS NULL THEN 'request' ELSE 'accept' END as type,
@@ -120,7 +130,6 @@ class NotificationsDao {
             accepted_services ac ON sr.id = ac.service_request_id
           WHERE 
             sr.user_id = :userId
-            AND ac.id IS NOT NULL
         )
         
         SELECT 
@@ -183,7 +192,8 @@ class NotificationsDao {
           userPincode,
           userCity,
           limit,
-          offset
+          offset,
+          isApprovedPartner: isApprovedPartner
         },
         type: this.sequelize.QueryTypes.SELECT
       });

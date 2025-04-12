@@ -1,4 +1,5 @@
 const db = require("../../../db/models/index");
+import { sendPushNotification } from "../../services/sendNotification";
 import { Op } from "sequelize";
 
 class AcceptedServiceDao {
@@ -43,6 +44,31 @@ class AcceptedServiceDao {
         ...data,
         status: 'pending' // Default status
       });
+
+      const query = `
+      SELECT ft.token from 
+        service_requests as sp
+        LEFT JOIN fcm_tokens ft on ft.user_id = sp.user_id
+        WHERE sp.id = :ServiceRequestId
+    `;
+
+    const results = await this.sequelize.query(query, {
+      replacements: {
+        ServiceRequestId: data.service_request_id,
+      },
+      type: this.sequelize.QueryTypes.SELECT,
+    });
+
+    sendPushNotification(
+      results,
+      "Service Request Accepted",
+      data?.description || "",
+      {
+        screen: "notification",
+        serviceRequestId: data.service_request_id,
+        serviceAcceptId: acceptedService.id
+      }
+    );
 
       return await this.getAcceptedServiceById(acceptedService.id);
     } catch (error) {
