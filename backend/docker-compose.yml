@@ -6,7 +6,7 @@ services: # Defines the services (containers) to be run.
       context: . # Path to the directory containing the Dockerfile.
     container_name: hire_backend # A custom name for the container.
     ports:
-      - "2000:2000" # Maps port 2001 on the host to port 2001 in the container.
+      - "2001:2001" # Maps port 2001 on the host to port 2001 in the container.
     env_file:
       - .env # Specifies the file containing environment variables for this service.
     depends_on: # Specifies service dependencies.
@@ -16,7 +16,7 @@ services: # Defines the services (containers) to be run.
       - /backend/node_modules # Prevents overwriting node_modules in the container.
     networks:
       - backend_network
-    command: sh -c "sleep 10 && npx sequelize-cli db:migrate && npm start" # Command to run when the container starts (development mode).
+    command: sh -c "sleep 10 && npx sequelize-cli db:migrate && npm run dev" # Command to run when the container starts (development mode).
 
 
   db: # Service for the PostgreSQL database.

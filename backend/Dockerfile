@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 2000
 
 # Start the app
-CMD ["sh", "-c", "npx sequelize-cli db:migrate && npm start"]
+CMD ["sh", "-c", "npx sequelize-cli db:migrate && npm run dev"]
