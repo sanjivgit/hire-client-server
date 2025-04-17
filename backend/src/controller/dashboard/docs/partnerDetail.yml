@@ -1,0 +1,245 @@
+/dashboard/partner/{id}:
+  get:
+    summary: Get Partner Details
+    description: Get detailed information about a specific partner by ID. Only accessible by admin users.
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the partner to retrieve
+    responses:
+      "200":
+        description: Partner details retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner details retrieved successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_01"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    userId:
+                      type: integer
+                      example: 5
+                    firstName:
+                      type: string
+                      example: "John"
+                    lastName:
+                      type: string
+                      example: "Doe"
+                    fullName:
+                      type: string
+                      example: "John Doe"
+                    email:
+                      type: string
+                      nullable: true
+                      example: "john.doe@example.com"
+                    phone:
+                      type: string
+                      nullable: true
+                      example: "+1234567890"
+                    address:
+                      type: object
+                      nullable: true
+                      properties:
+                        address:
+                          type: string
+                          example: "123 Main St"
+                        pincode:
+                          type: string
+                          example: "12345"
+                        state:
+                          type: string
+                          example: "California"
+                        city:
+                          type: string
+                          example: "Los Angeles"
+                    profilePic:
+                      type: string
+                      nullable: true
+                      example: "/uploads/profile-pics/profile.jpg"
+                    serviceType:
+                      type: object
+                      nullable: true
+                      properties:
+                        id:
+                          type: integer
+                          example: 2
+                        name:
+                          type: string
+                          example: "Plumbing"
+                    services:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 3
+                          name:
+                            type: string
+                            example: "Pipe Repair"
+                    aadharNumber:
+                      type: string
+                      example: "1234 5678 9012"
+                    aadharImage:
+                      type: string
+                      nullable: true
+                      example: "/uploads/documents/aadhar.jpg"
+                    additionalDocument:
+                      type: string
+                      nullable: true
+                      example: "/uploads/documents/license.pdf"
+                    status:
+                      type: string
+                      example: "active"
+                    createdAt:
+                      type: string
+                      format: date-time
+                      example: "2024-03-15T10:30:00Z"
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      example: "2024-03-15T10:30:00Z"
+      "400":
+        description: Bad Request - Invalid partner ID
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid partner ID"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_01"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "401":
+        description: Unauthorized - User is not an admin
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Unauthorized access - Admin role required"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_01"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "404":
+        description: Not Found - Partner does not exist
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Partner not found"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_01"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "500":
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Internal server error"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_01"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
