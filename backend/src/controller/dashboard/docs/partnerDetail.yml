@@ -243,3 +243,527 @@
                     action:
                       type: string
                       example: "GET"
+
+/dashboard/partner/{id}/reject:
+  put:
+    summary: Reject Partner Application
+    description: Reject a partner application with a reason. Only accessible by admin users.
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the partner to reject
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - reason
+            properties:
+              reason:
+                type: string
+                description: Reason for rejecting the partner application
+                example: "Incomplete documentation provided"
+    responses:
+      "200":
+        description: Partner application rejected successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner application rejected successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_05"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+                data:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      example: true
+                    message:
+                      type: string
+                      example: "Partner application rejected successfully"
+      "400":
+        description: Bad Request - Invalid partner ID or missing reason
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Rejection reason is required"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_05"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+      "401":
+        description: Unauthorized - User is not an admin
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Unauthorized access - Admin role required"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_05"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+      "404":
+        description: Not Found - Partner does not exist
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Partner not found"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_05"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+      "500":
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Internal server error"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_05"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+
+/dashboard/partner/{id}/approve:
+  put:
+    summary: Approve Partner Application
+    description: Approve a partner application. Only accessible by admin users.
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the partner to approve
+    responses:
+      "200":
+        description: Partner application approved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner application approved successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_06"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+                data:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      example: true
+                    message:
+                      type: string
+                      example: "Partner application approved successfully"
+      "400":
+        description: Bad Request - Invalid partner ID
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid partner ID"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_06"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+      "401":
+        description: Unauthorized - User is not an admin
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Unauthorized access - Admin role required"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_06"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+      "404":
+        description: Not Found - Partner does not exist
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Partner not found"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_06"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+      "500":
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Internal server error"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_06"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+
+/dashboard/partner/{id}/suspend:
+  put:
+    summary: Suspend Partner
+    description: Suspend a partner account with a reason. Only accessible by admin users.
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the partner to suspend
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - reason
+            properties:
+              reason:
+                type: string
+                description: Reason for suspending the partner
+                example: "Multiple complaints from customers"
+    responses:
+      "200":
+        description: Partner suspended successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner suspended successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_07"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+                data:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      example: true
+                    message:
+                      type: string
+                      example: "Partner suspended successfully"
+      "400":
+        description: Bad Request - Invalid partner ID or missing reason
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Suspension reason is required"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_07"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+      "401":
+        description: Unauthorized - User is not an admin
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Unauthorized access - Admin role required"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_07"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+      "404":
+        description: Not Found - Partner does not exist
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Partner not found"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_07"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"
+      "500":
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Internal server error"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_DETAIL_07"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "PUT"

@@ -54,6 +54,33 @@ class DashboardRoute {
             (req: Request, res: Response) =>
                 this.partnerDetailController.getPartnerDetail(req, res, apiId + "04")
         );
+
+        // Reject partner application
+        app.route(`${baseUrl}/dashboard/partner/:id/reject`).put(
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.authorization.jwtVerifyIsAdmin(req, res, next);
+            },
+            (req: Request, res: Response) =>
+                this.partnerDetailController.rejectPartnerApplication(req, res, apiId + "05")
+        );
+
+        // Approve partner application
+        app.route(`${baseUrl}/dashboard/partner/:id/approve`).put(
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.authorization.jwtVerifyIsAdmin(req, res, next);
+            },
+            (req: Request, res: Response) =>
+                this.partnerDetailController.approvePartnerApplication(req, res, apiId + "06")
+        );
+
+        // Suspend partner
+        app.route(`${baseUrl}/dashboard/partner/:id/suspend`).put(
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.authorization.jwtVerifyIsAdmin(req, res, next);
+            },
+            (req: Request, res: Response) =>
+                this.partnerDetailController.suspendPartner(req, res, apiId + "07")
+        );
     }
 }
 
