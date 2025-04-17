@@ -1,0 +1,185 @@
+/dashboard/partner/list:
+  get:
+    summary: Get Partner List
+    description: Get a list of all partners with search and pagination functionality. Only accessible by admin users.
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: Page number for pagination
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+        description: Number of items per page
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum: [all, pending, approved, suspended, active]
+          default: all
+        description: Filter partners by status
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search partners by name or address
+    responses:
+      "200":
+        description: Partner list retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner list retrieved successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_LIST_01"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+                data:
+                  type: object
+                  properties:
+                    partners:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "John Doe"
+                          profilePic:
+                            type: string
+                            nullable: true
+                            example: "/uploads/profile-pics/profile.jpg"
+                          email:
+                            type: string
+                            nullable: true
+                            example: "john.doe@example.com"
+                          address:
+                            type: object
+                            nullable: true
+                            properties:
+                              address:
+                                type: string
+                                example: "123 Main St"
+                              pincode:
+                                type: string
+                                example: "12345"
+                              state:
+                                type: string
+                                example: "California"
+                              city:
+                                type: string
+                                example: "Los Angeles"
+                          status:
+                            type: string
+                            example: "active"
+                          createdAt:
+                            type: string
+                            format: date-time
+                            example: "2024-03-15T10:30:00Z"
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            example: "2024-03-15T10:30:00Z"
+                    pagination:
+                      type: object
+                      properties:
+                        currentPage:
+                          type: integer
+                          example: 1
+                        totalPages:
+                          type: integer
+                          example: 5
+                        totalItems:
+                          type: integer
+                          example: 48
+                        itemsPerPage:
+                          type: integer
+                          example: 10
+      "401":
+        description: Unauthorized - User is not an admin
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Only admin can access this resource"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_LIST_01"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "500":
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Internal server error"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_LIST_01"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"

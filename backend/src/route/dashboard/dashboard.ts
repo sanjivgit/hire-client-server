@@ -2,13 +2,16 @@ import express, { NextFunction, Request, Response } from "express";
 import { baseUrl } from "../../utils/common";
 import DashboardController from "../../controller/dashboard/dashboardController";
 import Authorization from "../../middleware/auth";
+import PartnerListController from "../../controller/dashboard/partnerList";
 
 class DashboardRoute {
     private dashboardController: DashboardController;
+    private partnerListController: PartnerListController;
     private authorization: Authorization;
 
     constructor() {
         this.dashboardController = new DashboardController();
+        this.partnerListController = new PartnerListController();
         this.authorization = new Authorization();
     }
 
@@ -29,6 +32,15 @@ class DashboardRoute {
             },
             (req: Request, res: Response) =>
                 this.dashboardController.getLatestPartners(req, res, apiId + "02")
+        );
+
+        // Get partner list
+        app.route(`${baseUrl}/dashboard/partner/list`).get(
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.authorization.jwtVerifyIsAdmin(req, res, next);
+            },
+            (req: Request, res: Response) =>
+                this.partnerListController.getPartnerList(req, res, apiId + "03")
         );
     }
 }
