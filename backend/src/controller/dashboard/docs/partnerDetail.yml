@@ -123,6 +123,16 @@
                     status:
                       type: string
                       example: "active"
+                    reason:
+                      type: string
+                      nullable: true
+                      example: "Multiple customer complaints"
+                      description: "Reason for suspension or rejection if status is suspended"
+                    reasonType:
+                      type: string
+                      nullable: true
+                      example: "Suspension"
+                      description: "Type of reason (Suspension or Rejection)"
                     createdAt:
                       type: string
                       format: date-time

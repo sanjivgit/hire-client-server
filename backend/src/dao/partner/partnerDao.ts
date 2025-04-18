@@ -32,6 +32,7 @@ class PartnerDao {
   private serviceTypes: any;
   private users: any;
   private files: any;
+  private reasons: any;
 
   constructor() {
     this.partners = db.partners;
@@ -41,6 +42,7 @@ class PartnerDao {
     this.serviceTypes = db.service_types;
     this.users = db.users;
     this.files = db.files;
+    this.reasons = db.reasons;
   }
 
   becomePartner = async (userDetails: any) => {
@@ -149,7 +151,7 @@ class PartnerDao {
 
   getPartnerById = async (id: number) => {
     try {
-      return await this.partners.findByPk(id, {
+      const partner = await this.partners.findByPk(id, {
         include: [
           {
             model: this.partner_services,
@@ -178,8 +180,29 @@ class PartnerDao {
             model: this.files,
             as: "additional_document",
           },
+          {
+            model: this.reasons,
+            as: "reason",
+            attributes: ["reason"]
+          }
         ],
       });
+
+      // If partner exists and has suspended status but no reason is loaded
+      if (partner && partner.status === 'suspended' && !partner.reason) {
+        // Fetch the reason separately
+        const reasonRecord = await this.reasons.findOne({
+          where: { partner_id: id }
+        });
+
+        if (reasonRecord) {
+          partner.reason = reasonRecord;
+          // Add reasonType to indicate whether it's a suspension or rejection reason
+          partner.reasonType = 'Suspension';
+        }
+      }
+
+      return partner;
     } catch (error) {
       throw error;
     }

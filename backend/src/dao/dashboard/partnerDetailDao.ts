@@ -85,6 +85,22 @@ class PartnerDetailDao {
             }
         }
 
+        // If partner doesn't have a reason in the join, fetch it separately
+        if (!partner.reason && partner.status === 'suspended') {
+            const reasonRecord = await this.reasons.findOne({
+                where: { partner_id: partnerId }
+            });
+
+            if (reasonRecord) {
+                partner.reason = reasonRecord;
+            }
+        }
+
+        // Add a field to indicate the type of reason
+        if (partner.reason) {
+            partner.reasonType = partner.status === 'suspended' ? 'Suspension' : 'Rejection';
+        }
+
         return generateRes(partner);
     };
 

@@ -25,7 +25,8 @@ interface PartnerDetailResponse {
     aadharImage: string | null;
     additionalDocument: string | null;
     status: string;
-    statusReason: string | null;
+    reason: string | null;
+    reasonType: string | null;
     createdAt: string;
     updatedAt: string;
 }
@@ -57,7 +58,8 @@ class PartnerDetailResponseDto {
     public aadharImage: string | null;
     public additionalDocument: string | null;
     public status: string;
-    public statusReason: string | null;
+    public reason: string | null;
+    public reasonType: string | null;
     public createdAt: string;
     public updatedAt: string;
 
@@ -87,7 +89,8 @@ class PartnerDetailResponseDto {
         this.aadharImage = partner.aadhar_image.id;
         this.additionalDocument = partner.additional_document.id;
         this.status = partner.status;
-        this.statusReason = partner.reason ? partner.reason.reason : null;
+        this.reason = partner.reason ? partner.reason.reason : null;
+        this.reasonType = partner.reasonType || null;
         this.createdAt = partner.created_at;
         this.updatedAt = partner.updated_at;
     }
