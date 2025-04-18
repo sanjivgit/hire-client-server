@@ -1,20 +1,21 @@
-# Use Node.js base image
-FROM node:22
+# Build Stage
+FROM node:22 as builder
 
-# Set working directory
 WORKDIR /backend
-
-# Copy package.json and package-lock.json
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
-
-# Copy all other source code
 COPY . .
+RUN npm run build
 
-# Expose port (change if your app uses a different one)
-EXPOSE 2000
+# Production Stage
+FROM node:22
+WORKDIR /backend
+ENV NODE_ENV=production
 
-# Start the app
-CMD ["sh", "-c", "npx sequelize-cli db:migrate && npm run dev"]
+COPY package*.json ./
+RUN npm install --only=production
+COPY --from=builder /backend/dist ./dist
+
+EXPOSE 2001
+CMD ["sh", "-c", "npx sequelize-cli db:migrate && npm start"]
+

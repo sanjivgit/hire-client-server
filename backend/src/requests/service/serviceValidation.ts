@@ -9,6 +9,9 @@ export const createServiceValidation = Joi.object({
     "number.base": "Service type ID must be a number",
     "any.required": "Service type ID is required",
   }),
+  icon_id: Joi.number().required().messages({
+    "number.empty": "Icon is required"
+  }),
   description: Joi.string().optional(),
   price: Joi.number().optional(),
 });
@@ -20,6 +23,7 @@ export const updateServiceValidation = Joi.object({
   service_type_id: Joi.number().optional().messages({
     "number.base": "Service type ID must be a number",
   }),
+  icon_id: Joi.number().optional(),
   description: Joi.string().optional(),
   price: Joi.number().optional(),
 }); 

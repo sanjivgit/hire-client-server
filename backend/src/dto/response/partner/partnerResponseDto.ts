@@ -1,6 +1,5 @@
-
 interface PartnerResponse {
-    id: number; 
+    id: number;
     user_id: number;
     first_name: string;
     last_name: string;
@@ -11,7 +10,9 @@ interface PartnerResponse {
     additional_document_id: number;
     created_at: string;
     updated_at: string;
-}   
+    reason?: any;
+    reasonType?: string;
+}
 
 class PartnerResponseDto {
     public id: number;
@@ -23,10 +24,12 @@ class PartnerResponseDto {
     public aadharNumber: string;
     public aadharImageId: number;
     public additionalDocumentId: number;
+    public reason: string | null;
+    public reasonType: string | null;
     public createdAt: string;
     public updatedAt: string;
 
-    constructor(response:PartnerResponse) {
+    constructor(response: PartnerResponse) {
         this.id = response.id;
         this.userId = response.user_id;
         this.firstName = response.first_name;
@@ -36,9 +39,11 @@ class PartnerResponseDto {
         this.aadharNumber = response.aadhar_number;
         this.aadharImageId = response.aadhar_image_id;
         this.additionalDocumentId = response.additional_document_id;
+        this.reason = response.reason ? response.reason.reason : null;
+        this.reasonType = response.reasonType || (response.status === 'suspended' && response.reason ? 'Suspension' : null);
         this.createdAt = response.created_at;
         this.updatedAt = response.updated_at;
     }
-}   
+}
 
 export default PartnerResponseDto;

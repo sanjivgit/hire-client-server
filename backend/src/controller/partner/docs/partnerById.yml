@@ -33,50 +33,49 @@
                     id:
                       type: integer
                       example: 1
+                    userId:
+                      type: integer
+                      example: 5
                     firstName:
                       type: string
                       example: "John"
                     lastName:
                       type: string
                       example: "Doe"
-                    userId:
+                    serviceTypeId:
                       type: integer
-                      example: 1
+                      example: 2
+                    status:
+                      type: string
+                      example: "suspended"
+                      enum: [pending, approved, suspended, active]
+                    reason:
+                      type: string
+                      nullable: true
+                      example: "Multiple customer complaints"
+                      description: "Reason for suspension or rejection if status is suspended"
+                    reasonType:
+                      type: string
+                      nullable: true
+                      example: "Suspension"
+                      description: "Type of reason (Suspension or Rejection)"
                     aadharNumber:
                       type: string
                       example: "1234 5678 9012"
-                    serviceTypeId:
+                    aadharImageId:
                       type: integer
-                      example: 1
-                    serviceType:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        name:
-                          type: string
-                          example: "Plumbing"
-                    services:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          name:
-                            type: string
-                            example: "Pipe Fitting"
-                    status:
-                      type: string
-                      example: "pending"
+                      example: 3
+                    additionalDocumentId:
+                      type: integer
+                      example: 4
                     createdAt:
                       type: string
                       format: date-time
+                      example: "2024-03-15T10:30:00Z"
                     updatedAt:
                       type: string
                       format: date-time
+                      example: "2024-03-15T10:30:00Z"
                     user:
                       type: object
                       properties:
@@ -163,4 +162,4 @@
                   example: false
                 message:
                   type: string
-                  example: "Partner not found" 
+                  example: "Partner not found"

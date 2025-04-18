@@ -1,0 +1,108 @@
+/dashboard/partner-statistics:
+  get:
+    summary: Get Partner Statistics
+    description: Get statistics about partners including total, pending, rejected, and active counts
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    responses:
+      "200":
+        description: Partner statistics retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner statistics retrieved successfully"
+                data:
+                  type: object
+                  properties:
+                    totalPartners:
+                      type: integer
+                      example: 100
+                    pendingPartners:
+                      type: integer
+                      example: 20
+                    rejectedPartners:
+                      type: integer
+                      example: 10
+                    activePartners:
+                      type: integer
+                      example: 70
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "You are not authorized to access this resource"
+
+/dashboard/latest-partners:
+  get:
+    summary: Get Latest Partners
+    description: Get the latest 10 registered partners with their details
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    responses:
+      "200":
+        description: Latest partners retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Latest partners retrieved successfully"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "John Doe"
+                      profilePic:
+                        type: string
+                        nullable: true
+                        example: "profile-pics/123.jpg"
+                      status:
+                        type: string
+                        example: "pending"
+                      timestamp:
+                        type: string
+                        format: date-time
+                        example: "2024-04-15T10:30:00Z"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "You are not authorized to access this resource"

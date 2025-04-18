@@ -36,11 +36,11 @@ class Authorization {
     const secret = SECRET_KEY;
     const bearerHeader = req.headers["authorization"];
     const token = bearerHeader?.split(" ")[1];
-  
+
     if (token && typeof token !== "undefined") {
       try {
         const data: any = await jwt.verify(token, secret);
-        
+
         req.body.user = data?.authData;
         return next();
       } catch (error: any) {
@@ -74,12 +74,13 @@ class Authorization {
     };
     const secret = SECRET_KEY;
     const bearerHeader = req.headers["authorization"];
-    const token = bearerHeader?.split(" ")[0];
+    const token = bearerHeader?.split(" ")[1];
 
     if (token && typeof token !== "undefined") {
       try {
         const data: any = await jwt.verify(token, secret);
-        if (!data?.authData?.is_admin) {
+
+        if (data?.authData?.role !== 'admin') {
           return CommonRes.UNAUTHORISED(
             "You Are Not Authorised",
             resObj,

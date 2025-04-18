@@ -1,5 +1,5 @@
-const fs = require('fs');
-const dotenv = require('dotenv')
+const fs = require("fs");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -8,9 +8,9 @@ module.exports = {
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
-    host: 'db',
+    host: "127.0.0.1",
     port: 5432,
-    dialect: 'postgres',
+    dialect: "postgres",
     // dialectOptions: {
     //   bigNumberStrings: true,
     // },
@@ -19,9 +19,9 @@ module.exports = {
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
-    host: '127.0.0.1',
+    host: "127.0.0.1",
     port: 5432,
-    dialect: 'postgres',
+    dialect: "postgres",
     // dialectOptions: {
     //   bigNumberStrings: true,
     // },
@@ -30,9 +30,9 @@ module.exports = {
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
-    host: 'db',
+    host: "db",
     port: 5432,
-    dialect: 'postgres',
+    dialect: "postgres",
     // dialectOptions: {
     //   bigNumberStrings: true,
     //   ssl: {
