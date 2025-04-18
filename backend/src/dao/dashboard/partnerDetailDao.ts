@@ -106,7 +106,9 @@ class PartnerDetailDao {
 
     rejectPartner = async (partnerId: number, reason: string) => {
         // First, check if partner exists
-        const partner = await this.partners.findByPk(partnerId);
+        const partner = await this.partners.findByPk(partnerId, {
+            attributes: ['id', 'status']
+        });
         if (!partner) {
             return null;
         }
@@ -115,9 +117,9 @@ class PartnerDetailDao {
         const transaction = await this.sequelize.transaction();
 
         try {
-            // Update partner status to suspended
+            // Update partner status to rejected
             await partner.update({
-                status: 'suspended'
+                status: 'rejected'
             }, { transaction });
 
             // Check if a reason already exists for this partner
@@ -155,7 +157,9 @@ class PartnerDetailDao {
 
     approvePartner = async (partnerId: number) => {
         // First, check if partner exists
-        const partner = await this.partners.findByPk(partnerId);
+        const partner = await this.partners.findByPk(partnerId, {
+            attributes: ['id', 'status']
+        });
         if (!partner) {
             return null;
         }
@@ -196,7 +200,9 @@ class PartnerDetailDao {
 
     suspendPartner = async (partnerId: number, reason: string) => {
         // First, check if partner exists
-        const partner = await this.partners.findByPk(partnerId);
+        const partner = await this.partners.findByPk(partnerId, {
+            attributes: ['id', 'status']
+        });
         if (!partner) {
             return null;
         }
