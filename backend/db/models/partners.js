@@ -81,7 +81,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "RESTRICT",
       },
       status: {
-        type: DataTypes.ENUM("pending", "approved", "suspended", "active"),
+        type: DataTypes.ENUM("pending", "approved", "suspended", "rejected"),
         defaultValue: "pending",
         allowNull: false,
       },

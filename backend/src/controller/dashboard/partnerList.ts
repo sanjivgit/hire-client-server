@@ -41,7 +41,7 @@ class PartnerListController {
 
             const { data, ...pagination } = result;
             // Transform the response using DTO
-            const partners = data.map((partner: any) => new PartnerListResponseDto(partner));
+            const partners = data.map((partner: any) => new PartnerListResponseDto(partner)) || [];
 
             await CommonRes.SUCCESS(
                 "Partner list retrieved successfully",

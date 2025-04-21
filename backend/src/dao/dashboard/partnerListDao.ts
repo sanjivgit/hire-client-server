@@ -1,4 +1,5 @@
-import { generateRes } from "../../utils/generateRes";
+import { Op } from "sequelize";
+import { generateRes, generateResForPagination } from "../../utils/generateRes";
 const db = require("../../../db/models/index");
 
 interface PartnerListQuery {
@@ -12,11 +13,13 @@ class PartnerListDao {
     private partners: any;
     private users: any;
     private sequelize: any;
+    private service_types: any;
 
     constructor() {
         this.partners = db.partners;
         this.users = db.users;
         this.sequelize = db.sequelize;
+        this.service_types = db.service_types;
     }
 
     getPartnerList = async (query: PartnerListQuery) => {
@@ -34,9 +37,9 @@ class PartnerListDao {
 
         // Add search filter if provided
         if (query.search) {
-            userWhereClause[this.sequelize.Op.or] = [
-                { name: { [this.sequelize.Op.iLike]: `%${query.search}%` } },
-                { 'address.address': { [this.sequelize.Op.iLike]: `%${query.search}%` } }
+            userWhereClause[Op.or] = [
+                { name: { [Op.iLike]: `%${query.search}%` } },
+                { 'address.address': { [Op.iLike]: `%${query.search}%` } }
             ];
         }
 
@@ -50,22 +53,30 @@ class PartnerListDao {
                     where: userWhereClause,
                     attributes: ['name', 'email', 'profile_pic', 'address'],
                 },
+                {
+                    model: this.service_types,
+                    as: 'service_type',
+                    required: true,
+                    attributes: ['name'],
+                }
             ],
             attributes: ['id', 'first_name', 'last_name', 'status', 'created_at'],
             order: [['created_at', 'DESC']],
             limit,
-            offset
+            offset,
+            raw: true,
+            nest: true
         });
 
         const totalPages = Math.ceil(count / limit);
 
-        return generateRes(
+        return generateResForPagination(
             rows,
             count,
             page,
             limit,
             {
-                totalPages
+                totalPages: totalPages
             });
     };
 }

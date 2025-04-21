@@ -1,15 +1,21 @@
 export const generateRes = (
+  data: any
+) => {
+
+  if (!data || data.length == 0) null;
+
+  if (data && (!(data.length > 0))) return data;
+
+};
+
+export const generateResForPagination = (
   data: any,
   count?: number,
   page?: number,
   limit?: number,
   others?: any,
 ) => {
-    delete others?.total
-  
-  if (!data || data.length == 0) return null;
-
-  if (data && (!(data.length > 0) || !count || !page || !limit)) return data;
+  delete others?.total
 
   return {
     currentPage: page,
@@ -18,4 +24,4 @@ export const generateRes = (
     others,
     data,
   };
-};
+}

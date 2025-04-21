@@ -55,16 +55,22 @@ class DashboardDao {
                     'last_name',
                     'status',
                     'created_at'
-                ]
+                ],
+                raw: true,
+                nest: true
             });
 
-            return latestPartners.map((partner: any) => ({
-                id: partner.id,
-                name: partner.user?.name || `${partner.first_name} ${partner.last_name}`,
-                profilePic: partner.user?.profile_pic || null,
-                status: partner.status,
-                timestamp: partner.created_at
-            }));
+            return latestPartners;
+
+            // return latestPartners.map((partner: any) => {
+            //     return ({
+            //         id: partner.id,
+            //         name: partner.user?.name || `${partner.first_name} ${partner.last_name}`,
+            //         profilePic: partner.user?.profile_pic || null,
+            //         status: partner.status,
+            //         created_at: partner.created_at
+            //     })
+            // });
         } catch (error) {
             throw error;
         }

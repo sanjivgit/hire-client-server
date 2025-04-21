@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import CommonRes from "../../utils/commonResponse";
 import { resObj } from "../../utils/types";
 import DashboardDao from "../../dao/dashboard/dashboardDao";
+import PartnerListResponseDto from "../../dto/response/dashboard/partnerListResponseDto";
 
 class DashboardController {
     private dashboardDao: DashboardDao;
@@ -40,9 +41,12 @@ class DashboardController {
 
         try {
             const latestPartners = await this.dashboardDao.getLatestPartners();
+
+            const formatedLatestPartners = latestPartners.map((partner: any) => new PartnerListResponseDto(partner));
+
             return CommonRes.SUCCESS(
                 "Latest partners retrieved successfully",
-                latestPartners,
+                formatedLatestPartners,
                 resObj,
                 req,
                 res
