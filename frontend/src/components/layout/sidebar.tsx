@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { LayoutDashboard, Users, UserCheck, UserX, Settings, LogOut, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -12,6 +12,7 @@ interface SidebarProps {
 
 export function Sidebar({ isSidebarOpen, toggleSidebar }: SidebarProps) {
   const pathname = usePathname()
+  const router = useRouter()
 
   const navItems = [
     {
@@ -38,9 +39,8 @@ export function Sidebar({ isSidebarOpen, toggleSidebar }: SidebarProps) {
 
   return (
     <aside
-      className={`bg-background fixed inset-y-0 z-50 flex flex-col border-r transition-all duration-300 ease-in-out ${
-        isSidebarOpen ? "left-0 w-64" : "-left-64 w-64 lg:left-0 lg:w-16"
-      }`}
+      className={`bg-background fixed inset-y-0 z-50 flex flex-col border-r transition-all duration-300 ease-in-out ${isSidebarOpen ? "left-0 w-64" : "-left-64 w-64 lg:left-0 lg:w-16"
+        }`}
     >
       <div className="flex h-14 items-center justify-between border-b px-4">
         <Link href="/dashboard" className="flex items-center gap-2">
@@ -62,9 +62,8 @@ export function Sidebar({ isSidebarOpen, toggleSidebar }: SidebarProps) {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`flex items-center gap-3 rounded-md px-3 py-2 transition-colors hover:bg-muted ${
-                  pathname === item.href ? "bg-muted font-medium" : ""
-                }`}
+                className={`flex items-center gap-3 rounded-md px-3 py-2 transition-colors hover:bg-muted ${pathname === item.href ? "bg-muted font-medium" : ""
+                  }`}
               >
                 {item.icon}
                 <span className={`transition-opacity ${isSidebarOpen ? "opacity-100" : "opacity-0 lg:hidden"}`}>
@@ -81,6 +80,9 @@ export function Sidebar({ isSidebarOpen, toggleSidebar }: SidebarProps) {
           className="w-full justify-start gap-3"
           onClick={() => {
             /* Implement logout */
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            router.push('/auth/login');
           }}
         >
           <LogOut className="h-5 w-5" />

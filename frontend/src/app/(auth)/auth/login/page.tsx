@@ -10,21 +10,37 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { useLogin } from "@/hooks/useAuth"
+import { toast } from "sonner"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    phone: "",
+    password: ""
+  })
   const router = useRouter()
+  const loginMutation = useLogin()
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }))
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsLoading(true)
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false)
+    try {
+      await loginMutation.mutateAsync(formData)
+      // Redirect on successful login
       router.push("/admin/dashboard")
-    }, 1500)
+    } catch (error: any) {
+      // Display error message
+      toast.error(error.response?.data?.message || "Login failed. Please try again.")
+    }
   }
 
   return (
@@ -42,8 +58,15 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="admin@example.com" required />
+              <Label htmlFor="phone">Phone</Label>
+              <Input
+                id="phone"
+                type="phone"
+                placeholder="03001234567"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+              />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -53,7 +76,14 @@ export default function LoginPage() {
                 </Link>
               </div>
               <div className="relative">
-                <Input id="password" type={showPassword ? "text" : "password"} placeholder="••••••••" required />
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                />
                 <Button
                   type="button"
                   variant="ghost"
@@ -72,8 +102,8 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? (
+            <Button type="submit" className="w-full mt-4" disabled={loginMutation.isPending}>
+              {loginMutation.isPending ? (
                 <div className="flex items-center gap-2">
                   <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                   <span>Logging in...</span>
@@ -85,12 +115,12 @@ export default function LoginPage() {
                 </div>
               )}
             </Button>
-            <p className="text-center text-sm text-muted-foreground">
+            {/* <p className="text-center text-sm text-muted-foreground">
               Don&apos;t have an account?{" "}
               <Link href="/auth/signup" className="text-primary hover:underline">
                 Sign up
               </Link>
-            </p>
+            </p> */}
           </CardFooter>
         </form>
       </Card>

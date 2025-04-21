@@ -12,12 +12,13 @@ import {
   XCircle,
   FileText,
   Building,
-  Clock,
   Briefcase,
+  Loader2,
+  BookUser
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
@@ -30,67 +31,97 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
-
-// Sample partner data
-const partnerData = {
-  id: "2",
-  name: "Priya Sharma",
-  email: "priya.sharma@example.com",
-  phone: "+91 9876543211",
-  location: "Delhi, India",
-  status: "pending",
-  registeredAt: "2024-01-20",
-  businessName: "Sharma Services",
-  businessType: "Individual",
-  businessAddress: "123 Main Street, Delhi, India",
-  serviceAreas: ["Delhi", "Noida", "Gurgaon"],
-  documents: [
-    { name: "ID Proof", status: "verified", url: "#" },
-    { name: "Address Proof", status: "pending", url: "#" },
-    { name: "Business License", status: "pending", url: "#" },
-  ],
-  serviceHistory: [],
-  notes: [
-    {
-      id: "1",
-      text: "Called to verify business details",
-      createdBy: "Admin User",
-      createdAt: "2024-01-22",
-    },
-  ],
-}
+import { usePartnerDetails, useApprovePartner, useRejectPartner, useSuspendPartner } from "@/hooks/usePartners"
+import moment from "moment"
+import { toast } from "sonner"
+import { FILES } from "@/utils/apis"
 
 export default function PartnerDetailPage({ params }: { params: { id: string } }) {
-  const [activeTab, setActiveTab] = useState("overview")
+  const [activeTab, setActiveTab] = useState("documents")
   const [showRejectDialog, setShowRejectDialog] = useState(false)
   const [rejectionReason, setRejectionReason] = useState("")
+  const [suspentionReason, setSuspentionReason] = useState("");
+  const [showSuspendDialog, setShowSuspendDialog] = useState(false);
   const [note, setNote] = useState("")
 
-  // In a real app, you would fetch the partner data based on the ID
-  const partner = partnerData
+  const { data: partner, isLoading, isError } = usePartnerDetails(params.id)
+  const approveMutation = useApprovePartner()
+  const rejectMutation = useRejectPartner()
+  const suspendMutation = useSuspendPartner()
 
   const handleAddNote = () => {
     if (note.trim()) {
       // In a real app, you would call an API to add the note
-      console.log("Adding note:", note)
+      toast.success("Note added successfully")
       setNote("")
     }
   }
 
-  const handleApprove = () => {
-    // In a real app, you would call an API to approve the partner
-    console.log("Approving partner:", partner.id)
+  const handleApprove = async () => {
+    try {
+      await approveMutation.mutateAsync(params.id)
+      toast.success("Partner approved successfully")
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to approve partner")
+    }
   }
 
-  const handleReject = () => {
-    if (rejectionReason.trim()) {
-      // In a real app, you would call an API to reject the partner
-      console.log("Rejecting partner:", partner.id, "Reason:", rejectionReason)
+  const handleReject = async () => {
+    if (!rejectionReason.trim()) {
+      toast.error("Please provide a reason for rejection")
+      return
+    }
+
+    try {
+      await rejectMutation.mutateAsync({ id: params.id, reason: rejectionReason })
+      toast.success("Partner rejected successfully")
       setShowRejectDialog(false)
       setRejectionReason("")
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to reject partner")
     }
+  }
+
+  const handleSuspend = async () => {
+    if (!suspentionReason.trim()) {
+      toast.error("Please provide a reason for suspention")
+      return
+    }
+
+    try {
+      await suspendMutation.mutateAsync({ id: params.id, reason: suspentionReason })
+      toast.success("Partner suspended successfully")
+      setShowSuspendDialog(false)
+      setSuspentionReason("")
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to suspend partner")
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[calc(100vh-200px)] items-center justify-center">
+        <div className="flex flex-col items-center gap-2">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-sm text-muted-foreground">Loading partner details...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (isError || !partner) {
+    return (
+      <div className="flex h-[calc(100vh-200px)] items-center justify-center">
+        <div className="flex flex-col items-center gap-2">
+          <XCircle className="h-8 w-8 text-destructive" />
+          <p className="text-sm text-muted-foreground">Failed to load partner details</p>
+          <Button variant="outline" asChild className="mt-4">
+            <Link href="/admin/partners">Back to Partners</Link>
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -109,19 +140,23 @@ export default function PartnerDetailPage({ params }: { params: { id: string } }
         <Card className="md:col-span-1">
           <CardHeader className="flex flex-row items-center gap-4 space-y-0">
             <Avatar className="h-16 w-16">
-              <AvatarFallback className="text-xl">
-                {partner.name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </AvatarFallback>
+              {partner.profilePic ? (
+                <AvatarImage src={partner.profilePic} alt={partner.profilePic} />
+              ) : (
+                <AvatarFallback className="text-xl">
+                  {partner.fullName
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
+                </AvatarFallback>
+              )}
             </Avatar>
             <div>
-              <CardTitle>{partner.name}</CardTitle>
+              <CardTitle>{partner.fullName}</CardTitle>
               <CardDescription>
                 <Badge
                   variant={
-                    partner.status === "active" ? "default" : partner.status === "pending" ? "outline" : "destructive"
+                    partner.status === "approved" ? "default" : partner.status === "pending" ? "outline" : "destructive"
                   }
                   className="mt-1"
                 >
@@ -141,12 +176,12 @@ export default function PartnerDetailPage({ params }: { params: { id: string } }
                 <span>{partner.phone}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
-                <span>{partner.location}</span>
+                <BookUser className="h-4 w-4 text-muted-foreground" />
+                <span>{partner.aadharNumber}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
-                <span>Registered on {new Date(partner.registeredAt).toLocaleDateString()}</span>
+                <span>Registered on {moment(partner.createdAt).format('MMM DD, YYYY')}</span>
               </div>
             </div>
 
@@ -156,212 +191,191 @@ export default function PartnerDetailPage({ params }: { params: { id: string } }
               <h3 className="font-medium">Business Information</h3>
               <div className="flex items-center gap-2 text-sm">
                 <Building className="h-4 w-4 text-muted-foreground" />
-                <span>{partner.businessName}</span>
+                <span>{partner.serviceType.name}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Briefcase className="h-4 w-4 text-muted-foreground" />
-                <span>{partner.businessType}</span>
+                <span>{partner.services.map((service) => service.name).join(", ") || "Not specified"}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <MapPin className="h-4 w-4 text-muted-foreground" />
-                <span>{partner.businessAddress}</span>
+                <span>{partner.address.address}</span>
               </div>
             </div>
 
             <Separator />
 
-            {partner.status === "pending" && (
-              <div className="flex flex-col gap-3">
-                <Button className="w-full bg-green-600 hover:bg-green-700" onClick={handleApprove}>
+            <div className="flex flex-col gap-3">
+              {partner.status !== "approved" && <Button
+                className="w-full bg-green-600 hover:bg-green-700"
+                onClick={handleApprove}
+                disabled={approveMutation.isPending}
+              >
+                {approveMutation.isPending ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
                   <CheckCircle className="mr-2 h-4 w-4" />
-                  Approve Partner
-                </Button>
-                <Dialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
-                  <DialogTrigger asChild>
-                    <Button variant="destructive" className="w-full">
-                      <XCircle className="mr-2 h-4 w-4" />
-                      Reject Partner
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Reject Partner Application</DialogTitle>
-                      <DialogDescription>
-                        Please provide a reason for rejecting this partner application. This will be visible to the
-                        partner.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4 py-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="reason">Rejection Reason</Label>
-                        <Textarea
-                          id="reason"
-                          placeholder="Enter the reason for rejection..."
-                          value={rejectionReason}
-                          onChange={(e) => setRejectionReason(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <DialogFooter>
-                      <Button variant="outline" onClick={() => setShowRejectDialog(false)}>
-                        Cancel
-                      </Button>
-                      <Button variant="destructive" onClick={handleReject}>
-                        Confirm Rejection
-                      </Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              </div>
-            )}
-
-            {partner.status === "rejected" && (
-              <Button className="w-full bg-green-600 hover:bg-green-700" onClick={handleApprove}>
-                <CheckCircle className="mr-2 h-4 w-4" />
+                )}
                 Approve Partner
-              </Button>
-            )}
+              </Button>}
+              {["pending", "suspended"].includes(partner.status) ? (<Dialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
+                <Button
+                  variant="destructive"
+                  className="w-full"
+                  onClick={() => setShowRejectDialog(true)}
+                >
+                  <XCircle className="mr-2 h-4 w-4" />
+                  Reject Partner
+                </Button>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Reject Partner Application</DialogTitle>
+                    <DialogDescription>
+                      Please provide a reason for rejecting this partner application. This will be visible to the
+                      partner.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="reason">Rejection Reason</Label>
+                      <Textarea
+                        id="reason"
+                        placeholder="Enter the reason for rejection..."
+                        value={rejectionReason}
+                        onChange={(e) => setRejectionReason(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setShowRejectDialog(false)}>
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={handleReject}
+                      disabled={rejectMutation.isPending}
+                    >
+                      {rejectMutation.isPending ? (
+                        <div className="flex items-center gap-2">
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <span>Rejecting...</span>
+                        </div>
+                      ) : (
+                        "Reject Partner"
+                      )}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>) : (<Dialog open={showSuspendDialog} onOpenChange={setShowSuspendDialog}>
+                <Button
+                  variant="destructive"
+                  className="w-full"
+                  onClick={() => setShowSuspendDialog(true)}
+                >
+                  <XCircle className="mr-2 h-4 w-4" />
+                  Suspend Partner
+                </Button>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Suspend Partner Application</DialogTitle>
+                    <DialogDescription>
+                      Please provide a reason for suspending this partner application. This will be visible to the
+                      partner.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="reason">Suspention Reason</Label>
+                      <Textarea
+                        id="reason"
+                        placeholder="Enter the reason for suspention..."
+                        value={suspentionReason}
+                        onChange={(e) => setSuspentionReason(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setShowSuspendDialog(false)}>
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={handleSuspend}
+                      disabled={suspendMutation.isPending}
+                    >
+                      {suspendMutation.isPending ? (
+                        <div className="flex items-center gap-2">
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <span>Suspending...</span>
+                        </div>
+                      ) : (
+                        "Suspend Partner"
+                      )}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>)}
+            </div>
 
-            {partner.status === "active" && (
-              <Button variant="destructive" className="w-full" onClick={() => setShowRejectDialog(true)}>
-                <XCircle className="mr-2 h-4 w-4" />
-                Ban Partner
-              </Button>
-            )}
           </CardContent>
         </Card>
 
-        <div className="md:col-span-2">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="documents">Documents</TabsTrigger>
-              <TabsTrigger value="notes">Notes</TabsTrigger>
-            </TabsList>
+        <Card className="md:col-span-2">
+          <CardHeader>
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="documents">Documents</TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="overview" className="space-y-4 pt-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Service Areas</CardTitle>
-                  <CardDescription>Locations where this partner provides services</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {partner.serviceAreas.map((area) => (
-                      <Badge key={area} variant="secondary">
-                        <MapPin className="mr-1 h-3 w-3" />
-                        {area}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <TabsContent value="documents" className="space-y-4">
+                <h3 className="text-lg font-medium">Uploaded Documents</h3>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Service History</CardTitle>
-                  <CardDescription>Recent service activities by this partner</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {partner.serviceHistory.length === 0 ? (
-                    <div className="flex h-24 items-center justify-center rounded-md border border-dashed">
-                      <p className="text-sm text-muted-foreground">No service history available</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">{/* Service history items would go here */}</div>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="documents" className="space-y-4 pt-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Verification Documents</CardTitle>
-                  <CardDescription>Documents submitted by the partner for verification</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {partner.documents.map((doc) => (
-                      <div key={doc.name} className="flex items-center justify-between rounded-lg border p-4">
-                        <div className="flex items-center gap-3">
-                          <FileText className="h-5 w-5 text-muted-foreground" />
-                          <div>
-                            <p className="font-medium">{doc.name}</p>
-                            <p className="text-sm text-muted-foreground">
-                              Status:{" "}
-                              <Badge
-                                variant={
-                                  doc.status === "verified"
-                                    ? "default"
-                                    : doc.status === "pending"
-                                      ? "outline"
-                                      : "destructive"
-                                }
-                              >
-                                {doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}
-                              </Badge>
-                            </p>
-                          </div>
+                {partner.additionalDocument && partner.aadharImage ? (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between rounded-md border p-3">
+                      <div className="flex items-center gap-3">
+                        <FileText className="h-5 w-5 text-muted-foreground" />
+                        <div>
+                          <p className="text-sm font-medium">Aadhar Card</p>
+                          <p className="text-xs text-muted-foreground">pdf</p>
                         </div>
+                      </div>
+                      <div className="flex items-center gap-2">
                         <Button variant="outline" size="sm" asChild>
-                          <a href={doc.url} target="_blank" rel="noopener noreferrer">
+                          <a href={process.env.NEXT_PUBLIC_API_URL + FILES.FILE(partner.aadharImage.toString())} target="_blank" rel="noopener noreferrer">
                             View
                           </a>
                         </Button>
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+                    </div>
 
-            <TabsContent value="notes" className="space-y-4 pt-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Admin Notes</CardTitle>
-                  <CardDescription>Internal notes about this partner</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
-                    {partner.notes.length === 0 ? (
-                      <div className="flex h-24 items-center justify-center rounded-md border border-dashed">
-                        <p className="text-sm text-muted-foreground">No notes available</p>
-                      </div>
-                    ) : (
-                      partner.notes.map((note) => (
-                        <div key={note.id} className="rounded-lg border p-4">
-                          <div className="flex items-center justify-between">
-                            <p className="font-medium">{note.createdBy}</p>
-                            <p className="text-sm text-muted-foreground">
-                              <Clock className="mr-1 inline-block h-3 w-3" />
-                              {new Date(note.createdAt).toLocaleDateString()}
-                            </p>
-                          </div>
-                          <p className="mt-2 text-sm">{note.text}</p>
+                    <div className="flex items-center justify-between rounded-md border p-3">
+                      <div className="flex items-center gap-3">
+                        <FileText className="h-5 w-5 text-muted-foreground" />
+                        <div>
+                          <p className="text-sm font-medium">Additional Document</p>
+                          <p className="text-xs text-muted-foreground">pdf</p>
                         </div>
-                      ))
-                    )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm" asChild>
+                          <a href='' target="_blank" rel="noopener noreferrer">
+                            View
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="new-note">Add Note</Label>
-                    <Textarea
-                      id="new-note"
-                      placeholder="Type your note here..."
-                      value={note}
-                      onChange={(e) => setNote(e.target.value)}
-                    />
-                    <Button onClick={handleAddNote} className="mt-2">
-                      Add Note
-                    </Button>
+                ) : (
+                  <div className="flex items-center justify-center h-24 text-sm text-muted-foreground rounded-md border">
+                    No documents uploaded.
                   </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
+                )}
+              </TabsContent>
+            </Tabs>
+          </CardHeader>
+        </Card>
       </div>
-    </div>
+    </div >
   )
 }
