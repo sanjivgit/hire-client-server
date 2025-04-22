@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import CommonRes from "../../utils/commonResponse";
 import PartnerListDao from "../../dao/dashboard/partnerListDao";
 import PartnerListResponseDto from "../../dto/response/dashboard/partnerListResponseDto";
+import PartnerListWithStatsResponseDto from "../../dto/response/dashboard/partnerListWithStatsResponseDto";
 import { resObj } from "../../utils/types";
 
 class PartnerListController {
@@ -45,6 +46,53 @@ class PartnerListController {
 
             await CommonRes.SUCCESS(
                 "Partner list retrieved successfully",
+                {
+                    partners,
+                    pagination
+                },
+                resObj,
+                req,
+                res
+            );
+        } catch (error: any) {
+            await CommonRes.SERVER_ERROR(error, resObj, req, res);
+        }
+    };
+
+    getPartnerListWithServiceStats = async (req: Request, res: Response, apiId: string): Promise<void> => {
+        const resObj: resObj = {
+            apiId,
+            action: "GET",
+            version: "1.0",
+        };
+
+        try {
+            const { page, limit, status, search } = req.query;
+
+            // Check if user is admin
+            if (!req.body.user) {
+                await CommonRes.UNAUTHORISED(
+                    "unauthorised access",
+                    resObj,
+                    req,
+                    res
+                );
+                return;
+            }
+
+            const result = await this.partnerListDao.getPartnerListWithServiceStats({
+                page: page ? parseInt(page as string) : undefined,
+                limit: limit ? parseInt(limit as string) : undefined,
+                status: status as string,
+                search: search as string
+            });
+
+            const { data, ...pagination } = result;
+            // Transform the response using DTO
+            const partners = data.map((partner: any) => new PartnerListWithStatsResponseDto(partner)) || [];
+
+            await CommonRes.SUCCESS(
+                "Partner list with service statistics retrieved successfully",
                 {
                     partners,
                     pagination

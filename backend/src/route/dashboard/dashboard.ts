@@ -4,17 +4,20 @@ import DashboardController from "../../controller/dashboard/dashboardController"
 import Authorization from "../../middleware/auth";
 import PartnerListController from "../../controller/dashboard/partnerList";
 import PartnerDetailController from "../../controller/dashboard/partnerDetail";
+import AcceptedServicesStatsController from "../../controller/dashboard/acceptedServicesStatsController";
 
 class DashboardRoute {
     private dashboardController: DashboardController;
     private partnerListController: PartnerListController;
     private partnerDetailController: PartnerDetailController;
+    private acceptedServicesStatsController: AcceptedServicesStatsController;
     private authorization: Authorization;
 
     constructor() {
         this.dashboardController = new DashboardController();
         this.partnerListController = new PartnerListController();
         this.partnerDetailController = new PartnerDetailController();
+        this.acceptedServicesStatsController = new AcceptedServicesStatsController();
         this.authorization = new Authorization();
     }
 
@@ -37,6 +40,15 @@ class DashboardRoute {
                 this.dashboardController.getLatestPartners(req, res, apiId + "02")
         );
 
+        // Get accepted services statistics
+        app.route(`${baseUrl}/dashboard/accepted-services-statistics`).get(
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.authorization.jwtVerifyIsAdmin(req, res, next);
+            },
+            (req: Request, res: Response) =>
+                this.acceptedServicesStatsController.getAcceptedServicesStats(req, res, apiId + "08")
+        );
+
         // Get partner list
         app.route(`${baseUrl}/dashboard/partner/list`).get(
             async (req: Request, res: Response, next: NextFunction) => {
@@ -44,6 +56,15 @@ class DashboardRoute {
             },
             (req: Request, res: Response) =>
                 this.partnerListController.getPartnerList(req, res, apiId + "03")
+        );
+
+        // Get partner list with service stats
+        app.route(`${baseUrl}/dashboard/partner/list-with-stats`).get(
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.authorization.jwtVerifyIsAdmin(req, res, next);
+            },
+            (req: Request, res: Response) =>
+                this.partnerListController.getPartnerListWithServiceStats(req, res, apiId + "09")
         );
 
         // Get partner detail by ID
