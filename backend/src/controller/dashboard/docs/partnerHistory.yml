@@ -1,0 +1,428 @@
+/dashboard/partner/{id}/history:
+  get:
+    summary: Get Partner Working History
+    description: Get a partner's working history with details from accepted services. Only accessible by admin users.
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the partner
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: Page number for pagination
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+        description: Number of items per page
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by service name, user name or address
+    responses:
+      "200":
+        description: Partner working history retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner working history retrieved successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_10"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+                data:
+                  type: object
+                  properties:
+                    history:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          serviceName:
+                            type: string
+                            example: "Plumbing Repair"
+                          status:
+                            type: string
+                            enum: [pending, completed, cancelled]
+                            example: "completed"
+                          amount:
+                            type: number
+                            format: float
+                            example: 1200.50
+                          userAddress:
+                            type: string
+                            example: "123 Main St, New York, NY, 10001"
+                          userName:
+                            type: string
+                            example: "John Doe"
+                          userProfilePic:
+                            type: string
+                            nullable: true
+                            example: "/uploads/profile-pics/profile.jpg"
+                          createdAt:
+                            type: string
+                            format: date-time
+                            example: "2024-05-15T10:30:00Z"
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            example: "2024-05-16T15:45:00Z"
+                    pagination:
+                      type: object
+                      properties:
+                        currentPage:
+                          type: integer
+                          example: 1
+                        totalPages:
+                          type: integer
+                          example: 5
+                        totalItems:
+                          type: integer
+                          example: 42
+                        itemsPerPage:
+                          type: integer
+                          example: 10
+      "400":
+        description: Bad Request - Invalid partner ID
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid partner ID"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_10"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "401":
+        description: Unauthorized - User is not an admin
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Unauthorized access - Admin role required"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_10"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "404":
+        description: Not Found - Partner does not exist
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Partner not found"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_10"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "500":
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Internal server error"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_10"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+
+/dashboard/partner/{id}/work-stats:
+  get:
+    summary: Get Partner Work Statistics
+    description: Get a partner's work statistics including total amount earned and service counts. Only accessible by admin users.
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the partner
+    responses:
+      "200":
+        description: Partner work statistics retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Partner work statistics retrieved successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_11"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+                data:
+                  type: object
+                  properties:
+                    partnerId:
+                      type: integer
+                      example: 1
+                    partnerName:
+                      type: string
+                      example: "John Doe"
+                    partnerStatus:
+                      type: string
+                      enum: [pending, approved, suspended, rejected]
+                      example: "approved"
+                    email:
+                      type: string
+                      example: "john.doe@example.com"
+                    profilePic:
+                      type: string
+                      nullable: true
+                      example: "/uploads/profile-pics/profile.jpg"
+                    serviceType:
+                      type: string
+                      example: "Plumber"
+                    totalAmount:
+                      type: number
+                      format: float
+                      example: 25000.50
+                      description: Total earnings from completed services
+                    completedCount:
+                      type: integer
+                      example: 20
+                      description: Count of completed services
+                    pendingCount:
+                      type: integer
+                      example: 5
+                      description: Count of pending services
+                    cancelledCount:
+                      type: integer
+                      example: 2
+                      description: Count of cancelled services
+      "400":
+        description: Bad Request - Invalid partner ID
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid partner ID"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_11"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "401":
+        description: Unauthorized - User is not an admin
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Unauthorized access - Admin role required"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_11"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "404":
+        description: Not Found - Partner does not exist
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Partner not found"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_11"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "500":
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Internal server error"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_11"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"

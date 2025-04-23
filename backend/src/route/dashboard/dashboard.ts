@@ -5,12 +5,15 @@ import Authorization from "../../middleware/auth";
 import PartnerListController from "../../controller/dashboard/partnerList";
 import PartnerDetailController from "../../controller/dashboard/partnerDetail";
 import AcceptedServicesStatsController from "../../controller/dashboard/acceptedServicesStatsController";
+import PartnerHistoryController from "../../controller/dashboard/partnerHistoryController";
+import CommonRes from "../../utils/commonResponse";
 
 class DashboardRoute {
     private dashboardController: DashboardController;
     private partnerListController: PartnerListController;
     private partnerDetailController: PartnerDetailController;
     private acceptedServicesStatsController: AcceptedServicesStatsController;
+    private partnerHistoryController: PartnerHistoryController;
     private authorization: Authorization;
 
     constructor() {
@@ -18,6 +21,7 @@ class DashboardRoute {
         this.partnerListController = new PartnerListController();
         this.partnerDetailController = new PartnerDetailController();
         this.acceptedServicesStatsController = new AcceptedServicesStatsController();
+        this.partnerHistoryController = new PartnerHistoryController();
         this.authorization = new Authorization();
     }
 
@@ -101,6 +105,24 @@ class DashboardRoute {
             },
             (req: Request, res: Response) =>
                 this.partnerDetailController.suspendPartner(req, res, apiId + "07")
+        );
+
+        // Get partner working history
+        app.route(`${baseUrl}/dashboard/partner/:id/history`).get(
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.authorization.jwtVerifyIsAdmin(req, res, next);
+            },
+            (req: Request, res: Response) =>
+                this.partnerHistoryController.getPartnerWorkingHistory(req, res, apiId + "8")
+        );
+
+        // Get partner work stats
+        app.route(`${baseUrl}/dashboard/partner/:id/work-stats`).get(
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.authorization.jwtVerifyIsAdmin(req, res, next);
+            },
+            (req: Request, res: Response) =>
+                this.partnerHistoryController.getPartnerWorkStats(req, res, apiId + "9")
         );
     }
 }
