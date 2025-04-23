@@ -13,6 +13,11 @@ const APIs = {
         PARTNER_REJECT: (id: string) => `/dashboard/partner/${id}/reject`,
         PARTNER_SUSPEND: (id: string) => `/dashboard/partner/${id}/suspend`,
         PARTNER_LIST: '/dashboard/partner/list?page=',
+        PARTNER_LIST_WITH_STATS: '/dashboard/partner/list-with-stats?page=',
+        ACCEPTED_SERVICES_STATISTICS: '/dashboard/accepted-services-statistics',
+        PARTNER_WORK_HISTORY: (id: string) => `/dashboard/partner/${id}/history?page=`,
+        PARTNER_WORK_STATS: (id: string) => `/dashboard/partner/${id}/work-stats`,
+        SERVICE_HISTORY: '/dashboard/service-history',
     },
     FILES: {
         FILE: (id: string) => `files/${id}`

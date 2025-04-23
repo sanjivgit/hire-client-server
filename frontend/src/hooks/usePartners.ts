@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import apiClient from '@/utils/apiService';
 import { DASHBOARD } from '@/utils/apis';
+import axios from 'axios';
 
 export interface Partner {
     data: {
@@ -160,4 +161,5 @@ export const useSuspendPartner = () => {
             queryClient.invalidateQueries({ queryKey: [DASHBOARD.PARTNER_LIST] });
         }
     });
-}; 
+};
+
