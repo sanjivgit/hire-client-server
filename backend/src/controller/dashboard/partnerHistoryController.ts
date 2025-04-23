@@ -3,6 +3,7 @@ import CommonRes from "../../utils/commonResponse";
 import PartnerHistoryDao from "../../dao/dashboard/partnerHistoryDao";
 import PartnerHistoryResponseDto from "../../dto/response/dashboard/partnerHistoryResponseDto";
 import PartnerWorkStatsResponseDto from "../../dto/response/dashboard/partnerWorkStatsResponseDto";
+import ServiceHistoryDetailResponseDto from "../../dto/response/dashboard/serviceHistoryDetailResponseDto";
 import { resObj } from "../../utils/types";
 
 class PartnerHistoryController {
@@ -143,6 +144,74 @@ class PartnerHistoryController {
                 );
                 return;
             } else if (error.message === "Partner not found") {
+                await CommonRes.NOT_FOUND(
+                    error.message,
+                    null,
+                    resObj,
+                    req,
+                    res
+                );
+                return;
+            }
+            await CommonRes.SERVER_ERROR(error, resObj, req, res);
+        }
+    };
+
+    getServiceHistoryById = async (req: Request, res: Response, apiId: string): Promise<void> => {
+        const resObj: resObj = {
+            apiId,
+            action: "GET",
+            version: "1.0",
+        };
+
+        try {
+            const serviceHistoryId = parseInt(req.params.id);
+
+            // Check if user exists - this check is also done in the middleware
+            if (!req.body.user) {
+                await CommonRes.UNAUTHORISED(
+                    "Unauthorized access",
+                    resObj,
+                    req,
+                    res
+                );
+                return;
+            }
+
+            if (isNaN(serviceHistoryId) || serviceHistoryId <= 0) {
+                await CommonRes.BAD_REQUEST(
+                    "Invalid service history ID",
+                    resObj,
+                    req,
+                    res
+                );
+                return;
+            }
+
+            const result = await this.partnerHistoryDao.getServiceHistoryById(serviceHistoryId);
+
+            // Transform the response using DTO
+            const serviceHistoryDetail = new ServiceHistoryDetailResponseDto(result);
+
+            await CommonRes.SUCCESS(
+                "Service history details retrieved successfully",
+                serviceHistoryDetail,
+                resObj,
+                req,
+                res
+            );
+        } catch (error: any) {
+            if (error.message === "Invalid service history ID") {
+                await CommonRes.BAD_REQUEST(
+                    error.message,
+                    resObj,
+                    req,
+                    res
+                );
+                return;
+            } else if (error.message === "Service history not found" ||
+                error.message === "Partner not found" ||
+                error.message === "User not found") {
                 await CommonRes.NOT_FOUND(
                     error.message,
                     null,

@@ -426,3 +426,291 @@
                     action:
                       type: string
                       example: "GET"
+
+/dashboard/service-history/{id}:
+  get:
+    summary: Get Service History Detail
+    description: Get detailed information about a specific accepted service history, including work details, partner details, and user details. Only accessible by admin users.
+    tags:
+      - Dashboard
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the service history (accepted_services record)
+    responses:
+      "200":
+        description: Service history details retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Service history details retrieved successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_12"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+                data:
+                  type: object
+                  properties:
+                    workDetails:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 123
+                        status:
+                          type: string
+                          enum: [pending, in-progress, completed, cancelled]
+                          example: "completed"
+                        amount:
+                          type: number
+                          format: float
+                          example: 1500.75
+                        description:
+                          type: string
+                          example: "Fixed plumbing issues in the bathroom and kitchen"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2024-05-15T10:30:00Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2024-05-16T15:45:00Z"
+                        serviceName:
+                          type: string
+                          example: "Plumbing Repair"
+                        serviceRequestId:
+                          type: integer
+                          example: 456
+                    partnerDetails:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 789
+                        name:
+                          type: string
+                          example: "John Smith"
+                        firstName:
+                          type: string
+                          example: "John"
+                        lastName:
+                          type: string
+                          example: "Smith"
+                        email:
+                          type: string
+                          format: email
+                          example: "john.smith@example.com"
+                        phone:
+                          type: string
+                          example: "+1234567890"
+                        profilePic:
+                          type: string
+                          nullable: true
+                          example: "/uploads/profile-pics/profile1.jpg"
+                        status:
+                          type: string
+                          enum: [pending, approved, suspended, rejected]
+                          example: "approved"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2024-01-10T08:15:00Z"
+                        serviceType:
+                          type: string
+                          example: "Plumber"
+                        totalCompletedTasks:
+                          type: integer
+                          example: 87
+                        services:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 12
+                              name:
+                                type: string
+                                example: "Leak Repair"
+                              price:
+                                type: number
+                                format: float
+                                example: 500.00
+                    userDetails:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 234
+                        name:
+                          type: string
+                          example: "Jane Doe"
+                        email:
+                          type: string
+                          format: email
+                          example: "jane.doe@example.com"
+                        phone:
+                          type: string
+                          example: "+9876543210"
+                        profilePic:
+                          type: string
+                          nullable: true
+                          example: "/uploads/profile-pics/profile2.jpg"
+                        address:
+                          type: object
+                          properties:
+                            address:
+                              type: string
+                              example: "123 Main St"
+                            city:
+                              type: string
+                              example: "New York"
+                            state:
+                              type: string
+                              example: "NY"
+                            pincode:
+                              type: string
+                              example: "10001"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2023-12-05T14:25:00Z"
+                        totalRequests:
+                          type: integer
+                          example: 14
+      "400":
+        description: Bad Request - Invalid service history ID
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid service history ID"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_12"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "401":
+        description: Unauthorized - User is not an admin
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Unauthorized access - Admin role required"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_12"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "404":
+        description: Not Found - Service history, partner, or user not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Service history not found"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_12"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"
+      "500":
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Internal server error"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                      example: "DASHBOARD_PARTNER_HISTORY_12"
+                    version:
+                      type: string
+                      example: "1.0"
+                    responseTime:
+                      type: number
+                      example: 123.45
+                    action:
+                      type: string
+                      example: "GET"

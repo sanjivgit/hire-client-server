@@ -124,6 +124,15 @@ class DashboardRoute {
             (req: Request, res: Response) =>
                 this.partnerHistoryController.getPartnerWorkStats(req, res, apiId + "9")
         );
+
+        // Get service history details by ID
+        app.route(`${baseUrl}/dashboard/service-history/:id`).get(
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.authorization.jwtVerifyIsAdmin(req, res, next);
+            },
+            (req: Request, res: Response) =>
+                this.partnerHistoryController.getServiceHistoryById(req, res, apiId + "12")
+        );
     }
 }
 
