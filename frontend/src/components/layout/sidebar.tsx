@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, Users, UserCheck, UserX, Settings, LogOut, X } from "lucide-react"
+import { LayoutDashboard, Users, UserCheck, UserX, Settings, LogOut, X, Tag, Briefcase } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface SidebarProps {
@@ -29,6 +29,16 @@ export function Sidebar({ isSidebarOpen, toggleSidebar }: SidebarProps) {
       title: "Assigned Works",
       href: "/admin/partners/assigned-work",
       icon: <Users className="h-5 w-5" />,
+    },
+    {
+      title: "Service Types",
+      href: "/admin/service-types",
+      icon: <Tag className="h-5 w-5" />,
+    },
+    {
+      title: "Services",
+      href: "/admin/services",
+      icon: <Briefcase className="h-5 w-5" />,
     },
     {
       title: "Settings",

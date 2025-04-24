@@ -193,7 +193,7 @@ export default function PartnerWorkHistoryPage({ params }: { params: { id: strin
                   </TableCell>
                   <TableCell>{moment(work.createdAt).format('MMM DD, YYYY')}</TableCell>
                   <TableCell>
-                    <div className="flex items-center">
+                    <div className="flex items-center max-w-[150px] truncate">
                       <MapPin className="mr-1 h-4 w-4 text-muted-foreground" />
                       {work.userAddress}
                     </div>
