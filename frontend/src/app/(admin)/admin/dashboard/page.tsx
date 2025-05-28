@@ -87,7 +87,7 @@ export default function DashboardPage() {
               </div>
             ) : (
               <>
-                <div className="text-2xl font-bold">{statistics?.approvedPartners || 0}</div>
+                <div className="text-2xl font-bold">{statistics?.activePartners || 0}</div>
                 <p className="text-xs text-muted-foreground">Active partners</p>
               </>
             )}

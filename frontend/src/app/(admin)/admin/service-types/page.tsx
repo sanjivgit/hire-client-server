@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, Pencil, Trash2, Search } from "lucide-react"
-import { mockServiceTypes, type ServiceType } from "@/lib/types"
+import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -16,77 +15,104 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
+import { useServiceTypesList, useCreateServiceType, useUpdateServiceType, useDeleteServiceType, ServiceTypeWithServices } from "@/hooks/useServiceTypes"
+import { toast } from "sonner"
 
 export default function ServiceTypesPage() {
     const [searchTerm, setSearchTerm] = useState("")
-    const [serviceTypes, setServiceTypes] = useState<ServiceType[]>(mockServiceTypes)
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
     const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     const [newServiceTypeName, setNewServiceTypeName] = useState("")
-    const [currentServiceType, setCurrentServiceType] = useState<ServiceType | null>(null)
+    const [currentServiceType, setCurrentServiceType] = useState<ServiceTypeWithServices | null>(null)
+
+    // Fetch service types
+    const { data: serviceTypesData, isLoading, isError } = useServiceTypesList()
+
+    // API mutations
+    const createServiceType = useCreateServiceType()
+    const updateServiceType = useUpdateServiceType()
+    const deleteServiceType = useDeleteServiceType()
 
     // Filter service types based on search term
-    const filteredServiceTypes = serviceTypes.filter((serviceType) =>
-        serviceType.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
+    const filteredServiceTypes = serviceTypesData?.data
+        ? serviceTypesData.data.filter((serviceType) =>
+            serviceType.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        : []
 
     // Create a new service type
     const handleCreateServiceType = () => {
         if (!newServiceTypeName.trim()) return
 
-        const newServiceType: ServiceType = {
-            id: `${serviceTypes.length + 1}`,
-            name: newServiceTypeName,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-        }
-
-        setServiceTypes([...serviceTypes, newServiceType])
-        setNewServiceTypeName("")
-        setIsCreateDialogOpen(false)
+        createServiceType.mutate(
+            { name: newServiceTypeName },
+            {
+                onSuccess: () => {
+                    toast.success("Service type created successfully")
+                    setNewServiceTypeName("")
+                    setIsCreateDialogOpen(false)
+                },
+                onError: (error) => {
+                    toast.error("Failed to create service type")
+                    console.error("Error creating service type:", error)
+                }
+            }
+        )
     }
 
     // Update a service type
     const handleUpdateServiceType = () => {
         if (!currentServiceType || !newServiceTypeName.trim()) return
 
-        const updatedServiceTypes = serviceTypes.map((serviceType) =>
-            serviceType.id === currentServiceType.id
-                ? {
-                    ...serviceType,
-                    name: newServiceTypeName,
-                    updatedAt: new Date().toISOString(),
+        updateServiceType.mutate(
+            {
+                id: currentServiceType.id,
+                payload: { name: newServiceTypeName }
+            },
+            {
+                onSuccess: () => {
+                    toast.success("Service type updated successfully")
+                    setNewServiceTypeName("")
+                    setCurrentServiceType(null)
+                    setIsUpdateDialogOpen(false)
+                },
+                onError: (error) => {
+                    toast.error("Failed to update service type")
+                    console.error("Error updating service type:", error)
                 }
-                : serviceType,
+            }
         )
-
-        setServiceTypes(updatedServiceTypes)
-        setNewServiceTypeName("")
-        setCurrentServiceType(null)
-        setIsUpdateDialogOpen(false)
     }
 
     // Delete a service type
     const handleDeleteServiceType = () => {
         if (!currentServiceType) return
 
-        const updatedServiceTypes = serviceTypes.filter((serviceType) => serviceType.id !== currentServiceType.id)
-
-        setServiceTypes(updatedServiceTypes)
-        setCurrentServiceType(null)
-        setIsDeleteDialogOpen(false)
+        deleteServiceType.mutate(
+            currentServiceType.id,
+            {
+                onSuccess: () => {
+                    toast.success("Service type deleted successfully")
+                    setCurrentServiceType(null)
+                    setIsDeleteDialogOpen(false)
+                },
+                onError: (error) => {
+                    toast.error("Failed to delete service type")
+                    console.error("Error deleting service type:", error)
+                }
+            }
+        )
     }
 
     // Open update dialog
-    const openUpdateDialog = (serviceType: ServiceType) => {
+    const openUpdateDialog = (serviceType: ServiceTypeWithServices) => {
         setCurrentServiceType(serviceType)
         setNewServiceTypeName(serviceType.name)
         setIsUpdateDialogOpen(true)
     }
 
     // Open delete dialog
-    const openDeleteDialog = (serviceType: ServiceType) => {
+    const openDeleteDialog = (serviceType: ServiceTypeWithServices) => {
         setCurrentServiceType(serviceType)
         setIsDeleteDialogOpen(true)
     }
@@ -121,18 +147,42 @@ export default function ServiceTypesPage() {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Name</TableHead>
-                                <TableHead>Created At</TableHead>
-                                <TableHead>Updated At</TableHead>
+                                <TableHead>Services</TableHead>
                                 <TableHead className="w-[100px]">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {filteredServiceTypes.length > 0 ? (
+                            {isLoading ? (
+                                <TableRow>
+                                    <TableCell colSpan={3} className="text-center py-8">
+                                        <div className="flex justify-center">
+                                            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            ) : isError ? (
+                                <TableRow>
+                                    <TableCell colSpan={3} className="text-center py-4 text-red-500">
+                                        Error loading service types. Please try again.
+                                    </TableCell>
+                                </TableRow>
+                            ) : filteredServiceTypes.length > 0 ? (
                                 filteredServiceTypes.map((serviceType) => (
                                     <TableRow key={serviceType.id}>
                                         <TableCell className="font-medium">{serviceType.name}</TableCell>
-                                        <TableCell>{new Date(serviceType.createdAt).toLocaleDateString()}</TableCell>
-                                        <TableCell>{new Date(serviceType.updatedAt).toLocaleDateString()}</TableCell>
+                                        <TableCell>
+                                            {serviceType.services && serviceType.services.length > 0 ? (
+                                                <div className="flex flex-wrap gap-1">
+                                                    {serviceType.services.map(service => (
+                                                        <span key={service.id} className="inline-block px-2 py-1 bg-gray-100 rounded text-xs">
+                                                            {service.name}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <span className="text-muted-foreground text-sm">No services</span>
+                                            )}
+                                        </TableCell>
                                         <TableCell>
                                             <div className="flex gap-2">
                                                 <Button variant="outline" size="icon" onClick={() => openUpdateDialog(serviceType)}>
@@ -152,7 +202,7 @@ export default function ServiceTypesPage() {
                                 ))
                             ) : (
                                 <TableRow>
-                                    <TableCell colSpan={4} className="text-center py-4">
+                                    <TableCell colSpan={3} className="text-center py-4">
                                         No service types found.
                                     </TableCell>
                                 </TableRow>
@@ -184,10 +234,13 @@ export default function ServiceTypesPage() {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                        <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)} disabled={createServiceType.isPending}>
                             Cancel
                         </Button>
-                        <Button onClick={handleCreateServiceType}>Create</Button>
+                        <Button onClick={handleCreateServiceType} disabled={createServiceType.isPending}>
+                            {createServiceType.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Create
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
@@ -213,10 +266,13 @@ export default function ServiceTypesPage() {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsUpdateDialogOpen(false)}>
+                        <Button variant="outline" onClick={() => setIsUpdateDialogOpen(false)} disabled={updateServiceType.isPending}>
                             Cancel
                         </Button>
-                        <Button onClick={handleUpdateServiceType}>Update</Button>
+                        <Button onClick={handleUpdateServiceType} disabled={updateServiceType.isPending}>
+                            {updateServiceType.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Update
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
@@ -231,10 +287,11 @@ export default function ServiceTypesPage() {
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                        <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)} disabled={deleteServiceType.isPending}>
                             Cancel
                         </Button>
-                        <Button variant="destructive" onClick={handleDeleteServiceType}>
+                        <Button variant="destructive" onClick={handleDeleteServiceType} disabled={deleteServiceType.isPending}>
+                            {deleteServiceType.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Delete
                         </Button>
                     </DialogFooter>

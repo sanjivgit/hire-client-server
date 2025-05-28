@@ -20,10 +20,26 @@ const APIs = {
         SERVICE_HISTORY: '/dashboard/service-history',
     },
     FILES: {
-        FILE: (id: string) => `files/${id}`
+        FILE: (id: string) => `file/${id}`,
+        FILE_WITHOUT_TOKEN: (id: string) => `file-without-token/${id}`
+    },
+    SERVICE_TYPES: {
+        LIST: '/service-types',
+        CREATE: '/service-types/create',
+        UPDATE: (id: number) => `/service-types/update/${id}`,
+        DELETE: (id: number) => `/service-types/delete/${id}`
+    },
+    SERVICES: {
+        LIST: '/services',
+        CREATE: '/services/create',
+        UPDATE: (id: number) => `/services/update/${id}`,
+        DELETE: (id: number) => `/services/delete/${id}`
+    },
+    FILES_UPLOAD: {
+        UPLOAD: '/file/upload'
     }
 }
 
-export const { AUTH, DASHBOARD, FILES } = APIs;
+export const { AUTH, DASHBOARD, FILES, SERVICE_TYPES, SERVICES, FILES_UPLOAD } = APIs;
 
 export default APIs

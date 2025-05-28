@@ -6,7 +6,7 @@ export interface DashboardStats {
     data: {
         totalPartners: number;
         pendingRequests: number;
-        approvedPartners: number;
+        activePartners: number;
         rejectedPartners: number;
     }
 }
@@ -54,12 +54,12 @@ export const useRecentPartners = () => {
     });
 };
 
-export const useRecentActivities = () => {
-    return useQuery({
-        queryKey: ['dashboard', 'recentActivities'],
-        queryFn: async () => {
-            const response = await apiClient.get<Activity[]>(DASHBOARD.RECENT_ACTIVITIES);
-            return response.data;
-        }
-    });
-}; 
+// export const useRecentActivities = () => {
+//     return useQuery({
+//         queryKey: ['dashboard', 'recentActivities'],
+//         queryFn: async () => {
+//             const response = await apiClient.get<Activity[]>(DASHBOARD.RECENT_ACTIVITIES);
+//             return response.data;
+//         }
+//     });
+// }; 

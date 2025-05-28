@@ -285,8 +285,7 @@ class PartnerHistoryDao {
             const partnerServicesQuery = `
                 SELECT 
                     s.id as service_id,
-                    s.name as service_name,
-                    s.price as service_price
+                    s.name as service_name
                 FROM partner_services ps
                 JOIN services s ON ps.service_id = s.id
                 WHERE ps.partner_id = :partnerId

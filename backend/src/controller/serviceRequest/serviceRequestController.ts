@@ -48,13 +48,13 @@ class ServiceRequestController {
         return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
       }
 
-      const isRequestedAlready = await this.dao.checkDuplicateServiceRequest(userDetails?.id, req.body.service_id)
+      const isRequestedAlready = await this.dao.checkDuplicateServiceRequest(userDetails?.id, serviceRequestDto.service_id)
 
-      if(isRequestedAlready){
+      if (isRequestedAlready) {
         return CommonRes.CONFLICT_ERROR('You have already requested for this service. Now after 24 hour again able to request.', resObj, req, res);
       }
 
-      const serviceRequest = await this.dao.createServiceRequest(serviceRequestDto, {city: userDetails?.address?.city, pincode: userDetails?.address?.pincode});
+      const serviceRequest = await this.dao.createServiceRequest(serviceRequestDto, { city: userDetails?.address?.city, pincode: userDetails?.address?.pincode });
 
       const responseData = new ServiceRequestResponseDto(serviceRequest.toJSON());
 
@@ -94,7 +94,7 @@ class ServiceRequestController {
       // Ensure the user can only delete their own requests
       const user_id = req.body.user?.id;
       const serviceRequest = await this.dao.getServiceRequestById(id);
-      
+
       if (!serviceRequest) {
         return CommonRes.SUCCESS("Service request not found", null, resObj, req, res);
       }
@@ -186,22 +186,22 @@ class ServiceRequestController {
           res
         );
       }
-      
+
       // Parse filters from query parameters
       const filters: any = {};
-      
+
       if (req.query.start_date) {
         filters.start_date = new Date(req.query.start_date as string);
       }
-      
+
       if (req.query.end_date) {
         filters.end_date = new Date(req.query.end_date as string);
       }
-      
+
       if (req.query.service_id) {
         filters.service_id = parseInt(req.query.service_id as string);
       }
-      
+
       if (req.query.status) {
         filters.status = req.query.status as string;
       }
@@ -212,7 +212,7 @@ class ServiceRequestController {
           start_date: filters.start_date,
           end_date: filters.end_date
         });
-        
+
         if (error) {
           return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
         }
