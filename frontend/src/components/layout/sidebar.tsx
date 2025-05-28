@@ -40,11 +40,11 @@ export function Sidebar({ isSidebarOpen, toggleSidebar }: SidebarProps) {
       href: "/admin/services",
       icon: <Briefcase className="h-5 w-5" />,
     },
-    {
-      title: "Settings",
-      href: "/admin/settings",
-      icon: <Settings className="h-5 w-5" />,
-    },
+    // {
+    //   title: "Settings",
+    //   href: "/admin/settings",
+    //   icon: <Settings className="h-5 w-5" />,
+    // },
   ]
 
   return (
