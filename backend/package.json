@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "server.ts",
   "scripts": {
-    "build": "rm -rf ./build && npx tsc",
+    "build": "rm -rf ./dist && npx tsc && npm run copy-db",
+    "copy-db": "cp -r db dist/db",
     "lint": "eslint src/",
-    "start": "node build/src/server.js",
+    "start": "node dist/src/server.js",
     "devwithnode": "rm -rf dist && npx tsc --watch && node src/server.ts",
     "dev": "nodemon src/server.ts"
   },

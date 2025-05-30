@@ -3,6 +3,7 @@
     /* Language and Environment */
     "target": "es2016", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "outDir": "./dist",
+    "resolveJsonModule": true,
     /* Modules */
     "module": "commonjs",
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
@@ -21,7 +22,8 @@
     }
   },
   "include": [
-    "src/**/*.ts" // Adjust the path pattern based on your project structure
+    "src/**/*.ts",
+    "src/**/*.json"
   ],
   "exclude": [
     "node_modules"

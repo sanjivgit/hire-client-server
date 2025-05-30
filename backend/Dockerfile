@@ -13,9 +13,9 @@ WORKDIR /backend
 ENV NODE_ENV=production
 
 COPY package*.json ./
-RUN npm install --only=production
+RUN npm install
 COPY --from=builder /backend/dist ./dist
 
 EXPOSE 2001
 CMD ["sh", "-c", "npx sequelize-cli db:migrate && npm start"]
-
+# CMD ["npm", "start"]

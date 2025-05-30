@@ -16,13 +16,14 @@ services: # Defines the services (containers) to be run.
       - /backend/node_modules # Prevents overwriting node_modules in the container.
     networks:
       - backend_network
-    command: sh -c "sleep 10 && npx sequelize-cli db:migrate && npm run dev" # Command to run when the container starts (development mode).
+    command: sh -c "sleep 10 && npx sequelize-cli db:migrate && npm start" # Command to run when the container starts (development mode).
 
 
   db: # Service for the PostgreSQL database.
     image: postgres:16 # Uses the PostgreSQL 15 image from Docker Hub.
     container_name: hire_db # A custom name for the container.
     environment: # Environment variables for PostgreSQL configuration.
+      NODE_ENV: ${NODE_ENV}
       POSTGRES_USER: ${POSTGRES_USER} # Username for PostgreSQL (from .env file).
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # Password for PostgreSQL (from .env file).
       POSTGRES_DB: ${POSTGRES_DB} # Database name for PostgreSQL (from .env file).
