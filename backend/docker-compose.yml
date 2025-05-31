@@ -13,10 +13,10 @@ services: # Defines the services (containers) to be run.
       - db # Ensures the database service starts before the backend service.
     volumes:
       - .:/backend # Mounts the current directory into the container for live code changes.
-      - /backend/node_modules # Prevents overwriting node_modules in the container.
+    #   - /backend/node_modules # Prevents overwriting node_modules in the container.
     networks:
       - backend_network
-    command: sh -c "sleep 10 && npx sequelize-cli db:migrate && npm start" # Command to run when the container starts (development mode).
+    command: sh -c "sleep 10 && npm run build && npx sequelize-cli db:migrate && npm start" # Command to run when the container starts (development mode).
 
 
   db: # Service for the PostgreSQL database.
