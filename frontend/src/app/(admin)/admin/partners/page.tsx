@@ -2,15 +2,14 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Search, Filter, MoreHorizontal, Eye, CheckCircle, XCircle, Download, Loader2 } from "lucide-react"
+import { Filter, Eye, Download, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { usePartners, useApprovePartner, useRejectPartner } from "@/hooks/usePartners"
+import { usePartners, useRejectPartner } from "@/hooks/usePartners"
 import moment from 'moment'
 import { toast } from "sonner"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
@@ -21,27 +20,12 @@ export default function PartnersPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [rejectDialogOpen, setRejectDialogOpen] = useState(false)
-  const [selectedPartnerId, setSelectedPartnerId] = useState("")
+  const [selectedPartnerId] = useState("")
   const [rejectReason, setRejectReason] = useState("")
-  const [page, setPage] = useState(1)
+  const [page] = useState(1)
 
   const { data: partners, isLoading } = usePartners(page, statusFilter, searchTerm)
-  const approveMutation = useApprovePartner()
   const rejectMutation = useRejectPartner()
-
-  const handleApprove = async (id: string) => {
-    try {
-      await approveMutation.mutateAsync(id)
-      toast.success("Partner approved successfully")
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to approve partner")
-    }
-  }
-
-  const openRejectDialog = (id: string) => {
-    setSelectedPartnerId(id)
-    setRejectDialogOpen(true)
-  }
 
   const handleReject = async () => {
     if (!rejectReason.trim()) {

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowLeft, Search, Filter, Calendar, Clock, MapPin, DollarSign, Loader2 } from "lucide-react"
+import { ArrowLeft, Filter, Calendar, Clock, MapPin, DollarSign, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -22,7 +22,7 @@ const partner = {
   phone: "+91 9876543210",
 }
 
-export default function PartnerWorkHistoryPage({ params }: { params: { id: string } }) {
+export default function PartnerWorkHistoryPage({ params }: any) {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [currentPage, setCurrentPage] = useState(1)

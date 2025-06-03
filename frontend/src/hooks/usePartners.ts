@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import apiClient from '@/utils/apiService';
 import { DASHBOARD } from '@/utils/apis';
-import axios from 'axios';
 
 export interface Partner {
     data: {
@@ -112,7 +111,7 @@ export const useApprovePartner = () => {
 
     return useMutation({
         mutationFn: async (id: string) => {
-            const response = await apiClient.put(DASHBOARD.PARTNER_APPROVE(id));
+            await apiClient.put(DASHBOARD.PARTNER_APPROVE(id));
             return { id };
         },
         onSuccess: (data) => {
@@ -131,7 +130,7 @@ export const useRejectPartner = () => {
 
     return useMutation({
         mutationFn: async ({ id, reason }: { id: string; reason: string }) => {
-            const response = await apiClient.put(DASHBOARD.PARTNER_REJECT(id), { reason });
+            await apiClient.put(DASHBOARD.PARTNER_REJECT(id), { reason });
             return { id };
         },
         onSuccess: (data) => {

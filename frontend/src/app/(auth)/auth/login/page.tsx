@@ -66,6 +66,7 @@ export default function LoginPage() {
                 required
                 value={formData.phone}
                 onChange={handleChange}
+                maxLength={10}
               />
             </div>
             <div className="space-y-2">

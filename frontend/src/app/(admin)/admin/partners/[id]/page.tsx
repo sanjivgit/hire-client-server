@@ -37,26 +37,18 @@ import moment from "moment"
 import { toast } from "sonner"
 import { FILES } from "@/utils/apis"
 
-export default function PartnerDetailPage({ params }: { params: { id: string } }) {
+
+export default function PartnerDetailPage({ params }: any) {
   const [activeTab, setActiveTab] = useState("documents")
   const [showRejectDialog, setShowRejectDialog] = useState(false)
   const [rejectionReason, setRejectionReason] = useState("")
   const [suspentionReason, setSuspentionReason] = useState("");
   const [showSuspendDialog, setShowSuspendDialog] = useState(false);
-  const [note, setNote] = useState("")
 
   const { data: partner, isLoading, isError } = usePartnerDetails(params.id)
   const approveMutation = useApprovePartner()
   const rejectMutation = useRejectPartner()
   const suspendMutation = useSuspendPartner()
-
-  const handleAddNote = () => {
-    if (note.trim()) {
-      // In a real app, you would call an API to add the note
-      toast.success("Note added successfully")
-      setNote("")
-    }
-  }
 
   const handleApprove = async () => {
     try {
