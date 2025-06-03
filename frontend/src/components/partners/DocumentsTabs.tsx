@@ -5,7 +5,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 
 export default function PartnerTabs() {
     const [mounted, setMounted] = useState(false)
-    const [note, setNote] = useState("")
     const [activeTab, setActiveTab] = useState("overview")
 
     useEffect(() => {

@@ -131,6 +131,7 @@ export default function ServicesPage() {
                 }
             )
         } catch (error) {
+            console.log("error >>>", error)
             // Error already handled in uploadIcon
         }
     }
@@ -179,6 +180,7 @@ export default function ServicesPage() {
                 }
             )
         } catch (error) {
+            console.log("error >>>", error)
             // Error already handled in uploadIcon
         }
     }

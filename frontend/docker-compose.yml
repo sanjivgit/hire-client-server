@@ -9,4 +9,4 @@ services:
       - NODE_ENV=production
     volumes:
       - .:/frontend
-    command: sh -c "sleep 10 && npm run build && npm start"
+    command: sh -c "sleep 10 && npm run dev"

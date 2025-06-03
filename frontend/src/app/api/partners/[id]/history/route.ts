@@ -137,8 +137,7 @@ const workHistoryData = [
 ];
 
 export async function GET(
-    request: NextRequest,
-    { params }: { params: { id: string } }
+    request: NextRequest
 ) {
     try {
         // Pagination parameters

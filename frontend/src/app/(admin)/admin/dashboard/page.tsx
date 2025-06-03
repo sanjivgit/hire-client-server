@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, UserCheck, UserX, TrendingUp, MapPin, Loader2 } from "lucide-react"
+import { Users, UserCheck, UserX, TrendingUp, Loader2 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useDashboardStatistics, useRecentPartners } from "@/hooks/useDashboard"
 import moment from "moment"

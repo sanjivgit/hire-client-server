@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, Users, UserCheck, UserX, Settings, LogOut, X, Tag, Briefcase } from "lucide-react"
+import { LayoutDashboard, Users, LogOut, X, Tag, Briefcase } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface SidebarProps {
