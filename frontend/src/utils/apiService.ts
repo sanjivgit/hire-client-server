@@ -31,7 +31,9 @@ apiClient.interceptors.response.use(
     (error) => {
         // Handle unauthorized errors or token expiration
         if (error.response?.status === 401) {
-            // localStorage.removeItem('token');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user')
+            window.location.replace('/auth/login')
             // You can redirect to login page if needed
         }
         return Promise.reject(error);
