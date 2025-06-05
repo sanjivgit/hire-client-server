@@ -1,7 +1,14 @@
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function Home() {
-  // Redirect to admin dashboard or login page
-  redirect("/admin/dashboard")
+  const router = useRouter()
+
+  useEffect(() => {
+    // Use absolute path with domain for Windows compatibility
+    window.location.href = '/admin/dashboard/'
+  }, [])
+
+  return <div>Redirecting to dashboard...</div>
 }
 

@@ -1,11 +1,12 @@
 {
+  "trailingSlash": true,
   "rewrites": [
     {
-      "source": "/admin/:path*",
-      "destination": "/admin/:path*"
+      "source": "/admin/dashboard",
+      "destination": "/admin/dashboard/index.html"
     },
     {
-      "source": "/(.*)",
+      "source": "/",
       "destination": "/index.html"
     }
   ]
