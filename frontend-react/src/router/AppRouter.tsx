@@ -13,6 +13,7 @@ import AssignedWorkPage from "@/pages/admin/partners/assigned-work/AssignedWorkP
 import ServiceTypesPage from "@/pages/admin/service-types/Index";
 import ServicesPage from "@/pages/admin/services/Index";
 import SettingsPage from "@/pages/admin/settings/Index";
+import PrivacyPolice from "@/pages/PrivacyPolicy";
 
 const AppRouter = () => {
     return (
@@ -34,6 +35,7 @@ const AppRouter = () => {
                     <Route path="/admin/services" element={<ServicesPage />} />
                     <Route path="/admin/settings" element={<SettingsPage />} />
                 </Route>
+                <Route path="/privacy-policy" element={<PrivacyPolice />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
