@@ -35,23 +35,33 @@ import { usePartnerDetails, useApprovePartner, useRejectPartner, useSuspendPartn
 import moment from "moment"
 import { toast } from "sonner"
 import { FILES } from "@/utils/apis"
+import { useParams } from "react-router-dom"
+import apiClient, { apiClientForImage } from "@/utils/apiService"
 
 
-export default function PartnerDetailPage({ params }: any) {
+export default function PartnerDetailPage() {
+  const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState("documents")
   const [showRejectDialog, setShowRejectDialog] = useState(false)
   const [rejectionReason, setRejectionReason] = useState("")
   const [suspentionReason, setSuspentionReason] = useState("");
   const [showSuspendDialog, setShowSuspendDialog] = useState(false);
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
-  const { data: partner, isLoading, isError } = usePartnerDetails(params.id)
+
+  const { data: partner, isLoading, isError } = usePartnerDetails(id ?? "")
   const approveMutation = useApprovePartner()
   const rejectMutation = useRejectPartner()
   const suspendMutation = useSuspendPartner()
 
   const handleApprove = async () => {
     try {
-      await approveMutation.mutateAsync(params.id)
+      if (!id) {
+        toast.error("Partner ID is required for approval")
+        return
+      }
+
+      await approveMutation.mutateAsync(id)
       toast.success("Partner approved successfully")
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to approve partner")
@@ -59,13 +69,18 @@ export default function PartnerDetailPage({ params }: any) {
   }
 
   const handleReject = async () => {
+    if (!id) {
+      toast.error("Partner ID is required for rejection")
+      return
+    }
+
     if (!rejectionReason.trim()) {
       toast.error("Please provide a reason for rejection")
       return
     }
 
     try {
-      await rejectMutation.mutateAsync({ id: params.id, reason: rejectionReason })
+      await rejectMutation.mutateAsync({ id, reason: rejectionReason })
       toast.success("Partner rejected successfully")
       setShowRejectDialog(false)
       setRejectionReason("")
@@ -75,13 +90,17 @@ export default function PartnerDetailPage({ params }: any) {
   }
 
   const handleSuspend = async () => {
+    if (!id) {
+      toast.error("Partner ID is required for suspension")
+      return
+    }
     if (!suspentionReason.trim()) {
       toast.error("Please provide a reason for suspention")
       return
     }
 
     try {
-      await suspendMutation.mutateAsync({ id: params.id, reason: suspentionReason })
+      await suspendMutation.mutateAsync({ id, reason: suspentionReason })
       toast.success("Partner suspended successfully")
       setShowSuspendDialog(false)
       setSuspentionReason("")
@@ -114,6 +133,29 @@ export default function PartnerDetailPage({ params }: any) {
       </div>
     )
   }
+
+  // const handleView = async () => {
+  //   const response = await apiClientForImage.get(
+  //     `${import.meta.env.VITE_PUBLIC_API_URL + FILES.FILE(partner.aadharImage.toString())}`,
+  //     {
+  //       responseType: 'blob',
+  //     }
+  //   );
+  //   const url = window.URL.createObjectURL(new Blob([response.data]));
+  //   window.open(url, '_blank');
+  // };
+
+
+  const fetchFile = async () => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${import.meta.env.VITE_PUBLIC_API_URL + FILES.FILE(partner.aadharImage.toString())}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const blob = await response.blob();
+    setBlobUrl(URL.createObjectURL(blob));
+  };
 
   return (
     <div className="space-y-6">
@@ -332,11 +374,18 @@ export default function PartnerDetailPage({ params }: any) {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" asChild>
-                          <a href={import.meta.env.VITE_PUBLIC_API_URL + FILES.FILE(partner.aadharImage.toString())} target="_blank" rel="noopener noreferrer">
-                            View
-                          </a>
+                        <Button variant="outline" size="sm" onClick={fetchFile}>
+                          {/* <a href={import.meta.env.VITE_PUBLIC_API_URL + FILES.FILE(partner.aadharImage.toString())} target="_blank" rel="noopener noreferrer"> */}
+                          View
+                          {/* </a> */}
                         </Button>
+                        {blobUrl && (
+                          <iframe
+                            src={blobUrl}
+                            style={{ width: "100%", height: "600px" }}
+                            title="Secure File"
+                          />
+                        )}
                       </div>
                     </div>
 

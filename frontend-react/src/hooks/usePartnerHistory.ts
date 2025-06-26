@@ -116,7 +116,7 @@ export interface WorkDetailResponse {
     };
 }
 
-export function useWorkDetails(workId: string) {
+export function useWorkDetails(workId?: string) {
     return useQuery({
         queryKey: [DASHBOARD.SERVICE_HISTORY, workId],
         queryFn: async () => {

@@ -32,12 +32,14 @@ import {
 } from "@/components/ui/dialog"
 import { useWorkDetails } from "@/hooks/usePartnerHistory"
 import moment from 'moment'
+import { useParams } from "react-router-dom"
 
-export default function WorkDetailsPage({ params }: any) {
+export default function WorkDetailsPage() {
+  const params = useParams()
   const [showCancelDialog, setShowCancelDialog] = useState(false)
   const [cancellationReason, setCancellationReason] = useState("")
 
-  const { data, isLoading } = useWorkDetails(params.id);
+  const { data, isLoading } = useWorkDetails(params?.workId);
 
   const handleCancel = () => {
     if (cancellationReason.trim()) {
@@ -75,7 +77,7 @@ export default function WorkDetailsPage({ params }: any) {
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
-          <a href={`/admin/partners/${params.id}/work-history`}>
+          <a href={`/admin/partners/${params?.workId}/work-history`}>
             <ArrowLeft className="h-5 w-5" />
             <span className="sr-only">Back</span>
           </a>

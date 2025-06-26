@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Filter, MoreHorizontal, Calendar, Clock, Loader2, RefreshCw } from "lucide-react"
+import { Filter, MoreHorizontal, Calendar, Loader2, RefreshCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -232,12 +232,12 @@ export default function AssignedWorkPage() {
                             View Work History
                           </a>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
+                        {/* <DropdownMenuItem asChild>
                           <a href={`/admin/partners/${partner.id}/assign-work`}>
                             <Clock className="mr-2 h-4 w-4" />
                             Assign New Work
                           </a>
-                        </DropdownMenuItem>
+                        </DropdownMenuItem> */}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

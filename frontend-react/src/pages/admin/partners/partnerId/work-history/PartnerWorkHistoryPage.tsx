@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { ArrowLeft, Filter, Calendar, Clock, MapPin, DollarSign, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -12,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import moment from 'moment'
 import { usePartnerHistoryStatistics, usePartnerWorkHistory } from "@/hooks/usePartnerHistory"
+import { useParams } from "react-router-dom"
 
 // Sample data for fallback
 const partner = {
@@ -21,7 +20,8 @@ const partner = {
   phone: "+91 9876543210",
 }
 
-export default function PartnerWorkHistoryPage({ params }: any) {
+export default function PartnerWorkHistoryPage() {
+  const { id } = useParams()
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [currentPage, setCurrentPage] = useState(1)
@@ -29,12 +29,12 @@ export default function PartnerWorkHistoryPage({ params }: any) {
   const {
     data: workHistoryData,
     isLoading: historyLoading
-  } = usePartnerWorkHistory(params.id, currentPage, statusFilter, searchTerm)
+  } = usePartnerWorkHistory(id ?? "", currentPage, statusFilter, searchTerm)
 
   const {
     data: partnerStats,
     isLoading: statsLoading
-  } = usePartnerHistoryStatistics(params.id)
+  } = usePartnerHistoryStatistics(id ?? "")
 
   const isLoading = historyLoading || statsLoading;
 
@@ -200,7 +200,7 @@ export default function PartnerWorkHistoryPage({ params }: any) {
                   <TableCell>₹{work.amount.toLocaleString()}</TableCell>
                   <TableCell className="text-right">
                     <Button variant="outline" size="sm" asChild>
-                      <a href={`/admin/partners/${params.id}/work-history/${work.id}`}>View Details</a>
+                      <a href={`/admin/partners/${id}/work-history/${work.id}`}>View Details</a>
                     </Button>
                   </TableCell>
                 </TableRow>
