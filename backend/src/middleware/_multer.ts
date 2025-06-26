@@ -23,10 +23,11 @@ const storage = multer.diskStorage({
     const dest = fileFor === "profilePic" ? profilePicsDir : fileFor === "document" ? documentsDir : iconsDir;
     const token: string = req.headers["authorization"]?.split(" ")[1] || "";
     const decoded: any = await jwt.verify(token, SECRET_KEY);
-   
+
     const userId = decoded?.authData?.id || "unknown";
 
-    const destDir = fileFor === 'document' ? `${dest}/${userId}` : dest;
+    // const destDir = fileFor === 'document' ? `${dest}/${userId}` : dest;
+    const destDir = dest;
 
     if (!fs.existsSync(destDir)) {
       fs.mkdirSync(destDir, { recursive: true });
@@ -47,7 +48,7 @@ const fileFilter = (
   cb: multer.FileFilterCallback
 ) => {
   const fileFor = req.query.fileFor;
-  
+
   if (fileFor === "profilePic") {
     // Allow only image files for profile pictures
     if (!file.mimetype.startsWith("image/")) {

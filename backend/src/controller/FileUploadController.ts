@@ -53,7 +53,7 @@ class FileUploadController {
     try {
       const userId = String(req.body.user.id);
       const fileId = parseInt(req.params.id);
-      
+
       if (isNaN(fileId)) {
         CommonRes.BAD_REQUEST(
           "Invalid file ID",
@@ -66,7 +66,7 @@ class FileUploadController {
 
       // Get file details from the database
       const fileData = await this.fileDao.getFileById(fileId);
-      
+
       if (!fileData) {
         CommonRes.NOT_FOUND(
           "File not found",
@@ -81,7 +81,7 @@ class FileUploadController {
       // Determine the file path based on file type
       const publicDir = path.join(process.cwd(), 'public');
       let filePath;
-      
+
       // Check if the file is an image or document based on extension
       const fileExtension = path.extname(fileData.file_path).toLowerCase();
       const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
@@ -92,12 +92,12 @@ class FileUploadController {
 
         // If not found in profile-pics, check documents as fallback
         if (!fs.existsSync(filePath)) {
-          filePath = path.join(publicDir, 'uploads', 'documents', userId, fileData.file_path);
+          filePath = path.join(publicDir, 'uploads', 'documents', fileData.file_path);
         }
       } else {
         // For documents, check in documents folder first
-        filePath = path.join(publicDir, 'uploads', 'documents', userId, fileData.file_path);
-        
+        filePath = path.join(publicDir, 'uploads', 'documents', fileData.file_path);
+
         // If not found in documents, check profile-pics as fallback
         if (!fs.existsSync(filePath)) {
           filePath = path.join(publicDir, 'uploads', 'profile-pics', fileData.file_path);
@@ -150,7 +150,7 @@ class FileUploadController {
       // Stream the file
       const fileStream = fs.createReadStream(filePath);
       fileStream.pipe(res);
-      
+
     } catch (error: any) {
       CommonRes.SERVER_ERROR(error, resObj, req, res);
     }
@@ -165,7 +165,7 @@ class FileUploadController {
 
     try {
       const fileId = parseInt(req.params.id);
-      
+
       if (isNaN(fileId)) {
         CommonRes.BAD_REQUEST(
           "Invalid file ID",
@@ -178,7 +178,7 @@ class FileUploadController {
 
       // Get file details from the database
       const fileData = await this.fileDao.getFileById(fileId);
-      
+
       if (!fileData) {
         CommonRes.NOT_FOUND(
           "File not found",
@@ -193,7 +193,7 @@ class FileUploadController {
       // Determine the file path based on file type
       const publicDir = path.join(process.cwd(), 'public');
       let filePath;
-      
+
       // Check if the file is an image or document based on extension
       const fileExtension = path.extname(fileData.file_path).toLowerCase();
 
@@ -250,7 +250,7 @@ class FileUploadController {
       // Stream the file
       const fileStream = fs.createReadStream(filePath);
       fileStream.pipe(res);
-      
+
     } catch (error: any) {
       CommonRes.SERVER_ERROR(error, resObj, req, res);
     }

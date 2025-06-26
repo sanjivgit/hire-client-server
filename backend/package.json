@@ -8,7 +8,7 @@
     "lint": "eslint src/",
     "start": "node dist/src/server.js",
     "devwithnode": "rm -rf dist && npx tsc --watch && node src/server.ts",
-    "dev": "nodemon src/server.ts"
+    "dev": "dotenv -e .env.dev -- nodemon src/server.ts"
   },
   "author": "sanjiv",
   "license": "ISC",
@@ -48,6 +48,7 @@
     "@types/sequelize": "^4.28.20",
     "babel-register": "^6.26.0",
     "concurrently": "^9.1.2",
+    "dotenv-cli": "^8.0.0",
     "sequelize-cli": "^6.6.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
