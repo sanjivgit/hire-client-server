@@ -21,7 +21,7 @@ class AcceptedServiceDao {
     this.serviceTypes = db.service_types;
   }
 
-  isAcceptedAlready = async(service_request_id: number) => {
+  isAcceptedAlready = async (service_request_id: number) => {
     // Check if the service request already has an accepted service
     const isExistAlready = await this.acceptedServices.findOne({
       where: { service_request_id: service_request_id }
@@ -38,11 +38,11 @@ class AcceptedServiceDao {
     amount?: number;
   }) => {
     try {
-      
+
       // Create the accepted service
       const acceptedService = await this.acceptedServices.create({
         ...data,
-        status: 'pending' // Default status
+        status: 'accepted' // Default status
       });
 
       const query = `
@@ -52,23 +52,23 @@ class AcceptedServiceDao {
         WHERE sp.id = :ServiceRequestId
     `;
 
-    const results = await this.sequelize.query(query, {
-      replacements: {
-        ServiceRequestId: data.service_request_id,
-      },
-      type: this.sequelize.QueryTypes.SELECT,
-    });
+      const results = await this.sequelize.query(query, {
+        replacements: {
+          ServiceRequestId: data.service_request_id,
+        },
+        type: this.sequelize.QueryTypes.SELECT,
+      });
 
-    sendPushNotification(
-      results,
-      "Service Request Accepted",
-      data?.description || "",
-      {
-        screen: "notification",
-        serviceRequestId: data.service_request_id,
-        serviceAcceptId: acceptedService.id
-      }
-    );
+      sendPushNotification(
+        results,
+        "Service Request Accepted",
+        data?.description || "",
+        {
+          screen: "notification",
+          serviceRequestId: data.service_request_id,
+          serviceAcceptId: acceptedService.id
+        }
+      );
 
       return await this.getAcceptedServiceById(acceptedService.id);
     } catch (error) {
@@ -116,7 +116,7 @@ class AcceptedServiceDao {
       tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
 
       const acceptedServices = await this.acceptedServices.findAll({
-        where: { 
+        where: {
           partner_id: partnerId,
           created_at: {
             [Op.gte]: tenDaysAgo // Only get accepted services created in the last 10 days
@@ -328,7 +328,7 @@ class AcceptedServiceDao {
           service_request_id: serviceRequestId
         }
       });
-      
+
       return !!acceptedService;
     } catch (error) {
       throw error;
