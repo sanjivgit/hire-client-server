@@ -55,8 +55,8 @@ class NotificationsDao {
       // Parse the address
       let userAddress;
       try {
-        userAddress = typeof user.address === 'string' 
-          ? JSON.parse(user.address) 
+        userAddress = typeof user.address === 'string'
+          ? JSON.parse(user.address)
           : user.address;
       } catch (error) {
         console.error("Error parsing user address:", error);
@@ -70,6 +70,8 @@ class NotificationsDao {
       if (!userPincode && !userCity) {
         return { rows: [], count: 0 };
       }
+
+      const partnerId = user.partner ? user.partner.id : null;
 
       // Raw SQL query to get notifications
       const query = `
@@ -96,6 +98,8 @@ class NotificationsDao {
             users u ON sr.user_id = u.id
           LEFT JOIN 
             accepted_services ac ON sr.id = ac.service_request_id
+          LEFT JOIN
+            partner_services ps ON ps.partner_id = :partnerId AND ps.service_id = sr.service_id
           WHERE 
             sr.user_id != :userId
             AND ac.id IS NULL
@@ -105,6 +109,7 @@ class NotificationsDao {
               (LOWER(u.address->>'city') = LOWER(:userCity) AND :userCity != '')
             )
             AND :isApprovedPartner = TRUE
+            AND ps.service_id IS NOT NULL
           
           UNION ALL
           
@@ -130,6 +135,7 @@ class NotificationsDao {
             accepted_services ac ON sr.id = ac.service_request_id
           WHERE 
             sr.user_id = :userId
+            AND ac.id IS NOT NULL
         )
         
         SELECT 
@@ -193,20 +199,21 @@ class NotificationsDao {
           userCity,
           limit,
           offset,
-          isApprovedPartner: isApprovedPartner
+          isApprovedPartner: isApprovedPartner,
+          partnerId
         },
         type: this.sequelize.QueryTypes.SELECT
       });
 
       // Format the results
       const totalCount = results.length > 0 ? parseInt(results[0].total_count) : 0;
-      
+
       const formattedResults = results.map((item: any) => {
         // Parse addresses from JSON strings if needed
         let customerAddress;
         try {
-          customerAddress = typeof item.customer_address === 'string' 
-            ? JSON.parse(item.customer_address) 
+          customerAddress = typeof item.customer_address === 'string'
+            ? JSON.parse(item.customer_address)
             : item.customer_address;
         } catch (error) {
           customerAddress = {};
@@ -230,7 +237,7 @@ class NotificationsDao {
           description: item.description,
           createdAt: item.created_at,
           updatedAt: item.updated_at,
-          
+
           // Include acceptance details if available
           acceptance: item.accepted_service_id ? {
             id: item.accepted_service_id,
@@ -240,7 +247,7 @@ class NotificationsDao {
             createdAt: item.accept_created_at,
             updatedAt: item.accept_updated_at
           } : null,
-          
+
           // Customer details
           customer: {
             id: item.customer_id,
@@ -250,7 +257,7 @@ class NotificationsDao {
             profilePic: item.customer_profile_pic,
             address: customerAddress
           },
-          
+
           // Service details
           service: {
             id: item.service_id,
@@ -260,7 +267,7 @@ class NotificationsDao {
               name: item.service_type_name
             }
           },
-          
+
           // Partner details if applicable
           partner: item.partner_id ? {
             id: item.partner_id,
