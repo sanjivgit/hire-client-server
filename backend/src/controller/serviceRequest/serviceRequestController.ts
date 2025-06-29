@@ -297,8 +297,13 @@ class ServiceRequestController {
         );
       }
 
+      const body = {
+        service_id: id,
+        description: req.body.description
+      }
+
       // Validate request body
-      const { error } = updateServiceRequestValidation.validate(req.body);
+      const { error } = updateServiceRequestValidation.validate(body);
       if (error) {
         return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
       }

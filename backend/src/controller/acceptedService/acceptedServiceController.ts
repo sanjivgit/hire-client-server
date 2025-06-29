@@ -56,7 +56,7 @@ class AcceptedServiceController {
 
       const isExisting = await this.dao.isAcceptedAlready(acceptedServiceDto.service_request_id)
 
-      if(isExisting){
+      if (isExisting) {
         return CommonRes.CONFLICT_ERROR(
           "This service request has already been accepted",
           resObj,
@@ -94,6 +94,7 @@ class AcceptedServiceController {
       version: "1.0",
     };
     try {
+      console.log("Hello >>>>", req.body)
       // Extract partner_id from auth token
       const partner_id = req.body.user?.partner?.id;
       if (!partner_id) {
@@ -115,8 +116,14 @@ class AcceptedServiceController {
         );
       }
 
+      const body = {
+        status: req.body.status,
+        description: req.body.description,
+        amount: req.body.amount
+      }
+
       // Validate request body
-      const { error } = updateAcceptedServiceValidation.validate(req.body);
+      const { error } = updateAcceptedServiceValidation.validate(body);
       if (error) {
         return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
       }
@@ -125,11 +132,7 @@ class AcceptedServiceController {
       const updatedService = await this.dao.updateAcceptedService(
         id,
         partner_id,
-        {
-          status: req.body.status,
-          amount: req.body.amount,
-          description: req.body.description
-        }
+        body
       );
 
       if (!updatedService) {
