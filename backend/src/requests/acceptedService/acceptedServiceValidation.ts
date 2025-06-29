@@ -19,10 +19,10 @@ export const createAcceptedServiceValidation = Joi.object({
 
 // Validation for updating an accepted service
 export const updateAcceptedServiceValidation = Joi.object({
-  status: Joi.string().valid('pending', 'in-progress', 'completed', 'rejected').required().messages({
+  status: Joi.string().valid('accepted', 'in-progress', 'completed', 'cancelled').required().messages({
     "string.base": "Status must be a string",
     "any.required": "Status is required",
-    "any.only": "Status must be one of: pending, in-progress, completed, rejected",
+    "any.only": "Status must be one of: accepted, in-progress, completed, cancelled",
   }),
   amount: Joi.number().allow(null).optional().min(0).messages({
     "number.base": "Amount must be a number",

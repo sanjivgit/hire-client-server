@@ -101,9 +101,6 @@
                               type: string
                               example: "Household"
 
-
-
-
 /service-requests/delete/{id}:
   delete:
     summary: Delete a service request
@@ -133,10 +130,6 @@
                 message:
                   type: string
                   example: "Service request deleted successfully"
-
-
-
-
 
 /service-requests/user:
   get:
@@ -224,9 +217,6 @@
                       updatedAt:
                         type: string
                         format: date-time
-
-
-
 
 /service-requests:
   get:
@@ -339,9 +329,6 @@
                         type: string
                         format: date-time
 
-
-
-
 /service-requests/{id}:
   get:
     summary: Get a service request by ID
@@ -444,10 +431,55 @@
                         status:
                           type: string
                           example: "pending"
-                          enum: [pending, in-progress, completed, rejected] 
+                          enum: [pending, in-progress, completed, rejected]
                     createdAt:
                       type: string
                       format: date-time
                     updatedAt:
                       type: string
                       format: date-time
+
+/service-services/cancel/{id}:
+  post:
+    summary: Cancel an service request
+    description: User can cancel requested service
+    tags:
+      - Service Requests
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: ID of the requested service to cancel
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+            properties:
+              description:
+                type: string
+                description: Updated description or notes
+                example: "Service will be completed by tomorrow"
+    responses:
+      "200":
+        description: Requested service cancelled successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Requested service cancelled successfully"
+                data:
+                  type: object

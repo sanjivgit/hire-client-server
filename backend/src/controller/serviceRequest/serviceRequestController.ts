@@ -275,6 +275,64 @@ class ServiceRequestController {
       return CommonRes.SERVER_ERROR(error, resObj, req, res);
     }
   };
+
+  cancelServiceRequest = async (
+    req: Request,
+    res: Response,
+    apiId: string
+  ): Promise<any> => {
+    const resObj: resObj = {
+      apiId,
+      action: "PUT",
+      version: "1.0",
+    };
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return CommonRes.BAD_REQUEST(
+          "Invalid service request ID",
+          resObj,
+          req,
+          res
+        );
+      }
+
+      // Validate request body
+      const { error } = updateServiceRequestValidation.validate(req.body);
+      if (error) {
+        return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
+      }
+
+      // Update the accepted service
+      const updatedService = await this.dao.cancelServiceRequest(
+        id,
+        {
+          status: 'cancelled',
+          description: req.body.description
+        }
+      );
+
+      if (!updatedService) {
+        return CommonRes.NOT_FOUND(
+          "Service request not found or you don't have permission to update it",
+          null,
+          resObj,
+          req,
+          res
+        );
+      }
+
+      return CommonRes.SUCCESS(
+        "Service request updated successfully",
+        '',
+        resObj,
+        req,
+        res
+      );
+    } catch (error: any) {
+      return CommonRes.SERVER_ERROR(error, resObj, req, res);
+    }
+  };
 }
 
 export default ServiceRequestController; 

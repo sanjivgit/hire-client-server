@@ -275,6 +275,53 @@ class ServiceRequestDao {
       throw error;
     }
   };
+
+  cancelServiceRequest = async (
+    id: number,
+    data: {
+      status?: string;
+      description?: string;
+    }
+  ) => {
+    try {
+      const transaction = await this.sequelize.transaction();
+
+      // Check if the accepted service exists and belongs to the partner
+      const acceptedService = await this.acceptedServices.findOne({
+        where: {
+          service_request_id: id
+        },
+        transaction
+      });
+
+      if (!acceptedService) {
+        await transaction.rollback();
+        return await this.deleteServiceRequest(id);
+      }
+
+      await acceptedService.update(
+        { status: data.status },
+        { transaction }
+      );
+
+      if (data.description) {
+        await this.serviceRequests.update(
+          { description: data.description },
+          {
+            where: { id },
+            transaction,
+          }
+        );
+      }
+
+      await transaction.commit();
+
+
+      return { status: 'success' };
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 
 export default ServiceRequestDao;
