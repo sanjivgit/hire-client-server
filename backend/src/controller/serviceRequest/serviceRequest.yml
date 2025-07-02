@@ -439,7 +439,7 @@
                       type: string
                       format: date-time
 
-/service-services/cancel/{id}:
+/service-requests/cancel/{id}:
   post:
     summary: Cancel an service request
     description: User can cancel requested service

@@ -54,7 +54,7 @@ class ServiceRequestRoute {
         this.serviceRequestController.getServiceRequestById(req, res, apiId + "05")
     );
 
-    app.route(`${baseUrl}/service-request/cancel/:id`).post(
+    app.route(`${baseUrl}/service-requests/cancel/:id`).post(
       (req: Request, res: Response, next: NextFunction) =>
         this.authorization.authenticateUser(req, res, next),
       (req: Request, res: Response) => this.serviceRequestController.cancelServiceRequest(req, res, apiId + "06")
