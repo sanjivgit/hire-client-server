@@ -9,7 +9,7 @@ import admin from "firebase-admin";
  * @param {object} data - Optional custom data payload
  */
 export const sendPushNotification = async (
-  rawTokens: {token: string}[],
+  rawTokens: { token: string }[],
   title: string,
   body: string,
   data: any
@@ -30,7 +30,7 @@ export const sendPushNotification = async (
     }
     return result;
   };
-
+  console.log("tokens >>>> ", tokens)
   const tokenChunks = chunkArray(tokens, 499);
 
   // 🔥 Now you can send each chunk using admin.messaging().sendMulticast()
@@ -47,10 +47,17 @@ export const sendPushNotification = async (
 
     try {
       const response = await admin.messaging().sendEachForMulticast(message);
-     
+
+      response.responses.forEach((resp, i) => {
+        if (!resp.success) {
+          console.error(`❌ Token: ${chunk[i]}`);
+          console.error(`   Error: ${resp.error?.message}`);
+          console.error(`   Code: ${resp.error?.code}`);
+        }
+      });
+
       console.log(
-        `✅ Batch ${index + 1} sent. Success: ${
-          response.successCount
+        `✅ Batch ${index + 1} sent. Success: ${response.successCount
         }, Failure: ${response.failureCount}`
       );
     } catch (err) {

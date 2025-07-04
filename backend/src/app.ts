@@ -2,10 +2,10 @@ import express from "express";
 import cors from "cors";
 import HireRoute from "./router";
 import { swaggerSetup } from "./swagger-setup";
-import { DOCS_BASE_URL } from "./config";
 const db = require("../db/models/index");
 import admin from 'firebase-admin';
-const serviceAccount = require("./utils/serviceAccountKey.json");
+import serviceAccount from './utils/serviceAccountKey.json'
+import { ServiceAccount } from "firebase-admin";
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(cors());
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(serviceAccount as ServiceAccount),
 });
 
 swaggerSetup(app);
