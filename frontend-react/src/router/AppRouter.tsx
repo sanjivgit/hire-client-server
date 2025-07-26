@@ -14,6 +14,7 @@ import ServiceTypesPage from "@/pages/admin/service-types/Index";
 import ServicesPage from "@/pages/admin/services/Index";
 import SettingsPage from "@/pages/admin/settings/Index";
 import PrivacyPolice from "@/pages/PrivacyPolicy";
+import DeleteAccountInfo from "@/pages/DeleteAccountInfo";
 
 const AppRouter = () => {
     return (
@@ -36,6 +37,7 @@ const AppRouter = () => {
                     <Route path="/admin/settings" element={<SettingsPage />} />
                 </Route>
                 <Route path="/privacy-policy" element={<PrivacyPolice />} />
+                <Route path="/account-deletion" element={<DeleteAccountInfo />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
