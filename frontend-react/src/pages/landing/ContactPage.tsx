@@ -11,7 +11,7 @@ const contactInfo = [
         icon: Phone,
         title: "Phone Support",
         description: "Call us for immediate assistance",
-        value: "+1 (555) 123-4567",
+        value: "+91 9625298413",
         note: "Available 24/7 for emergencies",
     },
     {

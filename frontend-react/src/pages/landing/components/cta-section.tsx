@@ -5,7 +5,7 @@ import { CheckCircle } from "lucide-react"
 export function CustomerCTASection() {
     return (
         <section id="get-started" className="w-full py-12 md:py-24 lg:py-32 bg-blue-600 text-white">
-            <div className="container px-4 md:px-6">
+            <div className="px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
                         <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Need a Service Provider?</h2>
@@ -64,7 +64,7 @@ export function ProviderCTASection() {
                             <a href="https://play.google.com/store/apps/details?id=com.ridhi.solution"> Join as Service Provider </a>
                         </Button>
                     </div>
-                    <div className="flex items-center justify-center">
+                    {/* <div className="flex items-center justify-center">
                         <img
                             alt="Service provider using mobile app"
                             className="aspect-video overflow-hidden rounded-xl object-cover"
@@ -72,7 +72,7 @@ export function ProviderCTASection() {
                             src="/placeholder.svg?height=400&width=600"
                             width="600"
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

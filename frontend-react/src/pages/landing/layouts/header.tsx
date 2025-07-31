@@ -9,6 +9,9 @@ export function Header() {
                 <span className="ml-2 text-xl font-bold">Ridhi Solution</span>
             </a>
             <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
+                <a className="text-sm font-medium hover:underline underline-offset-4" href="/admin/dashboard">
+                    Admin Dashboard
+                </a>
                 <a className="text-sm font-medium hover:underline underline-offset-4" href="#how-it-works">
                     How It Works
                 </a>
