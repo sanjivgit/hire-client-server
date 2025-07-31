@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import NotFound from "@/pages/NotFound";
 import LoginPage from "@/pages/auth/LoginPage";
@@ -15,6 +15,10 @@ import ServicesPage from "@/pages/admin/services/Index";
 import SettingsPage from "@/pages/admin/settings/Index";
 import PrivacyPolice from "@/pages/PrivacyPolicy";
 import DeleteAccountInfo from "@/pages/DeleteAccountInfo";
+import LandingMainLayout from "@/pages/landing/layouts/LandingMainLayout";
+import HomePage from "@/pages/landing/Index";
+import TermsAndConditions from "@/pages/TermsAndConditions";
+import ContactPage from "@/pages/landing/ContactPage";
 
 const AppRouter = () => {
     return (
@@ -25,7 +29,7 @@ const AppRouter = () => {
 
                 {/* All other routes with layout */}
                 <Route element={<MainLayout />}>
-                    <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
+                    {/* <Route path="/" element={<Navigate to="/admin/dashboard" replace />} /> */}
                     <Route path="/admin/dashboard" element={<DashboardPage />} />
                     <Route path="/admin/partners" element={<PartnersPage />} />
                     <Route path="/admin/partners/:id" element={<PartnerDetailPage />} />
@@ -37,7 +41,12 @@ const AppRouter = () => {
                     <Route path="/admin/settings" element={<SettingsPage />} />
                 </Route>
                 <Route path="/privacy-policy" element={<PrivacyPolice />} />
+                <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                 <Route path="/account-deletion" element={<DeleteAccountInfo />} />
+                <Route element={<LandingMainLayout />}>
+                    <Route path="/" element={<HomePage />} />
+                </Route>
+                <Route path="/contact" element={<ContactPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
