@@ -184,18 +184,26 @@ class AuthDao {
   sendPhoneOtp = async (phone: string) => {
     const otp: string = String(generateOtp());
 
-    // const response = await axios.get("https://www.fast2sms.com/dev/bulkV2", {
-    //   params: {
-    //     authorization: process.env.FAST2SMS_API_KEY,
-    //     variables_values: `${otp}`,
-    //     route: "otp",
-    //     numbers: phone,
-    //   },
-    // });
+    // try {
+    const response = await axios.get("https://www.fast2sms.com/dev/whatsapp", {
+      params: {
+        authorization: process.env.FAST2SMS_API_KEY,
+        message_id: 3572,
+        variables_values: `${otp}`,
+        numbers: phone,
+      },
+    });
+
+    // } catch (error) {
+    //   console.error("Error sending OTP:", error);
+    //   throw new Error("Failed to send OTP");
+    // }
+
+
 
     const res = await this.otps.create({
       phone: String(phone),
-      otp: "123456",
+      otp,
     });
 
     return generateRes(res);

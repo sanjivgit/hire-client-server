@@ -38,11 +38,11 @@ class AuthController {
 
     try {
 
-      
+
       const { error } = registrationValidation.validate(req.body);
-      
+
       if (error) return CommonRes.VALIDATION_ERROR(error, resObj, req, res);
-      
+
       /* Verifing the opt sent on given phone number */
       const otpVerify = await this.dao.verifyPhoneOtp(
         String(req.body.phone),
@@ -64,7 +64,7 @@ class AuthController {
           res
         );
       }
-      
+
       const registrationDto = new RegistrationDto(req.body);
 
       ////////// Checking user already exist or not ?? If no then continue otherwise throw error message
