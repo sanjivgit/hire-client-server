@@ -182,15 +182,44 @@ class AuthDao {
   };
 
   sendPhoneOtp = async (phone: string) => {
+    const data = await this.otps.findOne({
+      where: {
+        phone
+      },
+    });
+    if (data) {
+      const createdAt: Date = data.createdAt;
+      const currentTime: Date = new Date();
+      const timeDifference: number =
+        currentTime.getTime() - createdAt.getTime();
+      if (timeDifference <= (Number(process.env.OTP_EXPIRY_TIME))) {
+        return generateRes(data)
+      }
+      await this.otps.destroy({
+        where: {
+          phone: data.phone,
+        },
+      });
+    }
+
     const otp: string = String(generateOtp());
 
     // try {
-    const response = await axios.get("https://www.fast2sms.com/dev/whatsapp", {
+    // const response = await axios.get("https://www.fast2sms.com/dev/whatsapp", {
+    //   params: {
+    //     authorization: process.env.FAST2SMS_API_KEY,
+    //     message_id: 3572,
+    //     variables_values: `${otp}`,
+    //     numbers: phone,
+    //   },
+    // });
+
+    const response = await axios.get("https://www.fast2sms.com/dev/bulkV2", {
       params: {
         authorization: process.env.FAST2SMS_API_KEY,
-        message_id: 3572,
         variables_values: `${otp}`,
         numbers: phone,
+        route: 'otp'
       },
     });
 
