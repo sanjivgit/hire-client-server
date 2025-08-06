@@ -107,7 +107,7 @@ class PartnerListDao {
                     u.name,
                     u.profile_pic,
                     st.name as service_type_name,
-                    COUNT(CASE WHEN as2.status = 'pending' THEN 1 ELSE NULL END) as pending_count,
+                    COUNT(CASE WHEN as2.status = 'accepted' THEN 1 ELSE NULL END) as pending_count,
                     COUNT(CASE WHEN as2.status = 'completed' THEN 1 ELSE NULL END) as completed_count,
                     COUNT(CASE WHEN as2.status = 'cancelled' THEN 1 ELSE NULL END) as cancelled_count,
                     COALESCE(SUM(CASE WHEN as2.status = 'completed' THEN as2.amount ELSE 0 END), 0) as total_earnings
