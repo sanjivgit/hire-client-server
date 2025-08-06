@@ -9,7 +9,7 @@ interface HistoryRequest extends Request {
   };
   query: {
     serviceType?: 'request' | 'accept';
-    status?: 'requested' | 'pending' | 'completed' | 'cancelled';
+    status?: 'requested' | 'accepted' | 'completed' | 'cancelled';
     startDate?: string;
     endDate?: string;
     query?: string;
@@ -77,10 +77,10 @@ class HistoryController {
 
       // Check if we should use raw query implementation (for testing/comparison)
       const useRawQuery = req.query.useRawQuery === 'true';
-      
+
       // Get service history
       const result = await this.dao.getUserServiceHistoryRaw(filters)
-        // : await this.dao.getUserServiceHistory(filters);
+      // : await this.dao.getUserServiceHistory(filters);
 
       // Prepare pagination metadata
       const pagination = {

@@ -50,7 +50,7 @@ class DashboardRoute {
                 await this.authorization.jwtVerifyIsAdmin(req, res, next);
             },
             (req: Request, res: Response) =>
-                this.acceptedServicesStatsController.getAcceptedServicesStats(req, res, apiId + "08")
+                this.acceptedServicesStatsController.getAcceptedServicesStats(req, res, apiId + "03")
         );
 
         // Get partner list
@@ -59,7 +59,7 @@ class DashboardRoute {
                 await this.authorization.jwtVerifyIsAdmin(req, res, next);
             },
             (req: Request, res: Response) =>
-                this.partnerListController.getPartnerList(req, res, apiId + "03")
+                this.partnerListController.getPartnerList(req, res, apiId + "04")
         );
 
         // Get partner list with service stats
@@ -68,7 +68,7 @@ class DashboardRoute {
                 await this.authorization.jwtVerifyIsAdmin(req, res, next);
             },
             (req: Request, res: Response) =>
-                this.partnerListController.getPartnerListWithServiceStats(req, res, apiId + "09")
+                this.partnerListController.getPartnerListWithServiceStats(req, res, apiId + "05")
         );
 
         // Get partner detail by ID
@@ -77,7 +77,7 @@ class DashboardRoute {
                 await this.authorization.jwtVerifyIsAdmin(req, res, next);
             },
             (req: Request, res: Response) =>
-                this.partnerDetailController.getPartnerDetail(req, res, apiId + "04")
+                this.partnerDetailController.getPartnerDetail(req, res, apiId + "06")
         );
 
         // Reject partner application
@@ -86,7 +86,7 @@ class DashboardRoute {
                 await this.authorization.jwtVerifyIsAdmin(req, res, next);
             },
             (req: Request, res: Response) =>
-                this.partnerDetailController.rejectPartnerApplication(req, res, apiId + "05")
+                this.partnerDetailController.rejectPartnerApplication(req, res, apiId + "07")
         );
 
         // Approve partner application
@@ -95,7 +95,7 @@ class DashboardRoute {
                 await this.authorization.jwtVerifyIsAdmin(req, res, next);
             },
             (req: Request, res: Response) =>
-                this.partnerDetailController.approvePartnerApplication(req, res, apiId + "06")
+                this.partnerDetailController.approvePartnerApplication(req, res, apiId + "08")
         );
 
         // Suspend partner
@@ -104,7 +104,7 @@ class DashboardRoute {
                 await this.authorization.jwtVerifyIsAdmin(req, res, next);
             },
             (req: Request, res: Response) =>
-                this.partnerDetailController.suspendPartner(req, res, apiId + "07")
+                this.partnerDetailController.suspendPartner(req, res, apiId + "09")
         );
 
         // Get partner working history
@@ -113,7 +113,7 @@ class DashboardRoute {
                 await this.authorization.jwtVerifyIsAdmin(req, res, next);
             },
             (req: Request, res: Response) =>
-                this.partnerHistoryController.getPartnerWorkingHistory(req, res, apiId + "8")
+                this.partnerHistoryController.getPartnerWorkingHistory(req, res, apiId + "10")
         );
 
         // Get partner work stats
@@ -122,7 +122,7 @@ class DashboardRoute {
                 await this.authorization.jwtVerifyIsAdmin(req, res, next);
             },
             (req: Request, res: Response) =>
-                this.partnerHistoryController.getPartnerWorkStats(req, res, apiId + "9")
+                this.partnerHistoryController.getPartnerWorkStats(req, res, apiId + "11")
         );
 
         // Get service history details by ID

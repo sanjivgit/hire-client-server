@@ -3,7 +3,7 @@ import { Op, Sequelize, literal } from "sequelize";
 
 interface HistoryFilters {
   serviceType?: 'request' | 'accept';
-  status?: 'requested' | 'pending' | 'completed' | 'cancelled';
+  status?: 'requested' | 'accepted' | 'completed' | 'cancelled';
   startDate?: Date;
   endDate?: Date;
   query?: string;
@@ -169,7 +169,7 @@ class HistoryDao {
       // Build status filter
       let statusFilter = '';
       if (filters.status) {
-          statusFilter = ` AND combined.status = '${filters.status.toLowerCase()}'`; 
+        statusFilter = ` AND combined.status = '${filters.status.toLowerCase()}'`;
       }
       // Build query filter
       let queryFilter = '';
@@ -192,11 +192,11 @@ class HistoryDao {
       }
 
       // Get partner ID for this user
-      const partner = await this.partners.findOne({ 
+      const partner = await this.partners.findOne({
         where: { user_id: filters.userId },
         attributes: ['id']
       });
-      
+
       const partnerId = partner ? partner.id : -1; // Use -1 if no partner found to avoid empty results
 
       // SQL query to get combined results
@@ -305,7 +305,7 @@ class HistoryDao {
 
       // Execute the query
       const results = await this.sequelize.query(query, {
-        replacements: { 
+        replacements: {
           userId: filters.userId,
           partnerId,
           limit,
@@ -316,7 +316,7 @@ class HistoryDao {
 
       // Format the results
       const totalCount = results.length > 0 ? parseInt(results[0].total_count) : 0;
-      
+
       const formattedResults = results.map((item: any) => ({
         id: item.id,
         type: item.type,

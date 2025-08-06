@@ -126,7 +126,7 @@ class PartnerHistoryDao {
                 SELECT 
                     COALESCE(SUM(as2.amount), 0) as total_amount,
                     COUNT(CASE WHEN as2.status = 'completed' THEN 1 ELSE NULL END) as completed_count,
-                    COUNT(CASE WHEN as2.status = 'pending' THEN 1 ELSE NULL END) as pending_count,
+                    COUNT(CASE WHEN as2.status = 'accepted' THEN 1 ELSE NULL END) as pending_count,
                     COUNT(CASE WHEN as2.status = 'cancelled' THEN 1 ELSE NULL END) as cancelled_count,
                     p.id as partner_id,
                     p.first_name,

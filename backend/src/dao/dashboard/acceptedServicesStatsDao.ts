@@ -18,7 +18,7 @@ class AcceptedServicesStatsDao {
                 this.acceptedServices.count({
                     where: {
                         status: {
-                            [Op.in]: ['pending', 'in-progress']
+                            [Op.in]: ['accepted', 'in-progress']
                         }
                     }
                 }),
