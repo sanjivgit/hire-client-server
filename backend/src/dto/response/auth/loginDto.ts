@@ -26,60 +26,52 @@ interface ResponseUser {
   } | null;
 }
 
-interface User {
+interface Address {
+  address: string;
+  pinCode: string;
+  state: string;
+  city: string;
+}
+
+interface Partner {
   id: number;
-  name: string;
-  phone: string;
-  profilePicId: number;
-  fcmToken: string;
-  address: {
-    address: string;
-    pinCode: string;
-    state: string;
-    city: string;
-  };
-  role?: string | null;
-  isAdmin?: boolean;
-  isSuperAdmin?: boolean;
-  partner?: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    aadharNumber: string;
-    aadharImageId: number;
-    additionalDocumentId: number;
-    status: string;
-    serviceTypeId: number;
-    services: any[];
-  } | null;
+  firstName: string;
+  lastName: string;
+  aadharNumber: string;
+  aadharImageId: number;
+  additionalDocumentId: number;
+  status: string;
+  serviceTypeId: number;
+  services: any[];
 }
 interface UserWithToken extends ResponseUser {
   token: string;
 }
 
 class LoginDto {
-  token: string;
-  user: User;
+  id: number;
+  name: string;
+  profilePicId: number;
+  phone: string;
+  address: Address;
+  isPartner: boolean;
+  role: string | null;
+  isAdmin: boolean;
+  partner?: Partner;
+
 
   constructor(response: UserWithToken) {
-    this.token = response.token;
-    this.user = {
-      id: response.id, 
-      name: response.name,
-      profilePicId: response.profile_pic,
-      phone: response.phone, 
-      fcmToken: response.fcm_token,
-      address: response.address,
-    };
 
-    if(response.role) {
-      this.user.role = response.role;
-      this.user.isAdmin = response.role === "admin";
-      this.user.isSuperAdmin = response.role === "superAdmin";
-    }
-
-    if(response.partner?.id) {
-      this.user.partner = {
+    this.id = response.id
+    this.name = response.name
+    this.profilePicId = response.profile_pic
+    this.phone = response.phone
+    this.address = response.address
+    this.isPartner = !!response.partner?.id
+    this.role = response.role
+    this.isAdmin = response.role === "admin"
+    if (response.partner?.id) {
+      this.partner = {
         id: response.partner.id,
         firstName: response.partner.first_name,
         lastName: response.partner.last_name,

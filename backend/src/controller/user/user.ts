@@ -20,7 +20,7 @@ interface AuthenticatedRequest extends Request {
 }
 class UserController {
   private userDao: UserDao;
-  
+
   constructor() {
     this.userDao = new UserDao();
   }
@@ -122,6 +122,46 @@ class UserController {
       return CommonRes.SERVER_ERROR(error, resObj, req, res);
     }
   };
+
+  getUserList = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    apiId: string
+  ): Promise<any> => {
+    const resObj: resObj = {
+      apiId,
+      action: "GET",
+      version: "1.0",
+    };
+
+    try {
+      const { query, limit = 10, page = 1 } = req.query
+
+      const result = await this.userDao.getUserList({ query, limit, page });
+
+      const { data, ...pagination } = result;
+
+      if (!data.length) {
+        return CommonRes.SUCCESS("User not found", { users: [] }, resObj, req, res);
+      }
+
+      let users: any = data.map((user: any) => new LoginDto(user));
+
+      return CommonRes.SUCCESS(
+        "User list retrieved successfully",
+        {
+          users,
+          pagination
+        },
+        resObj,
+        req,
+        res
+      );
+    } catch (error: any) {
+      return CommonRes.SERVER_ERROR(error, resObj, req, res);
+    }
+  };
 }
+
 
 export default UserController;

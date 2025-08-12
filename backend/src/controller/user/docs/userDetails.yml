@@ -114,3 +114,143 @@
                 message:
                   type: string
                   example: "Internal server error"
+
+/user/get-list:
+  get:
+    summary: Get user list
+    description: It will give you list of users
+    tags:
+      - User
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: query
+        in: query
+        description: Search term to filter by name or address
+        required: false
+        schema:
+          type: string
+          example: John
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        schema:
+          type: integer
+          default: 10
+          example: 10
+      - name: page
+        in: query
+        description: Page number (starting from 1)
+        required: false
+        schema:
+          type: integer
+          default: 1
+          example: 1
+    responses:
+      "200":
+        description: User list retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "User details fetched successfully"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        example: 1
+                      name:
+                        type: string
+                        example: "John Doe"
+                      phone:
+                        type: string
+                        example: "1234567890"
+                      email:
+                        type: string
+                        example: "john.doe@example.com"
+                      address:
+                        type: object
+                        properties:
+                          address:
+                            type: string
+                            example: "1234 Main St, Anytown, USA"
+                          pinCode:
+                            type: string
+                            example: "12345"
+                          state:
+                            type: string
+                            example: "California"
+                          city:
+                            type: string
+                            example: "Los Angeles"
+                          isAdmin:
+                            type: boolean
+                            example: false
+                          createdAt:
+                            type: string
+                            example: "2021-01-01T00:00:00.000Z"
+                          updatedAt:
+                            type: string
+                            example: "2021-01-01T00:00:00.000Z"
+      "401":
+        description: Unauthorized - Invalid or missing bearer token
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Bearer token is required"
+      "403":
+        description: Forbidden - Invalid or expired token
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Invalid or expired token"
+      "404":
+        description: User not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "User not found"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Internal server error"

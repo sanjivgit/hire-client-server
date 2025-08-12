@@ -24,6 +24,13 @@ class UserRoute {
       (req: Request, res: Response) =>
         this.userController.updateUserDetails(req, res, apiId + "02")
     );
+
+    app.route(`${baseUrl}/user/get-list`).get(
+      (req: Request, res: Response, next: NextFunction) =>
+        this.authorization.authenticateUser(req, res, next),
+      (req: Request, res: Response) =>
+        this.userController.getUserList(req, res, apiId + "03")
+    );
   }
 }
 

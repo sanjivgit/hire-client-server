@@ -10,7 +10,7 @@ export const generateRes = (
 
 export const generateResForPagination = (
   data: any,
-  count?: number,
+  totalItems?: number,
   page?: number,
   limit?: number,
   others?: any,
@@ -19,8 +19,9 @@ export const generateResForPagination = (
 
   return {
     currentPage: page,
-    count,
-    totalPage: count && limit ? Math.ceil(count / limit) : 0,
+    totalItems,
+    itemsPerPage: limit,
+    totalPages: totalItems && limit ? Math.ceil(totalItems / limit) : 0,
     others,
     data,
   };

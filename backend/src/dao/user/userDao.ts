@@ -1,4 +1,4 @@
-import { generateRes } from "../../utils/generateRes";
+import { generateRes, generateResForPagination } from "../../utils/generateRes";
 const db = require("../../../db/models/index");
 
 interface AddressDetails {
@@ -109,6 +109,80 @@ class UserDao {
 
     return generateRes(updatedUser);
   };
+
+  getUserList = async (creteria: any) => {
+    const { query, limit, page } = creteria;
+
+    const offset = (page - 1) * limit;
+
+    let param = ``;
+
+    if (query) {
+      param += `(u.name ILIKE '%' || :query || '%' 
+             OR u.address::text ILIKE '%' || :query || '%')`;
+    } else {
+      param += 'TRUE'
+    }
+
+    const countQuery = `
+      SELECT COUNT(DISTINCT u.id) AS total
+      FROM users u
+      LEFT JOIN roles r ON u.id = r.user_id
+      LEFT JOIN partners p ON u.id = p.user_id
+      LEFT JOIN partner_services ps ON p.id = ps.partner_id
+      LEFT JOIN services s ON ps.service_id = s.id
+      WHERE ${param}
+    `;
+
+    const totalResult = await this.sequelize.query(countQuery, {
+      replacements: { query },
+      type: this.sequelize.QueryTypes.SELECT,
+    });
+
+    const total = parseInt(totalResult[0].total, 10);
+    const totalPages = Math.ceil(total / limit);
+
+
+    const rawQuery = `
+    SELECT 
+        u.id, 
+        u.name, 
+        u.phone,
+        u.profile_pic,
+        u.address,
+        r.role AS role, 
+        json_build_object(
+          'id', p.id, 
+          'first_name', p.first_name,
+          'last_name', p.last_name,
+          'aadhar_image_id', p.aadhar_image_id,
+          'status', p.status,
+          'additional_document_id', p.additional_document_id,
+          'aadhar_number', p.aadhar_number,
+          'service_type_id', p.service_type_id,
+          'services', COALESCE(json_agg(
+                json_build_object('id', s.id, 'name', s.name)
+              ) FILTER (WHERE s.id IS NOT NULL), '[]'::json)
+        ) AS partner
+    FROM users u
+    LEFT JOIN roles r ON u.id = r.user_id
+    LEFT JOIN partners p ON u.id = p.user_id
+    LEFT JOIN partner_services ps ON p.id = ps.partner_id
+    LEFT JOIN services s ON ps.service_id = s.id
+    WHERE ${param}
+    GROUP BY u.id, u.name, u.phone, u.address::text, r.role, p.id, p.service_type_id
+    LIMIT :limit OFFSET :offset;
+  `;
+
+    const user = await this.sequelize.query(rawQuery, {
+      replacements: { query, limit, offset },
+      type: this.sequelize.QueryTypes.SELECT,
+    });
+
+    return generateResForPagination(user, total, page, limit, {
+      totalPages: totalPages
+    });
+  }
 }
 
 export default UserDao;
