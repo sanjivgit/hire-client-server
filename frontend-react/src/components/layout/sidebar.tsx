@@ -1,7 +1,7 @@
 "use client"
 
 
-import { LayoutDashboard, Users, LogOut, X, Tag, Briefcase } from "lucide-react"
+import { LayoutDashboard, Users, LogOut, X, Tag, Briefcase, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLocation, useNavigate } from "react-router-dom"
 
@@ -40,6 +40,11 @@ export function Sidebar({ isSidebarOpen, toggleSidebar }: SidebarProps) {
       title: "Services",
       href: "/admin/services",
       icon: <Briefcase className="h-5 w-5" />,
+    },
+    {
+      title: "Users",
+      href: "/admin/users",
+      icon: <User className="h-5 w-5" />,
     },
     // {
     //   title: "Settings",

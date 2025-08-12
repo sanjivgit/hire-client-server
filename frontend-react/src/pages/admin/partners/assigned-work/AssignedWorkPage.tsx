@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { usePartnerStatistics, usePartnersWithStats } from "@/hooks/useWorkAssign"
 import type { PartnerWithStats } from '@/hooks/useWorkAssign'
+import CustomPagination from "@/components/custom-ui/Pagination"
 
 export default function AssignedWorkPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -45,18 +46,6 @@ export default function AssignedWorkPage() {
 
   const partners = data?.partners || []
   const pagination = data?.pagination
-
-  const handlePreviousPage = () => {
-    if (pagination && pagination.currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
-
-  const handleNextPage = () => {
-    if (pagination && pagination.currentPage < pagination.totalPages) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
 
   if (isLoading && partners.length === 0) {
     return <div className="flex justify-center items-center h-64">
@@ -246,108 +235,16 @@ export default function AssignedWorkPage() {
             )}
           </TableBody>
         </Table>
+        {pagination && <CustomPagination
+          onPageChange={setCurrentPage}
+          pagination={{
+            page: pagination.currentPage,
+            limit: pagination.itemsPerPage,
+            total: pagination.totalItems,
+            totalPages: pagination.totalPages,
+          }}
+        />}
       </div>
-
-      {pagination && (
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
-          <div className="text-sm text-muted-foreground">
-            Showing {((pagination.currentPage - 1) * pagination.itemsPerPage) + 1} to {Math.min(pagination.currentPage * pagination.itemsPerPage, pagination.totalItems)} of {pagination.totalItems} partners
-          </div>
-          <div className="flex items-center space-x-6">
-            <div className="flex space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={pagination.currentPage <= 1 || isLoading}
-                onClick={handlePreviousPage}
-              >
-                Previous
-              </Button>
-
-              {pagination.totalPages <= 5 ? (
-                // Show all page numbers if 5 or fewer
-                [...Array(pagination.totalPages)].map((_, i) => (
-                  <Button
-                    key={i + 1}
-                    variant={pagination.currentPage === i + 1 ? "default" : "outline"}
-                    size="sm"
-                    disabled={isLoading}
-                    onClick={() => setCurrentPage(i + 1)}
-                  >
-                    {i + 1}
-                  </Button>
-                ))
-              ) : (
-                // Show limited page numbers with ellipsis for many pages
-                <>
-                  <Button
-                    variant={pagination.currentPage === 1 ? "default" : "outline"}
-                    size="sm"
-                    disabled={isLoading}
-                    onClick={() => setCurrentPage(1)}
-                  >
-                    1
-                  </Button>
-
-                  {pagination.currentPage > 3 && <span className="mx-1">...</span>}
-
-                  {pagination.currentPage > 2 && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      disabled={isLoading}
-                      onClick={() => setCurrentPage(pagination.currentPage - 1)}
-                    >
-                      {pagination.currentPage - 1}
-                    </Button>
-                  )}
-
-                  {pagination.currentPage !== 1 && pagination.currentPage !== pagination.totalPages && (
-                    <Button
-                      variant="default"
-                      size="sm"
-                      disabled={isLoading}
-                    >
-                      {pagination.currentPage}
-                    </Button>
-                  )}
-
-                  {pagination.currentPage < pagination.totalPages - 1 && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      disabled={isLoading}
-                      onClick={() => setCurrentPage(pagination.currentPage + 1)}
-                    >
-                      {pagination.currentPage + 1}
-                    </Button>
-                  )}
-
-                  {pagination.currentPage < pagination.totalPages - 2 && <span className="mx-1">...</span>}
-
-                  <Button
-                    variant={pagination.currentPage === pagination.totalPages ? "default" : "outline"}
-                    size="sm"
-                    disabled={isLoading}
-                    onClick={() => setCurrentPage(pagination.totalPages)}
-                  >
-                    {pagination.totalPages}
-                  </Button>
-                </>
-              )}
-
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={pagination.currentPage >= pagination.totalPages || isLoading}
-                onClick={handleNextPage}
-              >
-                Next
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

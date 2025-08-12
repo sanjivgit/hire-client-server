@@ -19,6 +19,7 @@ import LandingMainLayout from "@/pages/landing/layouts/LandingMainLayout";
 import HomePage from "@/pages/landing/Index";
 import TermsAndConditions from "@/pages/TermsAndConditions";
 import ContactPage from "@/pages/landing/ContactPage";
+import UserPage from "@/pages/admin/users/Index";
 
 const AppRouter = () => {
     return (
@@ -39,6 +40,7 @@ const AppRouter = () => {
                     <Route path="/admin/service-types" element={<ServiceTypesPage />} />
                     <Route path="/admin/services" element={<ServicesPage />} />
                     <Route path="/admin/settings" element={<SettingsPage />} />
+                    <Route path="/admin/users" element={<UserPage />} />
                 </Route>
                 <Route path="/privacy-policy" element={<PrivacyPolice />} />
                 <Route path="/terms-and-conditions" element={<TermsAndConditions />} />

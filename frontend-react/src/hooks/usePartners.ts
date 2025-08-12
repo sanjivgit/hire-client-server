@@ -76,8 +76,9 @@ interface PartnerList {
         }[],
         pagination: {
             currentPage: number,
-            count: number,
-            totalPage: number
+            totalItems: number,
+            totalPages: number,
+            itemsPerPage: number
         }
     };
 }

@@ -14,6 +14,7 @@ import { toast } from "sonner"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import CustomPagination from "@/components/custom-ui/Pagination"
 
 export default function PartnersPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -21,10 +22,12 @@ export default function PartnersPage() {
   const [rejectDialogOpen, setRejectDialogOpen] = useState(false)
   const [selectedPartnerId] = useState("")
   const [rejectReason, setRejectReason] = useState("")
-  const [page] = useState(1)
+  const [page, setCurrentPage] = useState(1)
 
   const { data: partners, isLoading } = usePartners(page, statusFilter, searchTerm)
   const rejectMutation = useRejectPartner()
+
+  const pagination = partners?.pagination
 
   const handleReject = async () => {
     if (!rejectReason.trim()) {
@@ -168,6 +171,16 @@ export default function PartnersPage() {
             )}
           </TableBody>
         </Table>
+
+        {pagination && <CustomPagination
+          onPageChange={setCurrentPage}
+          pagination={{
+            page: pagination.currentPage,
+            limit: pagination.itemsPerPage,
+            total: pagination.totalItems,
+            totalPages: pagination.totalPages,
+          }}
+        />}
       </div>
 
       {/* Reject Dialog */}
