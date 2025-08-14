@@ -8,7 +8,7 @@ import CustomPagination from "@/components/custom-ui/Pagination"
 import { useParams } from "react-router-dom"
 import { useGetUserHistory } from "@/hooks/useUsers"
 import type { ServiceRequest } from "@/hooks/user_types"
-import ServiceRequestModal from "./components/serviceDetails"
+import ServiceRequestModal from "./components/ServiceDetails"
 
 export default function UserHistoryPage() {
     const { userId } = useParams()
