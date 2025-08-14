@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import apiClient from '@/utils/apiService';
-import { USERS } from '@/utils/apis';
+import { USER } from '@/utils/apis';
+import type { ApiResponse } from './user_types';
 
 export interface Partner {
     data: {
@@ -88,9 +89,9 @@ interface UserList {
 // Get all partners
 export const useUsers = (page: number, query: string) => {
     return useQuery({
-        queryKey: [USERS.GET_LIST, page, query],
+        queryKey: [USER.GET_LIST, page, query],
         queryFn: async () => {
-            const { data } = await apiClient.get<UserList>(USERS.GET_LIST + `${page}&limit=10&query=${query}`);
+            const { data } = await apiClient.get<UserList>(USER.GET_LIST + `${page}&limit=10&query=${query}`);
             return data.data;
         }
     });
@@ -99,11 +100,28 @@ export const useUsers = (page: number, query: string) => {
 // Get single partner details
 export const usePartnerDetails = (id: string) => {
     return useQuery({
-        queryKey: [USERS.GET_LIST, id],
+        queryKey: [USER.GET_LIST, id],
         queryFn: async () => {
-            const { data } = await apiClient.get<{ data: PartnerDetails }>(USERS.GET_LIST + `/${id}`);
+            const { data } = await apiClient.get<{ data: PartnerDetails }>(USER.GET_LIST + `/${id}`);
             return data.data;
         },
         enabled: !!id // Only run the query if an ID is provided
+    });
+};
+
+export const useGetUserHistory = (userId: number | undefined, page: number, search: string = '') => {
+    return useQuery({
+        queryKey: [USER.GET_HISTORY, userId, page, search],
+        queryFn: async () => {
+            let url = `${USER.GET_HISTORY}/${userId}?page=${page}&limit=${20}`;
+            if (search) {
+                url += `&query=${encodeURIComponent(search)}`;
+            }
+
+            const { data } = await apiClient.get<ApiResponse>(url);
+            return data.data;
+        },
+        placeholderData: (prev) => prev,
+        enabled: !!userId
     });
 };

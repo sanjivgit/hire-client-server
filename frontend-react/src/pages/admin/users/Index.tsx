@@ -135,7 +135,7 @@ export default function UserPage() {
                                         {moment(user.createdAt).format("MMM DD, YYYY")}
                                     </TableCell>
                                     <TableCell className="text-center">
-                                        <a href={`/admin/partners/${user.id}`}>
+                                        <a href={`/admin/users/history/${user.id}`}>
                                             <Button variant={"outline"}>
                                                 <Eye className="mr-2 h-4 w-4" />
                                                 <span> View Details </span>

@@ -19,8 +19,9 @@ const APIs = {
         PARTNER_WORK_STATS: (id: string) => `/dashboard/partner/${id}/work-stats`,
         SERVICE_HISTORY: '/dashboard/service-history',
     },
-    USERS: {
-        GET_LIST: '/user/get-list?page='
+    USER: {
+        GET_LIST: '/user/get-list?page=',
+        GET_HISTORY: '/user/get-history'
     },
     FILES: {
         FILE: (id: string) => `file/${id}`,
@@ -43,6 +44,6 @@ const APIs = {
     }
 }
 
-export const { AUTH, USERS, DASHBOARD, FILES, SERVICE_TYPES, SERVICES, FILES_UPLOAD } = APIs;
+export const { AUTH, USER, DASHBOARD, FILES, SERVICE_TYPES, SERVICES, FILES_UPLOAD } = APIs;
 
 export default APIs

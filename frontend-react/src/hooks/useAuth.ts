@@ -74,6 +74,7 @@ export const useLogin = () => {
             return response.data;
         },
         onSuccess: (data) => {
+            console.log("data >>>", data)
             // Save token to localStorage
             localStorage.setItem('token', data.data.token);
             // You can also save user data if needed

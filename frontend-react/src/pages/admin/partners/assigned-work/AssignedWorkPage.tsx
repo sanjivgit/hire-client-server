@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Filter, MoreHorizontal, Calendar, Loader2, RefreshCw } from "lucide-react"
+import { Filter, MoreHorizontal, Calendar, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -36,7 +36,7 @@ export default function AssignedWorkPage() {
     setCurrentPage(1)
   }, [debouncedSearchTerm, statusFilter])
 
-  const { data, isLoading, isError, error, refetch } = usePartnersWithStats(
+  const { data, isLoading, isError, error } = usePartnersWithStats(
     currentPage,
     debouncedSearchTerm,
     statusFilter
@@ -66,20 +66,6 @@ export default function AssignedWorkPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Assigned Work</h1>
           <p className="text-muted-foreground">Manage partners with assigned work</p>
-        </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => refetch()}
-            disabled={isLoading}
-            title="Refresh data"
-          >
-            <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-          </Button>
-          <Button asChild>
-            <a href="/dashboard/partners/assign-work">Assign New Work</a>
-          </Button>
         </div>
       </div>
 

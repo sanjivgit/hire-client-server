@@ -20,6 +20,7 @@ import HomePage from "@/pages/landing/Index";
 import TermsAndConditions from "@/pages/TermsAndConditions";
 import ContactPage from "@/pages/landing/ContactPage";
 import UserPage from "@/pages/admin/users/Index";
+import UserHistoryPage from "@/pages/admin/users/history/Index";
 
 const AppRouter = () => {
     return (
@@ -41,6 +42,7 @@ const AppRouter = () => {
                     <Route path="/admin/services" element={<ServicesPage />} />
                     <Route path="/admin/settings" element={<SettingsPage />} />
                     <Route path="/admin/users" element={<UserPage />} />
+                    <Route path="/admin/users/history/:userId" element={<UserHistoryPage />} />
                 </Route>
                 <Route path="/privacy-policy" element={<PrivacyPolice />} />
                 <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
