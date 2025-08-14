@@ -109,8 +109,6 @@ class Authorization {
   };
 
   authenticateUser = this.jwtVerify;
-
-  authenticateAdmin = this.jwtVerifyIsAdmin
 }
 
 export default Authorization;

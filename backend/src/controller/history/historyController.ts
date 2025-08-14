@@ -3,7 +3,7 @@ import HistoryDao from "../../dao/history/historyDao";
 import CommonRes from "../../utils/commonResponse";
 import { resObj, User } from "../../utils/types";
 
-interface HistoryRequest extends Request {
+export interface HistoryRequest extends Request {
   body: {
     user: User;
   };
