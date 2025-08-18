@@ -35,33 +35,35 @@ export const sendPushNotification = async (
 
   // 🔥 Now you can send each chunk using admin.messaging().sendMulticast()
   tokenChunks.forEach(async (chunk, index) => {
+    if (chunk) {
+      const message = {
+        tokens: chunk,
+        notification: {
+          title: title,
+          body: body,
+        },
+        data: stringData// optional custom data
+      };
 
-    const message = {
-      tokens: chunk,
-      notification: {
-        title: title,
-        body: body,
-      },
-      data: stringData// optional custom data
-    };
+      try {
+        const response = await admin.messaging().sendEachForMulticast(message);
 
-    try {
-      const response = await admin.messaging().sendEachForMulticast(message);
+        response.responses.forEach((resp, i) => {
+          if (!resp.success) {
+            console.error(`❌ Token: ${chunk[i]}`);
+            console.error(`   Error: ${resp.error?.message}`);
+            console.error(`   Code: ${resp.error?.code}`);
+          }
+        });
 
-      response.responses.forEach((resp, i) => {
-        if (!resp.success) {
-          console.error(`❌ Token: ${chunk[i]}`);
-          console.error(`   Error: ${resp.error?.message}`);
-          console.error(`   Code: ${resp.error?.code}`);
-        }
-      });
-
-      console.log(
-        `✅ Batch ${index + 1} sent. Success: ${response.successCount
-        }, Failure: ${response.failureCount}`
-      );
-    } catch (err) {
-      console.error(`❌ Error in batch ${index + 1}:`, err);
+        console.log(
+          `✅ Batch ${index + 1} sent. Success: ${response.successCount
+          }, Failure: ${response.failureCount}`
+        );
+      } catch (err) {
+        console.error(`❌ Error in batch ${index + 1}:`, err);
+      }
     }
+
   });
 };
