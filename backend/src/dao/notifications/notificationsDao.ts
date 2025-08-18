@@ -295,6 +295,87 @@ class NotificationsDao {
       throw error;
     }
   };
+
+
+  getNotificationCount = async (userId: number) => {
+    const user = await this.users.findByPk(userId, {
+      include: [{
+        model: this.partners,
+        as: 'partner',
+        attributes: ['id', 'status'],
+      }]
+    });
+
+    if (!user || !user.address) {
+      return { rows: [], count: 0 };
+    }
+
+    // Check if the user is a partner with 'approved' status
+    const isApprovedPartner = user.partner && user.partner.status === 'approved';
+
+    // Parse the address
+    let userAddress;
+    try {
+      userAddress = typeof user.address === 'string'
+        ? JSON.parse(user.address)
+        : user.address;
+    } catch (error) {
+      console.error("Error parsing user address:", error);
+      return { rows: [], count: 0 };
+    }
+
+    // Extract pincode and city for matching
+    const userPincode = userAddress.pincode || '';
+    const userCity = userAddress.city || '';
+
+    if (!userPincode && !userCity) {
+      return { rows: [], count: 0 };
+    }
+
+    const partnerId = user.partner ? user.partner.id : null;
+
+
+    let query = `
+    SELECT
+  (
+    SELECT COUNT(*)
+    FROM service_requests as sr
+    JOIN users u ON sr.user_id = u.id
+    LEFT JOIN accepted_services ac ON sr.id = ac.service_request_id
+    LEFT JOIN partner_services ps ON ps.partner_id = :partnerId AND ps.service_id = sr.service_id
+    WHERE
+      sr.user_id != :userId
+      AND ac.id IS NULL
+      AND (
+        (u.address->>'pincode' = :userPincode AND :userPincode != '')
+        OR
+        (LOWER(u.address->>'city') = LOWER(:userCity) AND :userCity != '')
+      )
+      AND ps.service_id IS NOT NULL
+  ) as total_count,
+
+  (
+    SELECT COUNT(*)
+    FROM service_requests as sr
+    LEFT JOIN accepted_services ac ON sr.id = ac.service_request_id
+    WHERE sr.user_id = :userId
+      AND ac.id IS NOT NULL
+  ) as total_accept_count;
+    `
+
+    const results = await this.sequelize.query(query, {
+      replacements: {
+        userId,
+        userPincode,
+        userCity,
+        isApprovedPartner: isApprovedPartner,
+        partnerId
+      },
+      type: this.sequelize.QueryTypes.SELECT
+    });
+
+    return Number(results[0]?.total_count) + Number(results[0]?.total_accept_count)
+  }
 }
 
 export default NotificationsDao; 

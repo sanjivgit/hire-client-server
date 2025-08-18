@@ -7,7 +7,7 @@
       This API returns two types of notifications:
       1. Service requests from other users that match your location (pincode or city)
       2. Your own service requests with information about who has accepted them
-      
+
       The response includes detailed information about the service requests, customers, partners, and services.
     parameters:
       - in: query
@@ -198,4 +198,49 @@
       401:
         description: Unauthorized - User authentication required
       500:
-        description: Server error 
+        description: Server error
+
+/user/notification-counts:
+  get:
+    tags:
+      - Notifications
+    summary: Get location-based and own service request notifications
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Notification counts retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Notifications count retrieved successfully"
+                meta-data:
+                  type: object
+                  properties:
+                    apiId:
+                      type: string
+                    version:
+                      type: string
+                    responseTime:
+                      type: number
+                    action:
+                      type: string
+                data:
+                  type: object
+                  properties:
+                    notifications:
+                      type: number
+
+      400:
+        description: Bad request - Invalid pagination parameters
+      401:
+        description: Unauthorized - User authentication required
+      500:
+        description: Server error

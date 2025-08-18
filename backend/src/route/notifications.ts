@@ -21,6 +21,13 @@ class NotificationsRoute {
       (req: Request, res: Response) =>
         this.notificationsController.getNotifications(req, res, routePrefix + "01")
     );
+
+    app.route(`${baseUrl}/user/notification-counts`).get(
+      (req: Request, res: Response, next: NextFunction) =>
+        this.authorization.authenticateUser(req, res, next),
+      (req: Request, res: Response) =>
+        this.notificationsController.getNotificationCount(req, res, routePrefix + "02")
+    );
   }
 }
 

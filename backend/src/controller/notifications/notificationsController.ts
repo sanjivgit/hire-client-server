@@ -78,6 +78,49 @@ class NotificationsController {
       return CommonRes.SERVER_ERROR(error, resObj, req, res);
     }
   };
+
+  getNotificationCount = async (
+    req: Request,
+    res: Response,
+    apiId: string
+  ): Promise<any> => {
+    const resObj: resObj = {
+      apiId,
+      action: "GET",
+      version: "1.0",
+    };
+
+    try {
+      // Extract the user from the request
+      const userId = req.body.user?.id;
+
+      if (!userId) {
+        return CommonRes.UNAUTHORISED(
+          "User not authenticated",
+          resObj,
+          req,
+          res
+        );
+      }
+
+      // Get notifications from DAO
+      const result = await this.dao.getNotificationCount(userId);
+
+      // Return successful response
+      return CommonRes.SUCCESS(
+        "Notifications retrieved successfully",
+        {
+          count: result
+        },
+        resObj,
+        req,
+        res
+      );
+    } catch (error: any) {
+      console.error('Error in getNotifications controller:', error);
+      return CommonRes.SERVER_ERROR(error, resObj, req, res);
+    }
+  };
 }
 
 export default NotificationsController; 
