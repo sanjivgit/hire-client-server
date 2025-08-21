@@ -77,6 +77,12 @@ class ServiceRequestDao {
               OR 
               (LOWER(u.address->>'city') = LOWER(:userCity) AND :userCity != '')
             ) AND u.id != :RequestingUserId
+              AND EXISTS (
+                    SELECT 1
+                      FROM partner_services ps
+                      WHERE ps.partner_id = p.id
+                      AND ps.service_id = :requestServiceId
+            )
       `;
 
       const results = await this.sequelize.query(query, {
@@ -84,6 +90,7 @@ class ServiceRequestDao {
           userPincode: address.pincode,
           userCity: address.city,
           RequestingUserId: data.user_id,
+          requestServiceId: data.service_id
         },
         type: this.sequelize.QueryTypes.SELECT,
       });

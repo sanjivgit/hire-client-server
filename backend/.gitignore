@@ -3,3 +3,5 @@ node_modules
 /logs
 public/uploads
 /dist
+src/utils/serviceAccountKey.json
+serviceAccountKey.json
